@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet library="css" name="estilo.css" />
+	<title>Controle de Serviços</title>
+
+
+</h:head>
+
+<h:body styleClass="principal">
+	<table>
+		<tr>
+			<td><h:graphicImage library="imagens" name="mecanica.png" /></td>
+			<td>
+				<h1>
+					<span class="texto1">Sistema de Controle de Serviços</span>
+				</h1>
+			</td>
+		</tr>
+	</table>
+	<p:menubar>
+		<p:menuitem value="Home" url="home.xhtml" />
+		<p:menuitem value="|" url="#" />
+		<p:menuitem value="Cadastro Cliente" url="cadastroCliente.xhtml" />
+		<p:menuitem value="|" url="#" />
+		<p:menuitem value="Consultar Peça" url="consultarPeca.xhtml" />
+		<p:menuitem value="|" url="#" />
+		<p:menuitem value="Ordem Serviço" url="ordemServico.xhtml" />
+	</p:menubar>
+	<hr />
+	<ui:insert></ui:insert>
+
+</h:body>
+</html>
