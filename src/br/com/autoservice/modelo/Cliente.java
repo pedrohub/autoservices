@@ -3,6 +3,7 @@ package br.com.autoservice.modelo;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,6 +22,8 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codCliente;
 	private String nome;
+	@Column(length = 20)
+    private String cpf;
 	private String fone1;
 	private String fone2;
 	private String obs;
@@ -112,5 +115,16 @@ public class Cliente {
 	public void setVeiculos(List<Veiculo> veiculos) {
 		this.veiculos = veiculos;
 	}
+
+
+	public String getCpf() {
+		return cpf;
+	}
+
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+	
 	
 }

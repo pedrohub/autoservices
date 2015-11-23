@@ -16,6 +16,7 @@ public class Endereco {
 	private String logradouro;
 	private String bairro;
 	private String cidade;
+	private String numero;
 	private String uf;
 	private String cep;
 
@@ -71,5 +72,16 @@ public class Endereco {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
+
+
+	public String getNumero() {
+		return numero;
+	}
+
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+	
 		
 }

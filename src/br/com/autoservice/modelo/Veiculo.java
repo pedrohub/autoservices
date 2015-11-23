@@ -1,5 +1,6 @@
 package br.com.autoservice.modelo;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,7 @@ public class Veiculo {
 	private String obs;
 	private String placa;
 	private boolean status;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="team_id")
 	private Cliente cliente;
 

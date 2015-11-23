@@ -8,21 +8,23 @@
 	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
 
 	<h:form id="form">
-	
-	
-	<h1 class="texto2">Cadastro Cliente</h1>
-	
-	<p:commandButton update=":form:documentPanelIn" value="Inserir"
-					oncomplete="PF('documentDialogIn').show()" icon="fa fa-fw fa-edit"
-					>
+
+		<h:panelGrid columns="2" cellpadding="5">
+
+			<h:panelGrid columns="1" cellpadding="5">
+				<h1 class="texto2">Cadastro Cliente</h1>
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:commandButton update=":form:documentPanelIn" value="Inserir"
+					oncomplete="PF('documentDialogIn').show()" icon="fa fa-fw fa-edit">
 				</p:commandButton>
-	<p:commandButton update=":form:documentPanelIn" value="Consultar"
-					oncomplete="PF('documentDialogIn').show()" 
-					>
+				<p:commandButton update=":form:documentPanelIn" value="Consultar"
+					oncomplete="PF('documentDialogIn').show()">
 				</p:commandButton>
-	
-		<br></br><br></br>
-	
+			</h:panelGrid>
+		</h:panelGrid>
+
 		<p:dataTable id="tbl" var="cliente" value="#{clienteMB.lista}"
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
 			paginator="true" rows="10" style="margin-bottom:20px">
@@ -69,7 +71,7 @@
 				</f:facet>
 				<h:outputText value="#{cliente.nome}" />
 			</p:column>
-
+			
 			<p:column>
 				<f:facet name="header">
 					<h:outputText value="Bairro" />
@@ -96,142 +98,146 @@
 		<p:dialog id="dialog" header="Document Detail" showEffect="fade"
 			widgetVar="documentDialog" modal="true" resizable="true">
 			<p:outputPanel id="documentPanel" styleClass="modal">
-			
+
 				<h:outputLabel value="Name: " />
 				<h:outputLabel value="#{clienteMB.cliente.nome}" />
-				
+
 				<h:panelGrid columns="4" cellpadding="5">
-				
-			<h:outputText value="Nome: " />
-			<p:keyboard id="default" value="#{clienteMB.cliente.nome}" />
 
-			<h:outputText value="Marca: " />
-			<p:keyboard id="qwerty" value="#{clienteMB.cliente.nome}"
-				layout="qwertyBasic" />
+					<h:outputText value="Nome: " />
+					<p:keyboard id="default" value="#{clienteMB.cliente.nome}" />
 
-			<h:outputText value="Quantidade: " />
-			<p:keyboard id="alphabetic" value="#clienteMB.cliente.nome}"
-				layout="alphabetic" />
+					<h:outputText value="Marca: " />
+					<p:keyboard id="qwerty" value="#{clienteMB.cliente.nome}"
+						layout="qwertyBasic" />
 
-			<h:outputText value="Descricao: " />
-			<p:keyboard id="custom1" value="#{clienteMB.cliente.nome}"
-				layout="custom" layoutTemplate="prime-back,faces-clear,rocks-close" />
+					<h:outputText value="Quantidade: " />
+					<p:keyboard id="alphabetic" value="#clienteMB.cliente.nome}"
+						layout="alphabetic" />
 
-			<h:outputText value="Observacao: " />
-			<p:keyboard id="custom2" value="#{clienteMB.cliente.nome}"
-				layout="custom"
-				layoutTemplate="create-space-your-close,owntemplate-shift,easily-space-spacebar" />
+					<h:outputText value="Descricao: " />
+					<p:keyboard id="custom1" value="#{clienteMB.cliente.nome}"
+						layout="custom"
+						layoutTemplate="prime-back,faces-clear,rocks-close" />
 
-			<h:outputText value="" />
-			<p:commandButton value="Submit" />
+					<h:outputText value="Observacao: " />
+					<p:keyboard id="custom2" value="#{clienteMB.cliente.nome}"
+						layout="custom"
+						layoutTemplate="create-space-your-close,owntemplate-shift,easily-space-spacebar" />
 
-		</h:panelGrid>
-				
-				
+					<h:outputText value="" />
+					<p:commandButton value="Submit" />
+
+				</h:panelGrid>
+
+
 			</p:outputPanel>
 		</p:dialog>
-		
+
 		<!-- Inserir Clientes -->
 		<p:dialog id="dialogIn" header="Inserir Cliente" showEffect="fade"
 			widgetVar="documentDialogIn" modal="true" resizable="true">
 			<p:outputPanel id="documentPanelIn" styleClass="modal">
-				
+
 				<p:messages id="dialogInMSG" />
-				
+
 				<h:panelGrid columns="2" cellpadding="5">
-				<h:panelGrid columns="2" cellpadding="5">
+					<h:panelGrid columns="2" cellpadding="5">
+
+						<h:outputText value="Nome: " />
+						<p:inputText value="#{clienteMB.cliente.nome}" />
+
+						<h:outputText value="Email: " />
+						<p:inputText value="#{clienteMB.cliente.email}" />
 						
-					<h:outputText value="Nome: " />
-					<p:inputText  value="#{clienteMB.cliente.nome}" />
-					
-					<h:outputText value="Email: " />
-					<p:inputText  value="#{clienteMB.cliente.email}" />
-					
-					<h:outputText value="Fone 1: " />
-					<p:inputText  value="#{clienteMB.cliente.fone1}" />
-					
-					<h:outputText value="Fone 2: " />
-					<p:inputText  value="#{clienteMB.cliente.fone2}" />
-					
-					<h:outputText value="Observação: " />
-					<p:inputTextarea value="#{clienteMB.cliente.obs}" />
-		
-				</h:panelGrid>
-				
-				<h:panelGrid columns="2" cellpadding="5">
+						<h:outputText value="CPF: " />
+						<p:inputText value="#{clienteMB.cliente.cpf}" />
+
+						<h:outputText value="Fone 1: " />
+						<p:inputText value="#{clienteMB.cliente.fone1}" />
+
+						<h:outputText value="Fone 2: " />
+						<p:inputText value="#{clienteMB.cliente.fone2}" />
+
+						<h:outputText value="Observação: " />
+						<p:inputTextarea value="#{clienteMB.cliente.obs}" />
+
+					</h:panelGrid>
+
+					<h:panelGrid columns="2" cellpadding="5">
+
+						<h:outputText value="Estado: " />
+						<p:inputText value="#{clienteMB.endereco.uf}" />
+
+						<h:outputText value="Cidade: " />
+						<p:inputText value="#{clienteMB.endereco.cidade}" />
+
+						<h:outputText value="Cep: " />
+						<p:inputText value="#{clienteMB.endereco.cep}" />
+
+						<h:outputText value="Bairro: " />
+						<p:inputText value="#{clienteMB.endereco.bairro}" />
 						
-					<h:outputText value="Estado: " />
-					<p:inputText  value="#{clienteMB.endereco.uf}" />
-					
-					<h:outputText value="Cidade: " />
-					<p:inputText  value="#{clienteMB.endereco.cidade}" />
-					
-					<h:outputText value="Cep: " />
-					<p:inputText  value="#{clienteMB.endereco.cep}" />
-					
-					<h:outputText value="Bairro: " />
-					<p:inputText  value="#{clienteMB.endereco.bairro}" />
-					
-					<h:outputText value="Logradouro: " />
-					<p:inputTextarea value="#{clienteMB.endereco.logradouro}" />
-		
-				</h:panelGrid>
-				
-				</h:panelGrid>
-				
-				<p:commandButton update=":form:documentPanelIn :form:painelVeiculo" value="Salvar" 
-					 icon="ui-icon-check" actionListener="#{clienteMB.salvar}"
-					>
-					</p:commandButton>
+						<h:outputText value="Logradouro: " />
+						<p:inputTextarea value="#{clienteMB.endereco.logradouro}" />
 						
+						<h:outputText value="Numero: " />
+						<p:inputTextarea value="#{clienteMB.endereco.numero}" />
+
+					</h:panelGrid>
+
+				</h:panelGrid>
+
+				<p:commandButton update=":form:documentPanelIn :form:painelVeiculo"
+					value="Salvar" icon="ui-icon-check"
+					actionListener="#{clienteMB.salvar}">
+				</p:commandButton>
+
 			</p:outputPanel>
 			<br></br>
-			
-			<p:outputPanel id="painelVeiculo" >
-			<p:accordionPanel rendered="#{clienteMB.renderPainelVeiculo}">
-				<p:tab title="Adicionar Veículo">
-				
-				<h:panelGrid columns="2" cellpadding="10">
+
+			<p:outputPanel id="painelVeiculo">
+				<p:accordionPanel rendered="#{clienteMB.renderPainelVeiculo}">
+					<p:tab title="Adicionar Veículo">
+
 						<h:panelGrid columns="2" cellpadding="10">
-						
-							<h:outputText value="Marca: " />
-							<p:inputText  value="#{clienteMB.veiculo.marca}" />
-							
-							<h:outputText value="Modelo: " />
-							<p:inputText  value="#{clienteMB.veiculo.modelo}" />
-							
-							<h:outputText value="Placa: " />
-							<p:inputText  value="#{clienteMB.veiculo.placa}" />
-							
+							<h:panelGrid columns="2" cellpadding="10">
+
+								<h:outputText value="Marca: " />
+								<p:inputText value="#{clienteMB.veiculo.marca}" />
+
+								<h:outputText value="Modelo: " />
+								<p:inputText value="#{clienteMB.veiculo.modelo}" />
+
+								<h:outputText value="Placa: " />
+								<p:inputText value="#{clienteMB.veiculo.placa}" />
+
+							</h:panelGrid>
+							<h:panelGrid columns="2" cellpadding="10">
+
+								<h:outputText value="Ano: " />
+								<p:inputText value="#{clienteMB.veiculo.ano}" />
+
+								<h:outputText value="Cor: " />
+								<p:inputText value="#{clienteMB.veiculo.cor}" />
+
+								<h:outputText value="Obs: " />
+								<p:inputText value="#{clienteMB.veiculo.obs}" />
+
+							</h:panelGrid>
+
+							<p:commandButton
+								update=":form:documentPanelIn :form:painelVeiculo"
+								value="Salvar" icon="ui-icon-check"
+								actionListener="#{clienteMB.salvarVeiculo()}" />
+
 						</h:panelGrid>
-						<h:panelGrid columns="2" cellpadding="10">
-							
-							<h:outputText value="Ano: " />
-							<p:inputText  value="#{clienteMB.veiculo.ano}" />
-							
-							<h:outputText value="Cor: " />
-							<p:inputText  value="#{clienteMB.veiculo.cor}" />
-							
-							<h:outputText value="Obs: " />
-							<p:inputText  value="#{clienteMB.veiculo.obs}" />
-						
-						</h:panelGrid>
-						
-						<p:commandButton update=":form:documentPanelIn :form:painelVeiculo" value="Salvar" 
-						 icon="ui-icon-check" actionListener="#{clienteMB.salvarVeiculo(cliente)}"	/>
-						
-					</h:panelGrid>
-				</p:tab>
-			</p:accordionPanel>
+					</p:tab>
+				</p:accordionPanel>
 			</p:outputPanel>
 
 		</p:dialog>
 
 	</h:form>
-	
-	<h:form id="formv">
-	
-      </h:form>
-       
-	
+
 </ui:decorate>

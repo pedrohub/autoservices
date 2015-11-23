@@ -50,8 +50,13 @@ public class ControladorCliente {
 		return listaCliente;
 	}
 
-	public Cliente find(Cliente cliente) throws HibernateException {
-		Cliente clienteRetorno = clienteDao.find(cliente);
+	public Cliente findByName(Cliente cliente) throws HibernateException {
+		Cliente clienteRetorno = clienteDao.findByName(cliente);
+		return clienteRetorno;
+	}
+	
+	public Cliente findByCpf(Cliente cliente) throws HibernateException {
+		Cliente clienteRetorno = clienteDao.findByCpf(cliente);
 		return clienteRetorno;
 	}
 }
