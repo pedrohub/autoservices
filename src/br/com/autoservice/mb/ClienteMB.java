@@ -35,7 +35,7 @@ public class ClienteMB {
 		cliente = new Cliente();
 		endereco = new Endereco();
 		veiculo = new Veiculo();
-		renderPainelVeiculo = true;
+		renderPainelVeiculo = false;
 		controladorVeiculo = new ControladorVeiculo();
 		botaoCliente = false;
 		botaoVeiculo = false;
@@ -79,20 +79,35 @@ public class ClienteMB {
 	public void salvarVeiculo() {
 
 		veiculo.setCliente(cliente);
+		veiculo.setStatus(true);
 
 		try {
 			controladorVeiculo.inserir(veiculo);
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage("Veículo Salvo"));
-			renderPainelVeiculo = false;
 			botaoVeiculo = true;
 		} catch (Exception e) {
-			renderPainelVeiculo = true;
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							"Erro ao Salvar", "Veículo"));
 		}
+	}
+	
+	public void adicionarVeiculo(){
+		
+		veiculo = new Veiculo();
+		botaoVeiculo = false;
+		
+	}
+	
+	public void limparModal(){
+		cliente = new Cliente();
+		endereco = new Endereco();
+		veiculo = new Veiculo();
+		renderPainelVeiculo = false;
+		botaoCliente = false;
+		botaoVeiculo = false;
 	}
 
 	/**

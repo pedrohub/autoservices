@@ -12,8 +12,6 @@
 
   <mapping class="br.com.autoservice.modelo.Usuario"/> 
   <mapping class="br.com.autoservice.modelo.Cliente"/>
-  <mapping class="br.com.autoservice.modelo.Peca"/>
-  <mapping class="br.com.autoservice.modelo.Servico"/>
   <mapping class="br.com.autoservice.modelo.Veiculo"/>
    <mapping class="br.com.autoservice.modelo.Endereco"/>
   

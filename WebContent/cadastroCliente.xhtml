@@ -12,12 +12,13 @@
 		<h:panelGrid columns="2" cellpadding="5">
 
 			<h:panelGrid columns="1" cellpadding="5">
-				<h1 class="texto2">Cadastro Cliente</h1>
+				<h1 class="texto2">Clientes</h1>
 			</h:panelGrid>
 
 			<h:panelGrid columns="2" cellpadding="5">
-				<p:commandButton update=":form:documentPanelIn" value="Inserir"
-					oncomplete="PF('documentDialogIn').show()" icon="fa fa-fw fa-edit">
+				<p:commandButton update=":form:documentPanelIn :form:painelVeiculo" value="Inserir"
+					oncomplete="PF('documentDialogIn').show()" icon="fa fa-fw fa-edit"
+					actionListener="#{clienteMB.limparModal}">
 				</p:commandButton>
 				<p:commandButton update=":form:documentPanelIn" value="Consultar"
 					oncomplete="PF('documentDialogIn').show()">
@@ -31,23 +32,8 @@
 
 			<f:facet name="{Exporters}">
 				<h:commandLink>
-					<h:graphicImage library="imagens" name="excel.png" />
-					<p:dataExporter type="xls" target="tbl" fileName="cliente" />
-				</h:commandLink>
-
-				<h:commandLink>
-					<h:graphicImage library="imagens" name="pdf.png" />
-					<p:dataExporter type="pdf" target="tbl" fileName="cliente" />
-				</h:commandLink>
-
-				<h:commandLink>
 					<h:graphicImage library="imagens" name="csv.png" />
 					<p:dataExporter type="csv" target="tbl" fileName="cliente" />
-				</h:commandLink>
-
-				<h:commandLink>
-					<h:graphicImage library="imagens" name="xml.png" />
-					<p:dataExporter type="xml" target="tbl" fileName="cliente" />
 				</h:commandLink>
 			</f:facet>
 
@@ -71,7 +57,7 @@
 				</f:facet>
 				<h:outputText value="#{cliente.nome}" />
 			</p:column>
-			
+
 			<p:column>
 				<f:facet name="header">
 					<h:outputText value="Bairro" />
@@ -136,7 +122,8 @@
 
 		<!-- Inserir Clientes -->
 		<p:dialog id="dialogIn" header="Inserir Cliente" showEffect="fade"
-			widgetVar="documentDialogIn" modal="true" resizable="true">
+			widgetVar="documentDialogIn" modal="true"  resizable="false"  
+			style="max-height:700px;overflow:auto">
 			<p:outputPanel id="documentPanelIn" styleClass="modal">
 
 				<p:messages id="dialogInMSG" />
@@ -145,44 +132,56 @@
 					<h:panelGrid columns="2" cellpadding="5">
 
 						<h:outputText value="Nome: " />
-						<p:inputText value="#{clienteMB.cliente.nome}" />
+						<p:inputText value="#{clienteMB.cliente.nome}"
+							disabled="#{clienteMB.botaoCliente}" />
 
 						<h:outputText value="Email: " />
-						<p:inputText value="#{clienteMB.cliente.email}" />
-						
+						<p:inputText value="#{clienteMB.cliente.email}"
+							disabled="#{clienteMB.botaoCliente}" />
+
 						<h:outputText value="CPF: " />
-						<p:inputText value="#{clienteMB.cliente.cpf}" />
+						<p:inputText value="#{clienteMB.cliente.cpf}"
+							disabled="#{clienteMB.botaoCliente}" />
 
 						<h:outputText value="Fone 1: " />
-						<p:inputText value="#{clienteMB.cliente.fone1}" />
+						<p:inputText value="#{clienteMB.cliente.fone1}"
+							disabled="#{clienteMB.botaoCliente}" />
 
 						<h:outputText value="Fone 2: " />
-						<p:inputText value="#{clienteMB.cliente.fone2}" />
+						<p:inputText value="#{clienteMB.cliente.fone2}"
+							disabled="#{clienteMB.botaoCliente}" />
 
 						<h:outputText value="Observação: " />
-						<p:inputTextarea value="#{clienteMB.cliente.obs}" />
+						<p:inputTextarea value="#{clienteMB.cliente.obs}"
+							disabled="#{clienteMB.botaoCliente}" />
 
 					</h:panelGrid>
 
 					<h:panelGrid columns="2" cellpadding="5">
 
 						<h:outputText value="Estado: " />
-						<p:inputText value="#{clienteMB.endereco.uf}" />
+						<p:inputText value="#{clienteMB.endereco.uf}"
+							disabled="#{clienteMB.botaoCliente}" />
 
 						<h:outputText value="Cidade: " />
-						<p:inputText value="#{clienteMB.endereco.cidade}" />
+						<p:inputText value="#{clienteMB.endereco.cidade}"
+							disabled="#{clienteMB.botaoCliente}" />
 
 						<h:outputText value="Cep: " />
-						<p:inputText value="#{clienteMB.endereco.cep}" />
+						<p:inputText value="#{clienteMB.endereco.cep}"
+							disabled="#{clienteMB.botaoCliente}" />
 
 						<h:outputText value="Bairro: " />
-						<p:inputText value="#{clienteMB.endereco.bairro}" />
-						
+						<p:inputText value="#{clienteMB.endereco.bairro}"
+							disabled="#{clienteMB.botaoCliente}" />
+
 						<h:outputText value="Logradouro: " />
-						<p:inputTextarea value="#{clienteMB.endereco.logradouro}" />
-						
+						<p:inputTextarea value="#{clienteMB.endereco.logradouro}"
+							disabled="#{clienteMB.botaoCliente}" />
+
 						<h:outputText value="Numero: " />
-						<p:inputTextarea value="#{clienteMB.endereco.numero}" />
+						<p:inputText value="#{clienteMB.endereco.numero}"
+							disabled="#{clienteMB.botaoCliente}" />
 
 					</h:panelGrid>
 
@@ -190,6 +189,7 @@
 
 				<p:commandButton update=":form:documentPanelIn :form:painelVeiculo"
 					value="Salvar" icon="ui-icon-check"
+					disabled="#{clienteMB.botaoCliente}"
 					actionListener="#{clienteMB.salvar}">
 				</p:commandButton>
 
@@ -204,34 +204,46 @@
 							<h:panelGrid columns="2" cellpadding="10">
 
 								<h:outputText value="Marca: " />
-								<p:inputText value="#{clienteMB.veiculo.marca}" />
+								<p:inputText value="#{clienteMB.veiculo.marca}"
+									disabled="#{clienteMB.botaoVeiculo}" />
 
 								<h:outputText value="Modelo: " />
-								<p:inputText value="#{clienteMB.veiculo.modelo}" />
+								<p:inputText value="#{clienteMB.veiculo.modelo}"
+									disabled="#{clienteMB.botaoVeiculo}" />
 
 								<h:outputText value="Placa: " />
-								<p:inputText value="#{clienteMB.veiculo.placa}" />
+								<p:inputText value="#{clienteMB.veiculo.placa}"
+									disabled="#{clienteMB.botaoVeiculo}" />
 
 							</h:panelGrid>
 							<h:panelGrid columns="2" cellpadding="10">
 
 								<h:outputText value="Ano: " />
-								<p:inputText value="#{clienteMB.veiculo.ano}" />
+								<p:inputText value="#{clienteMB.veiculo.ano}"
+									disabled="#{clienteMB.botaoVeiculo}" />
 
 								<h:outputText value="Cor: " />
-								<p:inputText value="#{clienteMB.veiculo.cor}" />
+								<p:inputText value="#{clienteMB.veiculo.cor}"
+									disabled="#{clienteMB.botaoVeiculo}" />
 
 								<h:outputText value="Obs: " />
-								<p:inputText value="#{clienteMB.veiculo.obs}" />
+								<p:inputText value="#{clienteMB.veiculo.obs}"
+									disabled="#{clienteMB.botaoVeiculo}" />
 
 							</h:panelGrid>
 
-							<p:commandButton
+						</h:panelGrid>
+						
+						<p:commandButton
 								update=":form:documentPanelIn :form:painelVeiculo"
 								value="Salvar" icon="ui-icon-check"
-								actionListener="#{clienteMB.salvarVeiculo()}" />
-
-						</h:panelGrid>
+								disabled="#{clienteMB.botaoVeiculo}"
+								actionListener="#{clienteMB.salvarVeiculo}" />
+							<p:commandButton
+								update=":form:documentPanelIn :form:painelVeiculo"
+								value="Adicionar Veiculo" icon="ui-icon-check"
+								actionListener="#{clienteMB.adicionarVeiculo}" />
+						
 					</p:tab>
 				</p:accordionPanel>
 			</p:outputPanel>
