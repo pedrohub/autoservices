@@ -1,5 +1,1 @@
-.classpath
-.project
-.class
-/.project/
-/.classpath/
+*.class
