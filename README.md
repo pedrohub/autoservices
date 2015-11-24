@@ -3,7 +3,7 @@ control services
 
 # How to install
 
-To install autoservices, you need install MySQL and java 7 or greater.
+To install autoservices, you need to install MySQL and java 7 or greater.
 
 1- Clone the repository
 
