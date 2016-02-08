@@ -14,7 +14,8 @@ public class VeiculoDao extends GenericDao {
 		session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			Criteria cri = session.createCriteria(veiculo.getClass())
-					.add(Restrictions.eq("placa", veiculo.getPlaca()));
+					.add(Restrictions.eq("placa", veiculo.getPlaca()))
+					.add(Restrictions.eq("status", true));
 
 			return (Veiculo) cri.uniqueResult();
 		} finally {

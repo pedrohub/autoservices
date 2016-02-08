@@ -9,12 +9,11 @@
 
 	<h:form id="form">
 
+		<!-- painel de botoes -->
 		<h:panelGrid columns="2" cellpadding="5">
-
 			<h:panelGrid columns="1" cellpadding="5">
 				<h1 class="texto2">Clientes</h1>
 			</h:panelGrid>
-
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:commandButton update=":form:documentPanelIn :form:painelVeiculo" value="Inserir"
 					oncomplete="PF('documentDialogIn').show()" icon="fa fa-fw fa-edit"
@@ -25,51 +24,48 @@
 				</p:commandButton>
 			</h:panelGrid>
 		</h:panelGrid>
+		<!-- fim painel de botoes -->
 
-		<p:dataTable id="tbl" var="cliente" value="#{clienteMB.lista}"
+		<!-- tabela de clientes  -->
+		<p:outputPanel autoUpdate="true">
+		<p:dataTable id="tabelaClientes" var="cliente" value="#{clienteMB.lista}" 
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-			paginator="true" rows="10" style="margin-bottom:20px">
+			paginator="true" rows="14" style="margin-bottom:20px;font-size: 14px !important">
 
 			<f:facet name="{Exporters}">
 				<h:commandLink>
 					<h:graphicImage library="imagens" name="csv.png" />
-					<p:dataExporter type="csv" target="tbl" fileName="cliente" />
+					<p:dataExporter type="csv" target="tabelaClientes" fileName="cliente" />
 				</h:commandLink>
 			</f:facet>
-
 			<p:column>
 				<f:facet name="header">
 					<h:outputText value="Nome" />
 				</f:facet>
 				<h:outputText value="#{cliente.nome}" />
 			</p:column>
-
 			<p:column>
 				<f:facet name="header">
 					<h:outputText value="Email" />
 				</f:facet>
 				<h:outputText value="#{cliente.email}" />
 			</p:column>
-
 			<p:column>
 				<f:facet name="header">
 					<h:outputText value="Fone1" />
 				</f:facet>
-				<h:outputText value="#{cliente.nome}" />
+				<h:outputText value="#{cliente.fone1}" />
 			</p:column>
-
 			<p:column>
 				<f:facet name="header">
 					<h:outputText value="Bairro" />
 				</f:facet>
-				<h:outputText value="#{cliente.nome}" />
+				<h:outputText value="#{cliente.endereco.bairro}" />
 			</p:column>
-
 			<p:column>
 				<f:facet name="header">
 					<h:outputText value="Ações" />
 				</f:facet>
-
 				<p:commandLink update=":form:documentPanel"
 					oncomplete="PF('documentDialog').show()" title="View Detail"
 					styleClass="ui-icon ui-icon-search">
@@ -79,7 +75,9 @@
 				<p:spacer width="4px"></p:spacer>
 			</p:column>
 		</p:dataTable>
-
+		</p:outputPanel>
+		<!-- fim tabela de clientes  -->
+		
 
 		<p:dialog id="dialog" header="Document Detail" showEffect="fade"
 			widgetVar="documentDialog" modal="true" resizable="true">
@@ -120,7 +118,7 @@
 			</p:outputPanel>
 		</p:dialog>
 
-		<!-- Inserir Clientes -->
+		<!-- dialog inserir clientes -->
 		<p:dialog id="dialogIn" header="Inserir Cliente" showEffect="fade"
 			widgetVar="documentDialogIn" modal="true"  resizable="false"  
 			style="max-height:700px;overflow:auto">
@@ -137,10 +135,6 @@
 
 						<h:outputText value="Email: " />
 						<p:inputText value="#{clienteMB.cliente.email}"
-							disabled="#{clienteMB.botaoCliente}" />
-
-						<h:outputText value="CPF: " />
-						<p:inputText value="#{clienteMB.cliente.cpf}"
 							disabled="#{clienteMB.botaoCliente}" />
 
 						<h:outputText value="Fone 1: " />
@@ -235,7 +229,7 @@
 						</h:panelGrid>
 						
 						<p:commandButton
-								update=":form:documentPanelIn :form:painelVeiculo"
+								update=":form:documentPanelIn :form:painelVeiculo :form:tabelaClientes"
 								value="Salvar" icon="ui-icon-check"
 								disabled="#{clienteMB.botaoVeiculo}"
 								actionListener="#{clienteMB.salvarVeiculo}" />
@@ -243,12 +237,12 @@
 								update=":form:documentPanelIn :form:painelVeiculo"
 								value="Adicionar Veiculo" icon="ui-icon-check"
 								actionListener="#{clienteMB.adicionarVeiculo}" />
-						
 					</p:tab>
 				</p:accordionPanel>
 			</p:outputPanel>
-
+			
 		</p:dialog>
+		<!-- fim dialog inserir clientes -->
 
 	</h:form>
 

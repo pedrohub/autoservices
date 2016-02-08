@@ -1,16 +1,21 @@
 package br.com.autoservice.mb;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import br.com.autoservice.controller.ControladorCliente;
-import br.com.autoservice.controller.ControladorVeiculo;
+
+import br.com.autoservice.controller.ClienteController;
+import br.com.autoservice.controller.VeiculoController;
 import br.com.autoservice.modelo.Cliente;
 import br.com.autoservice.modelo.Endereco;
 import br.com.autoservice.modelo.Veiculo;
+import br.com.autoservice.util.LogUtil;
 
 /**
  * @author pedro.edson.o.lima
@@ -20,23 +25,26 @@ import br.com.autoservice.modelo.Veiculo;
 @ViewScoped
 public class ClienteMB {
 
-	private ControladorCliente controladorCliente;
-	private ControladorVeiculo controladorVeiculo;
+	private ClienteController controladorCliente;
+	private VeiculoController controladorVeiculo;
 	private Cliente cliente;
 	private Endereco endereco;
 	private Veiculo veiculo;
+	private List<Veiculo> listaVeiculo;
 	private boolean renderPainelVeiculo;
 	private boolean botaoCliente;
 	private boolean botaoVeiculo;
+	private org.apache.log4j.Logger logger = LogUtil.logger.getLogger(ClienteMB.class);
 
 	@PostConstruct
 	public void init() {
-		controladorCliente = new ControladorCliente();
+		controladorCliente = new ClienteController();
 		cliente = new Cliente();
 		endereco = new Endereco();
 		veiculo = new Veiculo();
+		listaVeiculo = new ArrayList<Veiculo>();
 		renderPainelVeiculo = false;
-		controladorVeiculo = new ControladorVeiculo();
+		controladorVeiculo = new VeiculoController();
 		botaoCliente = false;
 		botaoVeiculo = false;
 	}
@@ -45,31 +53,36 @@ public class ClienteMB {
 	 * Salvar Cliente
 	 */
 	public void salvar() {
-
+		logger.info("salvando Cliente");
 		cliente.setEndereco(endereco);
 		cliente.setStatus(true);
-
-		if (controladorCliente.findByCpf(cliente) == null) {
-			try {
-
-				controladorCliente.inserir(cliente);
-				renderPainelVeiculo = true;
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage("Cliente Salvo"));
-				botaoCliente = true;
-			} catch (Exception e) {
-				renderPainelVeiculo = false;
-				botaoCliente = false;
+		if (validarCliente(cliente)) {
+			if (controladorCliente.findByNameFone(cliente) == null) {
+				try {
+					controladorCliente.inserir(cliente);
+					renderPainelVeiculo = true;
+					FacesContext.getCurrentInstance().addMessage(null,
+							new FacesMessage("Cliente Salvo"));
+					botaoCliente = true;
+				} catch (Exception e) {
+					renderPainelVeiculo = false;
+					botaoCliente = false;
+					FacesContext.getCurrentInstance().addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Erro ao Salvar", "Cliente"));
+				}
+			} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR,
-								"Erro ao Salvar", "Cliente"));
+								"Cliente Já Existe", ""));
 			}
 		} else {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Cliente Já Existe", ""));
+							"Campos Obrigatorios não preenchidos", ""));
 		}
 	}
 
@@ -77,20 +90,29 @@ public class ClienteMB {
 	 * Salvar Veiculos
 	 */
 	public void salvarVeiculo() {
-
 		veiculo.setCliente(cliente);
 		veiculo.setStatus(true);
-
-		try {
-			controladorVeiculo.inserir(veiculo);
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage("Veículo Salvo"));
-			botaoVeiculo = true;
-		} catch (Exception e) {
+		listaVeiculo.add(veiculo);
+		if (validarVeiculo(veiculo)){
+			if (controladorVeiculo.find(veiculo) == null) {
+				try{
+					controladorVeiculo.inserir(veiculo);
+					FacesContext.getCurrentInstance().addMessage(null,
+							new FacesMessage("Veículo Salvo"));
+					botaoVeiculo = true;
+				} catch (Exception e) {
+					FacesContext.getCurrentInstance().addMessage(null, 
+							new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao Salvar", "Veículo"));
+				}
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+								"Veículo já cadastrado", ""));
+			}
+		} else {
 			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Erro ao Salvar", "Veículo"));
+					null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Informar o Modelo", ""));
 		}
 	}
 	
@@ -109,7 +131,27 @@ public class ClienteMB {
 		botaoCliente = false;
 		botaoVeiculo = false;
 	}
-
+	
+	private boolean validarCliente(Cliente cliente){
+		if ((cliente.getNome() != null && !cliente.getNome().isEmpty()) && 
+				(cliente.getFone1()!=null && !cliente.getFone1().isEmpty())
+				&& (cliente.getEndereco().getBairro() != null && !cliente.getEndereco().getBairro().isEmpty())){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private boolean validarVeiculo(Veiculo veiculo){
+		if (veiculo.getModelo() != null && !veiculo.getModelo().isEmpty()){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
+	
 	/**
 	 * Getters e Setters abaixo
 	 * 
@@ -166,6 +208,15 @@ public class ClienteMB {
 	public void setBotaoVeiculo(boolean botaoVeiculo) {
 		this.botaoVeiculo = botaoVeiculo;
 	}
+
+	public List<Veiculo> getListaVeiculo() {
+		return listaVeiculo;
+	}
+
+	public void setListaVeiculo(List<Veiculo> listaVeiculo) {
+		this.listaVeiculo = listaVeiculo;
+	}
+	
 	
 
 }

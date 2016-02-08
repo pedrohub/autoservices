@@ -4,7 +4,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 <h:head>
 
 	<title>Tela Login</title>
@@ -12,38 +12,42 @@
 
 </h:head>
 
-<h:body styleClass="principal" >  
+<h:body >
 
-<h:form>
-<h:panelGrid columns="2" cellpadding="5">
-	<p:panel id="panelImage">
-		<h:graphicImage library="imagens" name="mecanica.png" />
-	</p:panel>
-    <p:panel id="panel" header="Acesso ao Sistema" >
- 
-        <p:messages id="msgs" />
- 
-        <h:panelGrid columns="3" cellpadding="5">
-            <p:outputLabel for="login" value="Login:" />
-            <p:inputText id="login" value="#{userMB.usuario.login}" required="true" label="login">
-            </p:inputText>
-            <p:message for="login" display="icon" />
- 
-            <p:outputLabel for="senha" value="Senha:" />
-            <p:password id="senha" value="#{userMB.usuario.senha}" label="senha" required="true">
-                <p:ajax update="msgLastname" event="keyup" />
-            </p:password>
-            <p:message for="senha" id="msgLastname" display="icon" />
-            
-            <p:spacer/>
-            <p:commandButton value="Logar" update="panel" actionListener="#{userMB.validarLogin}" icon="ui-icon-check" />
- 			<p:spacer/>
-        </h:panelGrid>
- 
-        
-    </p:panel>
- </h:panelGrid>
-</h:form>
+	<h:form>
+		<h:panelGrid cellpadding="5" styleClass="painelLogin">
+			<p:panel id="panelImage" style="border: none">
+				<h:graphicImage library="imagens" name="mecanica.png" style="margin-left:100px"/>
+			</p:panel>
+			
+			<p:panel id="panel" header="Acesso ao Sistema">
+
+				<p:messages id="msgs" />
+
+				<h:panelGrid columns="3" cellpadding="5">
+					<p:outputLabel for="login" value="Login:" />
+					<p:inputText id="login" value="#{userMB.usuario.login}"
+						required="true" label="login">
+					</p:inputText>
+					<p:message for="login" display="icon" />
+
+					<p:outputLabel for="senha" value="Senha:" />
+					<p:password id="senha" value="#{userMB.usuario.senha}"
+						label="senha" required="true">
+						<p:ajax update="msgLastname" event="keyup" />
+					</p:password>
+					<p:message for="senha" id="msgLastname" display="icon" />
+
+					<p:spacer />
+					<p:commandButton value="Logar" update="panel"
+						actionListener="#{userMB.validarLogin}" icon="ui-icon-check" />
+					<p:spacer />
+				</h:panelGrid>
+
+
+			</p:panel>
+		</h:panelGrid>
+	</h:form>
 
 
 </h:body>

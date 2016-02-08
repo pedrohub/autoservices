@@ -7,7 +7,7 @@ import org.hibernate.HibernateException;
 import br.com.autoservice.dao.VeiculoDao;
 import br.com.autoservice.modelo.Veiculo;
 
-public class ControladorVeiculo {
+public class VeiculoController {
 
 	private VeiculoDao veiculoDao = new VeiculoDao();
 
@@ -49,7 +49,7 @@ public class ControladorVeiculo {
 		return listaPeca;
 	}
 	
-	public Veiculo find(Veiculo veiculo) throws HibernateException{
+	public Veiculo find(Veiculo veiculo) {
 		Veiculo veiculoRetorno = veiculoDao.find(veiculo); 
 		return veiculoRetorno;
 	}
