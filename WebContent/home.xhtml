@@ -8,8 +8,22 @@
 	xmlns:p="http://primefaces.org/ui"
 	template="/template/template.xhtml">
 	
-		<h1 class="texto2">Bem vindo ao Sistema</h1>
-		
+	<p:button value="Abrir Ordem" icon="ui-icon-wrench">
+		</p:button><br></br>
 
+	<p:panelGrid columns="2">
+		<p:panelGrid >
+			<p:dataList   type="unordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
+		        <f:facet name="header">
+		            Ordens Pendentes:
+		        </f:facet>
+		        <p:commandLink  title="View Detail" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px;width:40px">
+		            <h:outputText value="valor, v2" />
+		        </p:commandLink>
+		        <h:outputText value="valor, v2" style="display:inline-block"/>
+		    </p:dataList>
+	    </p:panelGrid>
+    </p:panelGrid>
 
+	
 </ui:decorate>
