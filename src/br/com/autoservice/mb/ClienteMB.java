@@ -2,7 +2,6 @@ package br.com.autoservice.mb;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -34,6 +33,7 @@ public class ClienteMB {
 	private boolean renderPainelVeiculo;
 	private boolean botaoCliente;
 	private boolean botaoVeiculo;
+	private List<Cliente> listaClientes;
 	private org.apache.log4j.Logger logger = LogUtil.logger.getLogger(ClienteMB.class);
 
 	@PostConstruct
@@ -47,6 +47,7 @@ public class ClienteMB {
 		controladorVeiculo = new VeiculoController();
 		botaoCliente = false;
 		botaoVeiculo = false;
+		listaClientes = controladorCliente.listar();
 	}
 
 	/**
@@ -150,17 +151,24 @@ public class ClienteMB {
 		}
 	}
 	
-	
+	public List<Cliente> completeCliente(String query) {
+        List<Cliente> allClientes = listaClientes;
+        List<Cliente> filteredClientes = new ArrayList<Cliente>();
+         
+        for (int i = 0; i < allClientes.size(); i++) {
+            Cliente cliente = allClientes.get(i);
+            if(cliente.getNome().toLowerCase().startsWith(query)) {
+            	filteredClientes.add(cliente);
+            }
+        }
+        return filteredClientes;
+    }
 	
 	/**
 	 * Getters e Setters abaixo
 	 * 
 	 * @return
 	 */
-	public List<Cliente> getLista() {
-		return controladorCliente.listar();
-	}
-
 	public Cliente getCliente() {
 		return cliente;
 	}
@@ -216,6 +224,15 @@ public class ClienteMB {
 	public void setListaVeiculo(List<Veiculo> listaVeiculo) {
 		this.listaVeiculo = listaVeiculo;
 	}
+
+	public List<Cliente> getListaClientes() {
+		return listaClientes;
+	}
+
+	public void setListaClientes(List<Cliente> listaClientes) {
+		this.listaClientes = listaClientes;
+	}
+	
 	
 	
 

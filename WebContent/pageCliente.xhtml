@@ -19,18 +19,25 @@
 					oncomplete="PF('documentDialogIn').show()" icon="fa fa-fw fa-edit"
 					actionListener="#{clienteMB.limparModal}">
 				</p:commandButton>
-				<p:commandButton update=":form:documentPanelIn" value="Consultar"
-					oncomplete="PF('documentDialogIn').show()">
+				<p:commandButton update=":form:painelConsultar" value="Consultar"
+					oncomplete="PF('dialogConsulta').show()">
 				</p:commandButton>
 			</h:panelGrid>
 		</h:panelGrid>
 		<!-- fim painel de botoes -->
+		
+		<!-- modal consultar clientes -->
+		<p:dialog id="painelConsultar" header="Consultar" widgetVar="dialogConsulta" modal="true" height="100">
+   			<p:outputLabel value="Simple:" for="acSimple" />
+        	<p:autoComplete id="acSimple" value="#{clienteMB.cliente}" completeMethod="#{clienteMB.completeCliente}" />
+		</p:dialog> 
+		<!-- fim modal consultar clientes -->
 
 		<!-- tabela de clientes  -->
-		<p:outputPanel autoUpdate="true">
-		<p:dataTable id="tabelaClientes" var="cliente" value="#{clienteMB.lista}" 
+		<p:outputPanel id="painelTabela">
+		<p:dataTable id="tabelaClientes" var="cliente" value="#{clienteMB.listaClientes}" 
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
-			paginator="true" rows="14" style="margin-bottom:20px;font-size: 14px !important">
+			paginator="true" rows="11" style="margin-bottom:20px;font-size: 14px !important">
 
 			<f:facet name="{Exporters}">
 				<h:commandLink>
@@ -119,7 +126,7 @@
 		</p:dialog>
 
 		<!-- dialog inserir clientes -->
-		<p:dialog id="dialogIn" header="Inserir Cliente" showEffect="fade"
+		<p:dialog id="dialogIn" header="Cadastrar Cliente" showEffect="fade"
 			widgetVar="documentDialogIn" modal="true"  resizable="false"  
 			style="max-height:700px;overflow:auto">
 			<p:outputPanel id="documentPanelIn" styleClass="modal">
@@ -181,7 +188,7 @@
 
 				</h:panelGrid>
 
-				<p:commandButton update=":form:documentPanelIn :form:painelVeiculo"
+				<p:commandButton update=":form:documentPanelIn :form:painelVeiculo :form:painelTabela"
 					value="Salvar" icon="ui-icon-check"
 					disabled="#{clienteMB.botaoCliente}"
 					actionListener="#{clienteMB.salvar}">
@@ -240,7 +247,6 @@
 					</p:tab>
 				</p:accordionPanel>
 			</p:outputPanel>
-			
 		</p:dialog>
 		<!-- fim dialog inserir clientes -->
 
