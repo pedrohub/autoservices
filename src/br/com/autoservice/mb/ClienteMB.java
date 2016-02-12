@@ -1,11 +1,13 @@
 package br.com.autoservice.mb;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -22,8 +24,9 @@ import br.com.autoservice.util.LogUtil;
  */
 @ManagedBean
 @ViewScoped
-public class ClienteMB {
+public class ClienteMB implements Serializable{
 
+	private static final long serialVersionUID = -2814761488716950745L;
 	private ClienteController controladorCliente;
 	private VeiculoController controladorVeiculo;
 	private Cliente cliente;
@@ -34,11 +37,12 @@ public class ClienteMB {
 	private boolean botaoCliente;
 	private boolean botaoVeiculo;
 	private List<Cliente> listaClientes;
+	private Cliente clienteSelected;
 	private org.apache.log4j.Logger logger = LogUtil.logger.getLogger(ClienteMB.class);
 
 	@PostConstruct
 	public void init() {
-		controladorCliente = new ClienteController();
+		controladorCliente = controladorCliente.getInstance();
 		cliente = new Cliente();
 		endereco = new Endereco();
 		veiculo = new Veiculo();
@@ -231,6 +235,14 @@ public class ClienteMB {
 
 	public void setListaClientes(List<Cliente> listaClientes) {
 		this.listaClientes = listaClientes;
+	}
+
+	public Cliente getClienteSelected() {
+		return clienteSelected;
+	}
+
+	public void setClienteSelected(Cliente clienteSelected) {
+		this.clienteSelected = clienteSelected;
 	}
 	
 	

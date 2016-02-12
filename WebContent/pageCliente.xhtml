@@ -29,12 +29,13 @@
 		<!-- modal consultar clientes -->
 		<p:dialog id="painelConsultar" header="Consultar" widgetVar="dialogConsulta" modal="true" height="100">
    			<p:outputLabel value="Simple:" for="acSimple" />
-        	<p:autoComplete id="acSimple" value="#{clienteMB.cliente}" completeMethod="#{clienteMB.completeCliente}" />
+            <p:autoComplete id="acSimple" value="#{clienteMB.clienteSelected}" completeMethod="#{clienteMB.completeCliente}" 
+             var="cliente" itemLabel="#{cliente.nome}" itemValue="#{cliente}" converter="ClienteConverter" forceSelection="true"/>
 		</p:dialog> 
 		<!-- fim modal consultar clientes -->
 
 		<!-- tabela de clientes  -->
-		<p:outputPanel id="painelTabela">
+		<p:outputPanel autoUpdate="true" id="painelTabela">
 		<p:dataTable id="tabelaClientes" var="cliente" value="#{clienteMB.listaClientes}" 
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
 			paginator="true" rows="11" style="margin-bottom:20px;font-size: 14px !important">
@@ -188,12 +189,10 @@
 
 				</h:panelGrid>
 
-				<p:commandButton update=":form:documentPanelIn :form:painelVeiculo :form:painelTabela"
+				<p:commandButton update=":form:documentPanelIn :form:painelVeiculo"  
 					value="Salvar" icon="ui-icon-check"
 					disabled="#{clienteMB.botaoCliente}"
-					actionListener="#{clienteMB.salvar}">
-				</p:commandButton>
-
+					actionListener="#{clienteMB.salvar}" />
 			</p:outputPanel>
 			<br></br>
 
@@ -236,7 +235,7 @@
 						</h:panelGrid>
 						
 						<p:commandButton
-								update=":form:documentPanelIn :form:painelVeiculo :form:tabelaClientes"
+								update=":form:documentPanelIn :form:painelVeiculo"  
 								value="Salvar" icon="ui-icon-check"
 								disabled="#{clienteMB.botaoVeiculo}"
 								actionListener="#{clienteMB.salvarVeiculo}" />
@@ -244,7 +243,10 @@
 								update=":form:documentPanelIn :form:painelVeiculo"
 								value="Adicionar Veiculo" icon="ui-icon-check"
 								actionListener="#{clienteMB.adicionarVeiculo}" />
-					</p:tab>
+							<p:commandButton
+								value="Fechar Janela" icon="ui-icon-check"
+								onclick="dialog.hide()" process="@none"/>
+						</p:tab>
 				</p:accordionPanel>
 			</p:outputPanel>
 		</p:dialog>

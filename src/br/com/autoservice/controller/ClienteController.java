@@ -7,7 +7,6 @@ import org.hibernate.HibernateException;
 
 import br.com.autoservice.dao.ClienteDao;
 import br.com.autoservice.modelo.Cliente;
-import br.com.autoservice.util.MessageException;
 
 /**
  * @author binha
@@ -18,6 +17,18 @@ public class ClienteController {
 
 	private ClienteDao clienteDao = new ClienteDao();
 	private Logger logger = Logger.getLogger("ClienteController");
+	
+	private static ClienteController uniqueInstance; 
+	
+	private ClienteController() { 
+		
+	} 
+	
+	public static synchronized ClienteController getInstance() { 
+		if (uniqueInstance == null) uniqueInstance = new ClienteController(); 
+		return uniqueInstance;
+	}
+
 
 	public void inserir(Cliente cliente) {
 		try {
