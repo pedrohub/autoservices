@@ -7,7 +7,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -38,6 +37,7 @@ public class ClienteMB implements Serializable{
 	private boolean botaoVeiculo;
 	private List<Cliente> listaClientes;
 	private Cliente clienteSelected;
+	private String tipoConsulta;
 	private org.apache.log4j.Logger logger = LogUtil.logger.getLogger(ClienteMB.class);
 
 	@PostConstruct
@@ -66,28 +66,19 @@ public class ClienteMB implements Serializable{
 				try {
 					controladorCliente.inserir(cliente);
 					renderPainelVeiculo = true;
-					FacesContext.getCurrentInstance().addMessage(null,
-							new FacesMessage("Cliente Salvo"));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cliente Salvo"));
 					botaoCliente = true;
+					listaClientes = controladorCliente.listar();
 				} catch (Exception e) {
 					renderPainelVeiculo = false;
 					botaoCliente = false;
-					FacesContext.getCurrentInstance().addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Erro ao Salvar", "Cliente"));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao Salvar", "Cliente"));
 				}
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR,
-								"Cliente Já Existe", ""));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente Já Existe", ""));
 			}
 		} else {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Campos Obrigatorios não preenchidos", ""));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos Obrigatorios não preenchidos", ""));
 		}
 	}
 
@@ -102,30 +93,22 @@ public class ClienteMB implements Serializable{
 			if (controladorVeiculo.find(veiculo) == null) {
 				try{
 					controladorVeiculo.inserir(veiculo);
-					FacesContext.getCurrentInstance().addMessage(null,
-							new FacesMessage("Veículo Salvo"));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Veículo Salvo"));
 					botaoVeiculo = true;
 				} catch (Exception e) {
-					FacesContext.getCurrentInstance().addMessage(null, 
-							new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao Salvar", "Veículo"));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao Salvar", "Veículo"));
 				}
 			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-								"Veículo já cadastrado", ""));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Veículo já cadastrado", ""));
 			}
 		} else {
-			FacesContext.getCurrentInstance().addMessage(
-					null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Informar o Modelo", ""));
+			FacesContext.getCurrentInstance().addMessage( null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Informar o Modelo", ""));
 		}
 	}
 	
 	public void adicionarVeiculo(){
-		
 		veiculo = new Veiculo();
 		botaoVeiculo = false;
-		
 	}
 	
 	public void limparModal(){
@@ -156,7 +139,7 @@ public class ClienteMB implements Serializable{
 	}
 	
 	public List<Cliente> completeCliente(String query) {
-        List<Cliente> allClientes = listaClientes;
+        List<Cliente> allClientes = controladorCliente.listar();
         List<Cliente> filteredClientes = new ArrayList<Cliente>();
          
         for (int i = 0; i < allClientes.size(); i++) {
@@ -167,6 +150,19 @@ public class ClienteMB implements Serializable{
         }
         return filteredClientes;
     }
+	
+	public void selecionarTipoConsulta(){
+		System.out.println("tipo consulta==============");
+	}
+	
+	public void selecionarClienteConsulta() {
+		if (clienteSelected != null) {
+			listaClientes.clear();
+			listaClientes.add(clienteSelected);
+		} else {
+			listaClientes = controladorCliente.listar();
+		}
+	}
 	
 	/**
 	 * Getters e Setters abaixo
@@ -243,6 +239,14 @@ public class ClienteMB implements Serializable{
 
 	public void setClienteSelected(Cliente clienteSelected) {
 		this.clienteSelected = clienteSelected;
+	}
+
+	public String getTipoConsulta() {
+		return tipoConsulta;
+	}
+
+	public void setTipoConsulta(String tipoConsulta) {
+		this.tipoConsulta = tipoConsulta;
 	}
 	
 	

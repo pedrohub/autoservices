@@ -27,15 +27,29 @@
 		<!-- fim painel de botoes -->
 		
 		<!-- modal consultar clientes -->
-		<p:dialog id="painelConsultar" header="Consultar" widgetVar="dialogConsulta" modal="true" height="100">
-   			<p:outputLabel value="Simple:" for="acSimple" />
+		<p:dialog id="painelConsultar" header="Consultar" widgetVar="dialogConsulta" modal="true" width="450" height="100">
+
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+				<p:outputLabel for="console" value="Tipo Consulta:" />
+				<p:selectOneRadio id="console" value="valo1" >
+					<f:selectItem itemLabel="Nome" itemValue="nome" />
+					<f:selectItem itemLabel="Telefone" itemValue="telefone" />
+					<f:selectItem itemLabel="Placa" itemValue="placa" />
+					<p:ajax event="change" listener="#{clienteMB.selecionarTipoConsulta}"></p:ajax>
+				</p:selectOneRadio>
+			</h:panelGrid>
+
             <p:autoComplete id="acSimple" value="#{clienteMB.clienteSelected}" completeMethod="#{clienteMB.completeCliente}" 
              var="cliente" itemLabel="#{cliente.nome}" itemValue="#{cliente}" converter="ClienteConverter" forceSelection="true"/>
+             
+             <p:spacer width="6"></p:spacer>
+             <p:commandButton update=":form:painelTabela" value="Selecionar" actionListener="#{clienteMB.selecionarClienteConsulta}"
+					oncomplete="PF('dialogConsulta').hide()"/>
 		</p:dialog> 
 		<!-- fim modal consultar clientes -->
 
 		<!-- tabela de clientes  -->
-		<p:outputPanel autoUpdate="true" id="painelTabela">
+		<p:outputPanel id="painelTabela">
 		<p:dataTable id="tabelaClientes" var="cliente" value="#{clienteMB.listaClientes}" 
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
 			paginator="true" rows="11" style="margin-bottom:20px;font-size: 14px !important">
@@ -189,7 +203,7 @@
 
 				</h:panelGrid>
 
-				<p:commandButton update=":form:documentPanelIn :form:painelVeiculo"  
+				<p:commandButton update=":form:documentPanelIn :form:painelVeiculo :form:painelTabela"  
 					value="Salvar" icon="ui-icon-check"
 					disabled="#{clienteMB.botaoCliente}"
 					actionListener="#{clienteMB.salvar}" />
