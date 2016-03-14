@@ -3,6 +3,8 @@ package br.com.autoservice.controller;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.faces.convert.FacesConverter;
+
 import org.hibernate.HibernateException;
 
 import br.com.autoservice.dao.ClienteDao;
