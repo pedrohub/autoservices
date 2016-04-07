@@ -8,6 +8,8 @@
 	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
 
 	<h:form id="form">
+	
+	  <p:growl id="message" showDetail="true" />
 
 		<!-- painel de botoes -->
 		<h:panelGrid columns="2" cellpadding="5">
@@ -89,18 +91,47 @@
 				<f:facet name="header">
 					<h:outputText value="Ações" />
 				</f:facet>
+				<p:panelGrid columns="2">
 				<p:commandLink update=":form:documentPanel"
 					oncomplete="PF('documentDialog').show()" title="View Detail"
 					styleClass="ui-icon ui-icon-search">
 					<f:setPropertyActionListener value="#{cliente}"
 						target="#{clienteMB.cliente}" />
 				</p:commandLink>
-				<p:spacer width="4px"></p:spacer>
+				 <p:commandLink update=":form:documentPanelDelete"
+					oncomplete="PF('documentDialogDelete').show()" title="View Detail"
+					styleClass="ui-icon ui-icon-search">
+					<f:setPropertyActionListener value="#{cliente}"
+						target="#{clienteMB.cliente}" />
+				</p:commandLink> 
+				</p:panelGrid>
+				
 			</p:column>
 		</p:dataTable>
 		</p:outputPanel>
 		<!-- fim tabela de clientes  -->
 		
+		<!-- confirme delete cliente -->
+		<p:dialog id="dialogDelete" header="Document Detail" showEffect="fade"
+			widgetVar="documentDialogDelete" modal="true" resizable="true">
+			<p:outputPanel id="documentPanelDelete" >
+
+				<!--  <p:commandButton value="Destroy the World"
+					actionListener="#{dialogView.destroyWorld}" update="message">
+					<p:confirm header="Confirmation" message="Are you sure?"
+						icon="ui-icon-alert" />
+				</p:commandButton>
+
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+					<p:commandButton value="Yes" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="No" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>-->
+
+			</p:outputPanel>
+		</p:dialog>
+
 
 		<p:dialog id="dialog" header="Document Detail" showEffect="fade"
 			widgetVar="documentDialog" modal="true" resizable="true">
@@ -136,8 +167,6 @@
 					<p:commandButton value="Submit" />
 
 				</h:panelGrid>
-
-
 			</p:outputPanel>
 		</p:dialog>
 
