@@ -16,13 +16,18 @@
 	<table>
 		<tr >
 			<td><h:graphicImage library="imagens" name="mecanica.png" /></td>
-			<td style="width:700px; text-align: center;">
+			<td style="width:600px; text-align: center;">
 				<h1>
 					<span class="texto1">SCS - Control System Services</span>
 				</h1>
 			</td>
+			<td>
+				<p:outputLabel value="#{userMB.userDao.user.login}"/> 
+				<p:spacer/>	<p:spacer/> <p:spacer/>
+				<p:link value="Sair" href="index.xhtml"/>
+			</td>
 		</tr>
-	</table>
+	</table>	
 	<p:menubar>
 		<p:menuitem value="Home" url="home.xhtml" />
 		<p:menuitem value="|" url="#" />

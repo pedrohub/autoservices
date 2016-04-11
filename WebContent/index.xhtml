@@ -6,14 +6,16 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-
 	<title>Tela Login</title>
 	<h:outputStylesheet library="css" name="estilo.css" />
-
 </h:head>
 
 <h:body >
-
+<style type="text/css">
+.textoErro {
+	color: Red !important;
+}
+</style>
 	<h:form>
 		<h:panelGrid cellpadding="5" styleClass="painelLogin">
 			<p:panel id="panelImage" style="border: none">
@@ -27,13 +29,13 @@
 				<h:panelGrid columns="3" cellpadding="5">
 					<p:outputLabel for="login" value="Login:" />
 					<p:inputText id="login" value="#{userMB.usuario.login}"
-						required="true" label="login">
+						requiredMessage="Preencha o campo Login"  required="true" label="login">
 					</p:inputText>
-					<p:message for="login" display="icon" />
+					<p:message for="login"  display="icon" />
 
 					<p:outputLabel for="senha" value="Senha:" />
 					<p:password id="senha" value="#{userMB.usuario.senha}"
-						label="senha" required="true">
+						requiredMessage="Preencha o campo Senha" label="senha" required="true">
 						<p:ajax update="msgLastname" event="keyup" />
 					</p:password>
 					<p:message for="senha" id="msgLastname" display="icon" />
@@ -42,13 +44,14 @@
 					<p:commandButton value="Logar" update="panel"
 						actionListener="#{userMB.validarLogin}" icon="ui-icon-check" />
 					<p:spacer />
+					
+					<p:spacer />
+					<p:outputLabel rendered="#{userMB.habilitaLabelErro}" styleClass="textoErro"
+					value="Usuário ou senha inválidos..."/>
+					<p:spacer />
 				</h:panelGrid>
-
-
 			</p:panel>
 		</h:panelGrid>
 	</h:form>
-
-
 </h:body>
 </html>
