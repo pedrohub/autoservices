@@ -181,51 +181,51 @@
 				<h:panelGrid columns="2" cellpadding="5">
 					<h:panelGrid columns="2" cellpadding="5">
 
-						<h:outputText value="Nome: " />
-						<p:inputText value="#{clienteMB.cliente.nome}"
+						<p:outputLabel for="nome" value="Nome: " />
+						<p:inputText id="nome" value="#{clienteMB.cliente.nome}" 
 							disabled="#{clienteMB.botaoCliente}" />
 
-						<h:outputText value="Email: " />
+						<p:outputLabel value="Email: " />
 						<p:inputText value="#{clienteMB.cliente.email}"
 							disabled="#{clienteMB.botaoCliente}" />
 
-						<h:outputText value="Fone 1: " />
-						<p:inputText value="#{clienteMB.cliente.fone1}"
-							disabled="#{clienteMB.botaoCliente}" />
+						<p:outputLabel for="fone1" value="Fone 1: " />
+						<p:inputMask id="fone1" value="#{clienteMB.cliente.fone1}" mask="(999) 99999-9999"
+						    disabled="#{clienteMB.botaoCliente}"/>
 
-						<h:outputText value="Fone 2: " />
-						<p:inputText value="#{clienteMB.cliente.fone2}"
-							disabled="#{clienteMB.botaoCliente}" />
+						<p:outputLabel for="fone2" value="Fone 2: " />
+						<p:inputMask id="fone2" value="#{clienteMB.cliente.fone2}" mask="(999) 99999-9999"
+						    disabled="#{clienteMB.botaoCliente}"/>
 
-						<h:outputText value="Observação: " />
-						<p:inputTextarea value="#{clienteMB.cliente.obs}"
-							disabled="#{clienteMB.botaoCliente}" />
+						<p:outputLabel value="Observação: " />
+						<p:inputTextarea value="#{clienteMB.cliente.obs}" autoResize="false"
+							rows="3" cols="22" disabled="#{clienteMB.botaoCliente}" />
 
 					</h:panelGrid>
 
 					<h:panelGrid columns="2" cellpadding="5">
 
-						<h:outputText value="Estado: " />
-						<p:inputText value="#{clienteMB.endereco.uf}"
+						<p:outputLabel value="Estado: " />
+						<p:inputText id="estado" value="#{clienteMB.endereco.uf}" placeholder="Pernambuco"
 							disabled="#{clienteMB.botaoCliente}" />
 
-						<h:outputText value="Cidade: " />
+						<p:outputLabel value="Cidade: " />
 						<p:inputText value="#{clienteMB.endereco.cidade}"
 							disabled="#{clienteMB.botaoCliente}" />
 
-						<h:outputText value="Cep: " />
-						<p:inputText value="#{clienteMB.endereco.cep}"
+						<p:outputLabel for="cep" value="Cep: " />
+						<p:inputMask id="cep" value="#{clienteMB.endereco.cep}" mask="99.999-999"
+						    disabled="#{clienteMB.botaoCliente}"/>
+
+						<p:outputLabel for="bairro" value="Bairro: " />
+						<p:inputText id="bairro" value="#{clienteMB.endereco.bairro}"
 							disabled="#{clienteMB.botaoCliente}" />
 
-						<h:outputText value="Bairro: " />
-						<p:inputText value="#{clienteMB.endereco.bairro}"
-							disabled="#{clienteMB.botaoCliente}" />
+						<p:outputLabel value="Logradouro: " />
+						<p:inputTextarea value="#{clienteMB.endereco.logradouro}" autoResize="false"
+							rows="3" cols="22" disabled="#{clienteMB.botaoCliente}" />
 
-						<h:outputText value="Logradouro: " />
-						<p:inputTextarea value="#{clienteMB.endereco.logradouro}"
-							disabled="#{clienteMB.botaoCliente}" />
-
-						<h:outputText value="Numero: " />
+						<p:outputLabel value="Numero: " />
 						<p:inputText value="#{clienteMB.endereco.numero}"
 							disabled="#{clienteMB.botaoCliente}" />
 
@@ -243,21 +243,34 @@
 			<p:outputPanel id="painelVeiculo">
 				<p:accordionPanel rendered="#{clienteMB.renderPainelVeiculo}">
 					<p:tab title="Adicionar Veículo">
-
+						<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+					        <p:outputLabel for="tipo" value="Tipo:" />
+					        <p:selectOneRadio id="tipo" value="#{clienteMB.flagTipoVeiculo}">
+					            <f:selectItem itemLabel="Carro" itemValue="0"/>
+					            <f:selectItem itemLabel="Moto" itemValue="1"/>
+					            <f:selectItem itemLabel="Caminhao" itemValue="2"/>
+					            <f:ajax render="marca" event="click" listener="#{clienteMB.carregarComboMarca}"/>
+					        </p:selectOneRadio>
+					    </h:panelGrid>
 						<h:panelGrid columns="2" cellpadding="10">
 							<h:panelGrid columns="2" cellpadding="10">
-
+							
 								<h:outputText value="Marca: " />
-								<p:inputText value="#{clienteMB.veiculo.marca}"
-									disabled="#{clienteMB.botaoVeiculo}" />
+								 <p:selectOneMenu id="marca" value="#{clienteMB.veiculo.marca}"
+									 disabled="#{clienteMB.botaoVeiculo}">
+						            <f:selectItem itemLabel="- Selecione -" itemValue="" />
+						            <f:selectItems value="#{clienteMB.listaMarcas}" />
+						        </p:selectOneMenu>
 
 								<h:outputText value="Modelo: " />
 								<p:inputText value="#{clienteMB.veiculo.modelo}"
 									disabled="#{clienteMB.botaoVeiculo}" />
 
 								<h:outputText value="Placa: " />
-								<p:inputText value="#{clienteMB.veiculo.placa}"
-									disabled="#{clienteMB.botaoVeiculo}" />
+								<p:inputMask id="placa" value="#{clienteMB.veiculo.placa}"  mask="aaa-9999"
+					    			disabled="#{clienteMB.botaoVeiculo}">
+					    		<p:ajax event="blur" update="placa" listener="#{clienteMB.convertetoUpperCase}" />
+					    		</p:inputMask>
 
 							</h:panelGrid>
 							<h:panelGrid columns="2" cellpadding="10">

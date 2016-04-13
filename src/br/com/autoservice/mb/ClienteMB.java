@@ -11,9 +11,11 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import br.com.autoservice.controller.ClienteController;
+import br.com.autoservice.controller.MarcaController;
 import br.com.autoservice.controller.VeiculoController;
 import br.com.autoservice.modelo.Cliente;
 import br.com.autoservice.modelo.Endereco;
+import br.com.autoservice.modelo.Marca;
 import br.com.autoservice.modelo.Veiculo;
 import br.com.autoservice.util.LogUtil;
 
@@ -28,6 +30,7 @@ public class ClienteMB implements Serializable{
 	private static final long serialVersionUID = -2814761488716950745L;
 	private ClienteController controladorCliente;
 	private VeiculoController controladorVeiculo;
+	private MarcaController controladorMarca;
 	private Cliente cliente;
 	private Endereco endereco;
 	private Veiculo veiculo;
@@ -36,9 +39,14 @@ public class ClienteMB implements Serializable{
 	private boolean botaoCliente;
 	private boolean botaoVeiculo;
 	private List<Cliente> listaClientes;
+	private List<Marca> listaMarcasBkp;
+	private List<String> listaMarcas = null;
 	private Cliente clienteSelected;
 	private String tipoConsulta;
 	private org.apache.log4j.Logger logger = LogUtil.logger.getLogger(ClienteMB.class);
+	private static final String VAZIO = "";
+	private ArrayList<String> marcas = null;
+	private String flagTipoVeiculo = "0";
 
 	@PostConstruct
 	public void init() {
@@ -59,6 +67,11 @@ public class ClienteMB implements Serializable{
 	 */
 	public void salvar() {
 		logger.info("salvando Cliente");
+		
+		if (endereco.getUf() == null || endereco.getUf().equals(VAZIO)) {
+			endereco.setUf("Pernambuco");
+		}
+		
 		cliente.setEndereco(endereco);
 		cliente.setStatus(true);
 		if (validarCliente(cliente)) {
@@ -69,6 +82,19 @@ public class ClienteMB implements Serializable{
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cliente Salvo"));
 					botaoCliente = true;
 					listaClientes = controladorCliente.listar();
+					
+					//Buscar todas as marcas de veiculos em banco
+					if (listaMarcas == null) {
+						listaMarcas = new ArrayList<String>();
+						controladorMarca = controladorMarca.getInstance();
+						listaMarcasBkp = controladorMarca.listar();
+						for (Marca marca : listaMarcasBkp) {
+							if (marca.getTipo().equals("0")) {
+								listaMarcas.add(marca.getMarca());
+							}
+						}
+					}
+					
 				} catch (Exception e) {
 					renderPainelVeiculo = false;
 					botaoCliente = false;
@@ -78,7 +104,7 @@ public class ClienteMB implements Serializable{
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente Já Existe", ""));
 			}
 		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos Obrigatorios não preenchidos", ""));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos Obrigatorios não preenchidos: Nome, Fone 1 e Bairro", ""));
 		}
 	}
 
@@ -164,6 +190,32 @@ public class ClienteMB implements Serializable{
 		}
 	}
 	
+	
+	/**
+	 * Metodo para carregar o combo marca
+	 * @return listaMarcas
+	 */
+	public List<String> carregarComboMarca(){
+		
+		listaMarcas = new ArrayList<String>();
+		
+		for (Marca marca : listaMarcasBkp) {
+			if (marca.getTipo().equals(flagTipoVeiculo)) {
+				listaMarcas.add(marca.getMarca());
+			}
+		}
+		
+		return listaMarcas;
+	}
+	
+	public Veiculo convertetoUpperCase(){
+		
+		if (veiculo.getPlaca() != null) {
+			veiculo.setPlaca(veiculo.getPlaca().toUpperCase());
+		}
+		
+		return veiculo;
+	}
 	/**
 	 * Getters e Setters abaixo
 	 * 
@@ -248,8 +300,29 @@ public class ClienteMB implements Serializable{
 	public void setTipoConsulta(String tipoConsulta) {
 		this.tipoConsulta = tipoConsulta;
 	}
-	
-	
-	
+
+	public ArrayList<String> getMarcas() {
+		return marcas;
+	}
+
+	public void setMarcas(ArrayList<String> marcas) {
+		this.marcas = marcas;
+	}
+
+	public String getFlagTipoVeiculo() {
+		return flagTipoVeiculo;
+	}
+
+	public void setFlagTipoVeiculo(String flagTipoVeiculo) {
+		this.flagTipoVeiculo = flagTipoVeiculo;
+	}
+
+	public List<String> getListaMarcas() {
+		return listaMarcas;
+	}
+
+	public void setListaMarcas(List<String> listaMarcas) {
+		this.listaMarcas = listaMarcas;
+	}	
 
 }
