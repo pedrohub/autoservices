@@ -17,12 +17,12 @@
 				<h1 class="texto2">Clientes</h1>
 			</h:panelGrid>
 			<h:panelGrid columns="2" cellpadding="5">
-				<p:commandButton update=":form:documentPanelIn :form:painelVeiculo" value="Inserir"
+				<p:commandButton update=":form:documentPanelIn" value="Inserir"
 					oncomplete="PF('documentDialogIn').show()" icon="fa fa-fw fa-edit"
 					actionListener="#{clienteMB.limparModal}">
 				</p:commandButton>
 				<p:commandButton update=":form:painelConsultar" value="Consultar"
-					oncomplete="PF('dialogConsulta').show()">
+					oncomplete="PF('dialogConsulta').show();">
 				</p:commandButton>
 			</h:panelGrid>
 		</h:panelGrid>
@@ -33,11 +33,11 @@
 
 			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 				<p:outputLabel for="console" value="Tipo Consulta:" />
-				<p:selectOneRadio id="console" value="valo1" >
+				<p:selectOneRadio id="console" value="#{clienteMB.flagTipoConsulta}" >
 					<f:selectItem itemLabel="Nome" itemValue="nome" />
 					<f:selectItem itemLabel="Telefone" itemValue="telefone" />
 					<f:selectItem itemLabel="Placa" itemValue="placa" />
-					<p:ajax event="change" listener="#{clienteMB.selecionarTipoConsulta}"></p:ajax>
+					<f:ajax event="click" listener="#{clienteMB.selecionarTipoConsulta}"/>
 				</p:selectOneRadio>
 			</h:panelGrid>
 
@@ -47,7 +47,7 @@
              
              <p:spacer width="6"></p:spacer>
              <p:commandButton update=":form:painelTabela" value="Selecionar" actionListener="#{clienteMB.selecionarClienteConsulta}"
-					oncomplete="PF('dialogConsulta').hide()"/>
+					oncomplete="PF('dialogConsulta').hide();"/>
 		</p:dialog> 
 		<!-- fim modal consultar clientes -->
 
@@ -133,7 +133,7 @@
 		</p:dialog>
 
 
-		<p:dialog id="dialog" header="Document Detail" showEffect="fade"
+		<p:dialog id="dialog" header="Document Detail" showEffect="fade" dynamic="true"
 			widgetVar="documentDialog" modal="true" resizable="true">
 			<p:outputPanel id="documentPanel" styleClass="modal">
 
@@ -171,7 +171,7 @@
 		</p:dialog>
 
 		<!-- dialog inserir clientes -->
-		<p:dialog id="dialogIn" header="Cadastrar Cliente" showEffect="fade"
+		<p:dialog id="dialogIn" header="Cadastrar Cliente" showEffect="fade" 
 			widgetVar="documentDialogIn" modal="true"  resizable="false"  
 			style="max-height:700px;overflow:auto">
 			<p:outputPanel id="documentPanelIn" styleClass="modal">
@@ -233,16 +233,32 @@
 
 				</h:panelGrid>
 
-				<p:commandButton update=":form:documentPanelIn :form:painelVeiculo :form:painelTabela"  
+				<p:commandButton update=":form:documentPanelIn :form:painelTabela :form:dlgForm2:painelVeiculo"  
 					value="Salvar" icon="ui-icon-check"
 					disabled="#{clienteMB.botaoCliente}"
-					actionListener="#{clienteMB.salvar}" />
+					actionListener="#{clienteMB.salvar}"/>
+					
+				<p:commandButton update=":form:dialogInVeiculo" value="Adicionar veiculo"
+					rendered="#{clienteMB.renderPainelVeiculo}" 
+					oncomplete="PF('documentDialogInVeiculo').show()" icon="fa fa-fw fa-edit"/>
+					
+				<p:commandButton
+					value="Fechar Janela" icon="ui-icon-check"
+					onclick="PF('documentDialogIn').hide();" immediate="true"/>
+				
 			</p:outputPanel>
-			<br></br>
-
-			<p:outputPanel id="painelVeiculo">
-				<p:accordionPanel rendered="#{clienteMB.renderPainelVeiculo}">
-					<p:tab title="Adicionar Veículo">
+		</p:dialog>
+		<!-- fim dialog inserir clientes -->
+		
+		<!-- dialog inserir veiculos -->
+		<p:dialog id="dialogInVeiculo" header="Cadastrar Veiculo" showEffect="fade"
+			widgetVar="documentDialogInVeiculo" modal="true"  resizable="false"  
+			style="max-height:700px;overflow:auto">
+			
+			 <h:form id="dlgForm2">
+			 
+						<p:outputPanel id="painelVeiculo" styleClass="modal">
+				
 						<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 					        <p:outputLabel for="tipo" value="Tipo:" />
 					        <p:selectOneRadio id="tipo" value="#{clienteMB.flagTipoVeiculo}">
@@ -292,22 +308,17 @@
 						</h:panelGrid>
 						
 						<p:commandButton
-								update=":form:documentPanelIn :form:painelVeiculo"  
+								update="painelVeiculo"  
 								value="Salvar" icon="ui-icon-check"
 								disabled="#{clienteMB.botaoVeiculo}"
-								actionListener="#{clienteMB.salvarVeiculo}" />
-							<p:commandButton
-								update=":form:documentPanelIn :form:painelVeiculo"
-								value="Adicionar Veiculo" icon="ui-icon-check"
-								actionListener="#{clienteMB.adicionarVeiculo}" />
-							<p:commandButton
-								value="Fechar Janela" icon="ui-icon-check"
-								onclick="dialog.hide()" process="@none"/>
-						</p:tab>
-				</p:accordionPanel>
+								actionListener="#{clienteMB.salvarVeiculo}"/>
+						<p:commandButton ajax="true" update=":form:dialogInVeiculo" value="Fechar Janela" icon="ui-icon-check"
+						onclick="PF('documentDialogInVeiculo').hide();" immediate="true" />
+
 			</p:outputPanel>
+			</h:form>
 		</p:dialog>
-		<!-- fim dialog inserir clientes -->
+		<!-- fim dialog inserir veiculos -->
 
 	</h:form>
 

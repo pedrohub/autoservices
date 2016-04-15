@@ -44,9 +44,14 @@ public class ClienteMB implements Serializable{
 	private Cliente clienteSelected;
 	private String tipoConsulta;
 	private org.apache.log4j.Logger logger = LogUtil.logger.getLogger(ClienteMB.class);
-	private static final String VAZIO = "";
 	private ArrayList<String> marcas = null;
 	private String flagTipoVeiculo = "0";
+	private String flagTipoConsulta = "nome";
+	
+	private static final String VAZIO = "";
+	private static final String NOME = "nome";
+	private static final String TELEFONE = "telefone";
+	private static final String PLACA = "placa";
 
 	@PostConstruct
 	public void init() {
@@ -168,10 +173,31 @@ public class ClienteMB implements Serializable{
         List<Cliente> allClientes = controladorCliente.listar();
         List<Cliente> filteredClientes = new ArrayList<Cliente>();
          
+//        for (int i = 0; i < allClientes.size(); i++) {
+//            Cliente cliente = allClientes.get(i);
+//            if(cliente.getNome().toLowerCase().startsWith(query)) {
+//            	filteredClientes.add(cliente);
+//            }
+//        }
         for (int i = 0; i < allClientes.size(); i++) {
             Cliente cliente = allClientes.get(i);
-            if(cliente.getNome().toLowerCase().startsWith(query)) {
-            	filteredClientes.add(cliente);
+            if (flagTipoConsulta.equalsIgnoreCase(NOME)) {
+	            if(cliente.getNome().toLowerCase().startsWith(query)) {
+	            	filteredClientes.add(cliente);
+	            }
+            } else if (flagTipoConsulta.equalsIgnoreCase(TELEFONE)) {
+            	if (cliente.getFone1() != null || !cliente.getFone1().equals(VAZIO)) {
+	            	String fone1 = cliente.getFone1().substring(6, 16);
+	            	 if(fone1.startsWith(query)) {
+	 	            	filteredClientes.add(cliente);
+	 	            }
+            	}
+            } else if (flagTipoConsulta.equalsIgnoreCase(PLACA)) {
+            	for (Veiculo veiculo : cliente.getVeiculos()) {
+            		 if(veiculo.getPlaca().toLowerCase().startsWith(query)) {
+      	            	filteredClientes.add(cliente);
+      	            }
+            	}
             }
         }
         return filteredClientes;
@@ -208,6 +234,10 @@ public class ClienteMB implements Serializable{
 		return listaMarcas;
 	}
 	
+	/**
+	 * Metodo para converter placa para UpperCase
+	 * @return veiculo
+	 */
 	public Veiculo convertetoUpperCase(){
 		
 		if (veiculo.getPlaca() != null) {
@@ -323,6 +353,14 @@ public class ClienteMB implements Serializable{
 
 	public void setListaMarcas(List<String> listaMarcas) {
 		this.listaMarcas = listaMarcas;
-	}	
+	}
 
+	public String getFlagTipoConsulta() {
+		return flagTipoConsulta;
+	}
+
+	public void setFlagTipoConsulta(String flagTipoConsulta) {
+		this.flagTipoConsulta = flagTipoConsulta;
+	}
+	
 }
