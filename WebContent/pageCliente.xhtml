@@ -42,8 +42,8 @@
 			</h:panelGrid>
 
             <p:autoComplete id="acSimple" value="#{clienteMB.clienteSelected}" completeMethod="#{clienteMB.completeCliente}" 
-             var="cliente" itemLabel="#{cliente.nome}" itemValue="#{cliente}" converter="ClienteConverter" 
-             forceSelection="true" />
+             var="cliente" itemLabel="#{clienteMB.consultaNome ? cliente.nome : clienteMB.consultaFone ? cliente.fone1 : clienteMB.consultaPlaca ? clienteMB.veiculo.placa : ''}"
+             itemValue="#{cliente}" converter="ClienteConverter" forceSelection="true" />
              
              <p:spacer width="6"></p:spacer>
              <p:commandButton update=":form:painelTabela" value="Selecionar" actionListener="#{clienteMB.selecionarClienteConsulta}"

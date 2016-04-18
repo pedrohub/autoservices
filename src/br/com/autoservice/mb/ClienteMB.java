@@ -48,6 +48,10 @@ public class ClienteMB implements Serializable{
 	private String flagTipoVeiculo = "0";
 	private String flagTipoConsulta = "nome";
 	
+	private boolean consultaNome;
+	private boolean consultaFone;
+	private boolean consultaPlaca;
+	
 	private static final String VAZIO = "";
 	private static final String NOME = "nome";
 	private static final String TELEFONE = "telefone";
@@ -172,31 +176,42 @@ public class ClienteMB implements Serializable{
 	public List<Cliente> completeCliente(String query) {
         List<Cliente> allClientes = controladorCliente.listar();
         List<Cliente> filteredClientes = new ArrayList<Cliente>();
-         
+        
 //        for (int i = 0; i < allClientes.size(); i++) {
 //            Cliente cliente = allClientes.get(i);
 //            if(cliente.getNome().toLowerCase().startsWith(query)) {
 //            	filteredClientes.add(cliente);
 //            }
 //        }
+        consultaNome = false;
+    	consultaFone = false;
+    	consultaPlaca = false;
+    	
         for (int i = 0; i < allClientes.size(); i++) {
             Cliente cliente = allClientes.get(i);
             if (flagTipoConsulta.equalsIgnoreCase(NOME)) {
 	            if(cliente.getNome().toLowerCase().startsWith(query)) {
 	            	filteredClientes.add(cliente);
+	            	consultaNome = true;
 	            }
             } else if (flagTipoConsulta.equalsIgnoreCase(TELEFONE)) {
             	if (cliente.getFone1() != null || !cliente.getFone1().equals(VAZIO)) {
 	            	String fone1 = cliente.getFone1().substring(6, 16);
 	            	 if(fone1.startsWith(query)) {
 	 	            	filteredClientes.add(cliente);
+	 	            	consultaFone = true;
 	 	            }
             	}
             } else if (flagTipoConsulta.equalsIgnoreCase(PLACA)) {
-            	for (Veiculo veiculo : cliente.getVeiculos()) {
-            		 if(veiculo.getPlaca().toLowerCase().startsWith(query)) {
-      	            	filteredClientes.add(cliente);
-      	            }
+            	if (!cliente.getVeiculos().isEmpty() && cliente.getVeiculos() != null) {
+	            	for (Veiculo veiculo : cliente.getVeiculos()) {
+	            		if (veiculo.getPlaca() != null && !veiculo.getPlaca().equals(VAZIO)) {
+		            		 if(veiculo.getPlaca().toLowerCase().startsWith(query)) {
+		      	            	filteredClientes.add(cliente);
+		      	            	consultaPlaca = true;
+		      	            }
+	            		}
+	            	}
             	}
             }
         }
@@ -361,6 +376,30 @@ public class ClienteMB implements Serializable{
 
 	public void setFlagTipoConsulta(String flagTipoConsulta) {
 		this.flagTipoConsulta = flagTipoConsulta;
+	}
+
+	public boolean isConsultaNome() {
+		return consultaNome;
+	}
+
+	public void setConsultaNome(boolean consultaNome) {
+		this.consultaNome = consultaNome;
+	}
+
+	public boolean isConsultaFone() {
+		return consultaFone;
+	}
+
+	public void setConsultaFone(boolean consultaFone) {
+		this.consultaFone = consultaFone;
+	}
+
+	public boolean isConsultaPlaca() {
+		return consultaPlaca;
+	}
+
+	public void setConsultaPlaca(boolean consultaPlaca) {
+		this.consultaPlaca = consultaPlaca;
 	}
 	
 }
