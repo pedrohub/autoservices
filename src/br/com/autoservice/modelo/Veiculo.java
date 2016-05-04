@@ -23,7 +23,7 @@ public class Veiculo {
 	private String obs;
 	private String placa;
 	private boolean status;
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne//(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="team_id")
 	private Cliente cliente;
 

@@ -7,7 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import br.com.autoservice.controller.ClienteController;
@@ -24,7 +24,7 @@ import br.com.autoservice.util.LogUtil;
  *
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class ClienteMB implements Serializable{
 
 	private static final long serialVersionUID = -2814761488716950745L;
@@ -215,7 +215,7 @@ public class ClienteMB implements Serializable{
             	}
             }
         }
-        return filteredClientes;
+       	return filteredClientes;
     }
 	
 	public void selecionarTipoConsulta(){

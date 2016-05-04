@@ -1,5 +1,6 @@
 package br.com.autoservice.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -32,7 +33,7 @@ public class Cliente {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "endereco_id") 
 	private Endereco endereco;
-	@OneToMany(mappedBy = "cliente", targetEntity = Veiculo.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Veiculo> veiculos;
 	private boolean status;
 
@@ -101,7 +102,6 @@ public class Cliente {
 	public List<Veiculo> getVeiculos() {
 		return veiculos;
 	}
-
 
 	public void setVeiculos(List<Veiculo> veiculos) {
 		this.veiculos = veiculos;

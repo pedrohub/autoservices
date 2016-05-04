@@ -1,0 +1,13 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+           xmlns:h="http://java.sun.com/jsf/html"
+           xmlns:p="http://primefaces.org/ui">
+<h:body>
+        <h:form enctype="multipart/form-data">
+            <p:fileUpload fileUploadListener="#{fileUploadView.doUpload}" 
+                          showButtons="false" label="Procurar..." auto="true"/>
+        </h:form>        
+        <p:messages  severity="info" escape="false" showDetail="true" 
+                 autoUpdate="true" closable="true"/>
+</h:body>
+
+</html>
