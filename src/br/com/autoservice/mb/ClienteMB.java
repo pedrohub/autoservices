@@ -39,8 +39,7 @@ public class ClienteMB implements Serializable{
 	private boolean botaoCliente;
 	private boolean botaoVeiculo;
 	private List<Cliente> listaClientes;
-	private List<Marca> listaMarcasBkp;
-	private List<String> listaMarcas = null;
+	private List<Marca> listaMarcas = null;
 	private Cliente clienteSelected;
 	private String tipoConsulta;
 	private org.apache.log4j.Logger logger = LogUtil.logger.getLogger(ClienteMB.class);
@@ -69,6 +68,7 @@ public class ClienteMB implements Serializable{
 		botaoCliente = false;
 		botaoVeiculo = false;
 		listaClientes = controladorCliente.listar();
+		listaMarcas = MarcaController.getInstance().getListaMarca();
 	}
 
 	/**
@@ -91,18 +91,6 @@ public class ClienteMB implements Serializable{
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cliente Salvo"));
 					botaoCliente = true;
 					listaClientes = controladorCliente.listar();
-					
-					//Buscar todas as marcas de veiculos em banco
-					if (listaMarcas == null) {
-						listaMarcas = new ArrayList<String>();
-						controladorMarca = controladorMarca.getInstance();
-						listaMarcasBkp = controladorMarca.listar();
-						for (Marca marca : listaMarcasBkp) {
-							if (marca.getTipo().equals("0")) {
-								listaMarcas.add(marca.getMarca());
-							}
-						}
-					}
 					
 				} catch (Exception e) {
 					renderPainelVeiculo = false;
@@ -233,23 +221,6 @@ public class ClienteMB implements Serializable{
 	
 	
 	/**
-	 * Metodo para carregar o combo marca
-	 * @return listaMarcas
-	 */
-	public List<String> carregarComboMarca(){
-		
-		listaMarcas = new ArrayList<String>();
-		
-		for (Marca marca : listaMarcasBkp) {
-			if (marca.getTipo().equals(flagTipoVeiculo)) {
-				listaMarcas.add(marca.getMarca());
-			}
-		}
-		
-		return listaMarcas;
-	}
-	
-	/**
 	 * Metodo para converter placa para UpperCase
 	 * @return veiculo
 	 */
@@ -360,14 +331,6 @@ public class ClienteMB implements Serializable{
 
 	public void setFlagTipoVeiculo(String flagTipoVeiculo) {
 		this.flagTipoVeiculo = flagTipoVeiculo;
-	}
-
-	public List<String> getListaMarcas() {
-		return listaMarcas;
-	}
-
-	public void setListaMarcas(List<String> listaMarcas) {
-		this.listaMarcas = listaMarcas;
 	}
 
 	public String getFlagTipoConsulta() {
