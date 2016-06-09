@@ -1,6 +1,7 @@
 package br.com.autoservice.controller;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,7 +36,11 @@ public class MarcaController {
 		Gson gson = new Gson();
 		List<Marca> lista = new ArrayList<Marca>();
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("marcas.json"));
+			ClassLoader classLoader = getClass().getClassLoader();
+			String fileName = "marcas.json";
+			File file = new File(classLoader.getResource(fileName).getFile());
+			
+			BufferedReader br = new BufferedReader(new FileReader(file));
 			// Converte String JSON para objeto Java
 			Marca[] obj = gson.fromJson(br, Marca[].class);
 			lista = Arrays.asList(obj);
@@ -45,7 +50,5 @@ public class MarcaController {
 		}
 		return lista;
 	}
-
-	
 
 }
