@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/template/template.xhtml">
+	
+	<h:form>						 
+	<h1 class="texto2">Cadastro de Marcas</h1>
+	
+	<p:outputLabel  value="Nome: "/>
+	<p:inputText id="nome" /><br></br><br></br>
+	
+	<p:button value="Salvar"/>
+	<br></br><br></br><br></br>
+
+
+		<p:outputPanel id="painelMarca">
+		<p:dataTable id="tabelaMarcas" var="marca" value="#{marcaMB.listaMarcas}" 
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+			paginator="true" rows="11" style="margin-bottom:20px;font-size: 14px !important">
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="id" />
+				</f:facet>
+				<h:outputText value="#{marca.id}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Nome" />
+				</f:facet>
+				<h:outputText value="#{marca.nome}" />
+			</p:column>
+			
+		</p:dataTable>
+		</p:outputPanel>
+		<!-- fim tabela de clientes  -->
+		
+		
+	</h:form>
+</ui:decorate>

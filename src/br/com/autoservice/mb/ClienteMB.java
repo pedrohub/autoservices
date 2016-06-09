@@ -30,7 +30,6 @@ public class ClienteMB implements Serializable{
 	private static final long serialVersionUID = -2814761488716950745L;
 	private ClienteController controladorCliente;
 	private VeiculoController controladorVeiculo;
-	private MarcaController controladorMarca;
 	private Cliente cliente;
 	private Endereco endereco;
 	private Veiculo veiculo;
@@ -98,10 +97,10 @@ public class ClienteMB implements Serializable{
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao Salvar", "Cliente"));
 				}
 			} else {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente Já Existe", ""));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente Jï¿½ Existe", ""));
 			}
 		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos Obrigatorios não preenchidos: Nome, Fone 1 e Bairro", ""));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos Obrigatorios nï¿½o preenchidos: Nome, Fone 1 e Bairro", ""));
 		}
 	}
 
@@ -116,13 +115,13 @@ public class ClienteMB implements Serializable{
 			if (controladorVeiculo.find(veiculo) == null) {
 				try{
 					controladorVeiculo.inserir(veiculo);
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Veículo Salvo"));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Veï¿½culo Salvo"));
 					botaoVeiculo = true;
 				} catch (Exception e) {
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao Salvar", "Veículo"));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao Salvar", "Veï¿½culo"));
 				}
 			} else {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Veículo já cadastrado", ""));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Veï¿½culo jï¿½ cadastrado", ""));
 			}
 		} else {
 			FacesContext.getCurrentInstance().addMessage( null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Informar o Modelo", ""));
@@ -364,5 +363,15 @@ public class ClienteMB implements Serializable{
 	public void setConsultaPlaca(boolean consultaPlaca) {
 		this.consultaPlaca = consultaPlaca;
 	}
+
+	public List<Marca> getListaMarcas() {
+		return listaMarcas;
+	}
+
+	public void setListaMarcas(List<Marca> listaMarcas) {
+		this.listaMarcas = listaMarcas;
+	}
+	
+	
 	
 }
