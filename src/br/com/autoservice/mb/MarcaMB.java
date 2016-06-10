@@ -18,10 +18,22 @@ import br.com.autoservice.modelo.Marca;
 public class MarcaMB {
 	
 	private List<Marca> listaMarcas;
+	private MarcaController marcaController;
+	private Marca marca;
 	
 	@PostConstruct
 	public void init (){
-		listaMarcas = MarcaController.getInstance().getListaMarca();
+		marcaController = MarcaController.getInstance();
+		listaMarcas = marcaController.getListaMarca();
+		marca = new Marca();
+	}
+	
+	/**
+	 * salvar Marca
+	 * @param marca
+	 */
+	public void salvar(Marca marca){
+		marcaController.salvar(marca);
 	}
 
 	public List<Marca> getListaMarcas() {
@@ -32,6 +44,13 @@ public class MarcaMB {
 		this.listaMarcas = listaMarcas;
 	}
 	
-	
+	public Marca getMarca() {
+		return marca;
+	}
 
+	public void setMarca(Marca marca) {
+		this.marca = marca;
+	}
+
+	
 }

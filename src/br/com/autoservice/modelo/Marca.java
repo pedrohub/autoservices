@@ -1,31 +1,43 @@
 package br.com.autoservice.modelo;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 
 /**
  * @author pedro.edson.o.lima
  *
  */
+@Entity
+@Table(name = "marca")
 public class Marca {
 
-	private int id;
-	private String nome;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codMarca;
+	private String marca;
+	private String tipo;
 	
-	public int getId() {
-		return id;
+	public Long getCodMarca() {
+		return codMarca;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setCodMarca(Long codMarca) {
+		this.codMarca = codMarca;
 	}
-	public String getNome() {
-		return nome;
+	public String getMarca() {
+		return marca;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setMarca(String marca) {
+		this.marca = marca;
 	}
-	
-	@Override
-	public String toString() {
-		return "Marca [id=" + id + ", nome=" + nome + "]";
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 	
 	

@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	template="/template/template.xhtml">
 	
-	<h:form>						 
+	<h:form id="form">						 
 	<h1 class="texto2">Cadastro de Marcas</h1>
 	
 	<p:outputLabel  value="Nome: "/>
@@ -19,26 +19,44 @@
 
 
 		<p:outputPanel id="painelMarca">
-		<p:dataTable id="tabelaMarcas" var="marca" value="#{marcaMB.listaMarcas}" 
-			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-			paginator="true" rows="11" style="margin-bottom:20px;font-size: 14px !important">
 
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="id" />
-				</f:facet>
-				<h:outputText value="#{marca.id}" />
-			</p:column>
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="Nome" />
-				</f:facet>
-				<h:outputText value="#{marca.nome}" />
-			</p:column>
-			
-		</p:dataTable>
+		<p:dataList value="#{marcaMB.listaMarcas}" var="marca" type="unordered" id="tabelaMarcas"
+			itemType="none" paginator="true" rows="10" styleClass="paginated">
+			<f:facet name="header">
+            Paginator
+        </f:facet>
+			<p:commandLink update=":form:carDetail"
+				oncomplete="PF('carDialog').show()" title="View Detail"
+				styleClass="ui-icon ui-icon-search"
+				style="float:left;margin-right:10px">
+				<f:setPropertyActionListener value="#{marca}"
+					target="#{marcaMB.marca}" />
+				<h:outputText value="#{marca.codMarca}, #{marca.marca}" />
+			</p:commandLink>
+			<h:outputText value="#{marca.codMarca}, #{marca.marca}"
+				style="display:inline-block" />
+		</p:dataList>
 		</p:outputPanel>
 		<!-- fim tabela de clientes  -->
+		
+		<p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="blind" hideEffect="explode" resizable="false">
+        <p:outputPanel id="carDetail" style="text-align:center;">
+            <p:panelGrid  columns="2" rendered="#{not empty marcaMB.listaMarcas}" columnClasses="label,value">
+ 
+                <h:outputText value="Id:" />
+                <h:outputText value="teste" />
+ 
+                <h:outputText value="Year" />
+                <h:outputText value="teste" />
+ 
+                <h:outputText value="Color:" />
+                <h:outputText value="teste" />
+ 
+                <h:outputText value="Price" />
+                <h:outputText value="teste" />
+            </p:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
 		
 		
 	</h:form>

@@ -21,11 +21,11 @@ public class MarcaDao extends GenericDao {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Marca> listar(Marca marca) {
+	public List<Marca> listar() {
 
 		session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			Criteria cri = session.createCriteria(marca.getClass());
+			Criteria cri = session.createCriteria(Marca.class);
 
 			return (List<Marca>) cri.list();
 		} finally {

@@ -1,16 +1,8 @@
 package br.com.autoservice.controller;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
+import br.com.autoservice.dao.MarcaDao;
 import br.com.autoservice.modelo.Marca;
-
-import com.google.gson.Gson;
 
 /**
  * @author robson.carlos.santos
@@ -20,9 +12,10 @@ import com.google.gson.Gson;
 public class MarcaController {
 
 	private static MarcaController marcaController;
+	private MarcaDao dao;
 	
 	private MarcaController(){
-		
+		dao = new MarcaDao();
 	}
 	
 	public static MarcaController getInstance() { 
@@ -33,22 +26,10 @@ public class MarcaController {
 	}
 	
 	public List<Marca> getListaMarca(){
-		Gson gson = new Gson();
-		List<Marca> lista = new ArrayList<Marca>();
-		try {
-			ClassLoader classLoader = getClass().getClassLoader();
-			String fileName = "marcas.json";
-			File file = new File(classLoader.getResource(fileName).getFile());
-			
-			BufferedReader br = new BufferedReader(new FileReader(file));
-			// Converte String JSON para objeto Java
-			Marca[] obj = gson.fromJson(br, Marca[].class);
-			lista = Arrays.asList(obj);
-
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-		}
-		return lista;
+		return dao.listar();
 	}
 
+	public void salvar(Marca marca){
+		dao.inserir(marca);
+	}
 }
