@@ -8,7 +8,8 @@
 	xmlns:p="http://primefaces.org/ui"
 	template="/template/template.xhtml">
 	
-	<h:form id="form">						 
+	<h:form id="form">	
+	<div style="float:left">				 
 	<h1 class="texto2">Cadastro de Marcas</h1>
 	
 	<p:outputLabel  value="Nome: "/>
@@ -16,10 +17,12 @@
 	
 	<p:button value="Salvar"/>
 	<br></br><br></br><br></br>
+	
+	</div>
+	
+	<div style="float:right;">
 
-
-		<p:outputPanel id="painelMarca">
-
+		<p:outputPanel id="painelMarca" style="width:300px">
 		<p:dataList value="#{marcaMB.listaMarcas}" var="marca" type="unordered" id="tabelaMarcas"
 			itemType="none" paginator="true" rows="10" styleClass="paginated">
 			<f:facet name="header">
@@ -37,6 +40,7 @@
 				style="display:inline-block" />
 		</p:dataList>
 		</p:outputPanel>
+		</div>
 		<!-- fim tabela de clientes  -->
 		
 		<p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="blind" hideEffect="explode" resizable="false">
@@ -57,7 +61,6 @@
             </p:panelGrid>
         </p:outputPanel>
     </p:dialog>
-		
 		
 	</h:form>
 </ui:decorate>
