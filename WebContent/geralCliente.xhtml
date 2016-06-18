@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+
+	<h1 class="texto2">Cliente</h1>
+	<h:form>
+	
+	<!-- painel clientes -->
+	<p:outputPanel id="documentPanel" styleClass="modal">
+
+				<h:panelGrid columns="4" cellpadding="5">
+
+					<h:outputText value="Nome: " />
+					<p:inputText id="default" value="#{clienteMB.cliente.nome}" />
+
+					<h:outputText value="Marca: " />
+					<p:inputText id="qwerty" value="#{clienteMB.cliente.nome}"
+						layout="qwertyBasic" />
+
+					<h:outputText value="Quantidade: " />
+					<p:inputText id="alphabetic" value="#clienteMB.cliente.nome}"
+						layout="alphabetic" />
+
+					<h:outputText value="Descricao: " />
+					<p:inputText id="custom1" value="#{clienteMB.cliente.nome}"
+						layout="custom"
+						layoutTemplate="prime-back,faces-clear,rocks-close" />
+
+					<h:outputText value="Observacao: " />
+					<p:inputText id="custom2" value="#{clienteMB.cliente.nome}"
+						layout="custom"
+						layoutTemplate="create-space-your-close,owntemplate-shift,easily-space-spacebar" />
+
+					<h:outputText value="" />
+					<p:commandButton value="Salvar" />
+
+				</h:panelGrid>
+			</p:outputPanel>
+		<hr />
+	
+		<!-- tabela de veiculos  -->
+		<h1 class="texto2">Veículos</h1>
+		<p:outputPanel id="painelTabela">
+		<p:dataTable id="tabelaClientes" var="cliente" value="#{clienteMB.listaClientes}" 
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+			paginator="true" rows="6" style="margin-bottom:20px;font-size: 14px !important">
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Ano" />
+				</f:facet>
+				<h:outputText value="#{cliente.nome}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Cor" />
+				</f:facet>
+				<h:outputText value="#{cliente.email}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Marca" />
+				</f:facet>
+				<h:outputText value="#{cliente.fone1}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Modelo" />
+				</f:facet>
+				<h:outputText value="#{cliente.endereco.bairro}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Placa" />
+				</f:facet>
+				<h:outputText value="#{cliente.endereco.bairro}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Ações" />
+				</f:facet>
+				<p:panelGrid columns="2">
+				<p:commandLink update=":form:documentPanel"
+					oncomplete="PF('documentDialog').show()" title="View Detail"
+					styleClass="ui-icon ui-icon-search">
+					<f:setPropertyActionListener value="#{cliente}"
+						target="#{clienteMB.cliente}" />
+				</p:commandLink>
+				 <p:commandLink update=":form:documentPanelDelete"
+					oncomplete="PF('documentDialogDelete').show()" title="View Detail"
+					styleClass="ui-icon ui-icon-search">
+					<f:setPropertyActionListener value="#{cliente}"
+						target="#{clienteMB.cliente}" />
+				</p:commandLink> 
+				</p:panelGrid>
+				
+			</p:column>
+		</p:dataTable>
+		
+		<h:outputText value="" />
+		<p:commandButton value="Adicionar Veículo" />
+		
+		</p:outputPanel>
+		<!-- fim tabela de veiculos  -->
+		<hr/>
+		
+		<!-- tabela de agendaentos  -->
+		<h1 class="texto2">Agendamentos</h1>
+		<p:outputPanel id="painelAgenda">
+		<p:dataTable id="tabelaAgenda" var="cliente" value="#{clienteMB.listaClientes}" 
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+			paginator="true" rows="6" style="margin-bottom:20px;font-size: 14px !important">
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Ano" />
+				</f:facet>
+				<h:outputText value="#{cliente.nome}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Cor" />
+				</f:facet>
+				<h:outputText value="#{cliente.email}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Marca" />
+				</f:facet>
+				<h:outputText value="#{cliente.fone1}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Modelo" />
+				</f:facet>
+				<h:outputText value="#{cliente.endereco.bairro}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Placa" />
+				</f:facet>
+				<h:outputText value="#{cliente.endereco.bairro}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Ações" />
+				</f:facet>
+				<p:panelGrid columns="2">
+				<p:commandLink update=":form:documentPanel"
+					oncomplete="PF('documentDialog').show()" title="View Detail"
+					styleClass="ui-icon ui-icon-search">
+					<f:setPropertyActionListener value="#{cliente}"
+						target="#{clienteMB.cliente}" />
+				</p:commandLink>
+				 <p:commandLink update=":form:documentPanelDelete"
+					oncomplete="PF('documentDialogDelete').show()" title="View Detail"
+					styleClass="ui-icon ui-icon-search">
+					<f:setPropertyActionListener value="#{cliente}"
+						target="#{clienteMB.cliente}" />
+				</p:commandLink> 
+				</p:panelGrid>
+				
+			</p:column>
+		</p:dataTable>
+		
+		<h:outputText value="" />
+		<p:commandButton value="Adicionar Agendamento" />
+		
+		</p:outputPanel>
+		<!-- fim tabela de agendamentos  -->
+		<hr/>
+		
+		<!-- tabela de ordens  -->
+		<h1 class="texto2">Ordens de Serviços</h1>
+		<p:outputPanel id="painelOrdem">
+		<p:dataTable id="tabelaordem" var="cliente" value="#{clienteMB.listaClientes}" 
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+			paginator="true" rows="6" style="margin-bottom:20px;font-size: 14px !important">
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Ano" />
+				</f:facet>
+				<h:outputText value="#{cliente.nome}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Cor" />
+				</f:facet>
+				<h:outputText value="#{cliente.email}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Marca" />
+				</f:facet>
+				<h:outputText value="#{cliente.fone1}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Modelo" />
+				</f:facet>
+				<h:outputText value="#{cliente.endereco.bairro}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Placa" />
+				</f:facet>
+				<h:outputText value="#{cliente.endereco.bairro}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Ações" />
+				</f:facet>
+				<p:panelGrid columns="2">
+				<p:commandLink update=":form:documentPanel"
+					oncomplete="PF('documentDialog').show()" title="View Detail"
+					styleClass="ui-icon ui-icon-search">
+					<f:setPropertyActionListener value="#{cliente}"
+						target="#{clienteMB.cliente}" />
+				</p:commandLink>
+				 <p:commandLink update=":form:documentPanelDelete"
+					oncomplete="PF('documentDialogDelete').show()" title="View Detail"
+					styleClass="ui-icon ui-icon-search">
+					<f:setPropertyActionListener value="#{cliente}"
+						target="#{clienteMB.cliente}" />
+				</p:commandLink> 
+				</p:panelGrid>
+				
+			</p:column>
+		</p:dataTable>
+		
+		<h:outputText value="" />
+		<p:commandButton value="Adicionar Ordem de Serviço" />
+		
+		</p:outputPanel>
+		<!-- fim tabela de veiculos  -->
+	
+	
+	</h:form>
+</ui:decorate>
