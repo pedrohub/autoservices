@@ -13,23 +13,23 @@
 	<h1 class="texto2">Cadastro de Marcas</h1>
 	
 	<p:outputLabel  value="Nome: "/>
-	<p:inputText id="nome" /><br></br><br></br>
+	<p:inputText id="nome" value="#{marcaMB.marca.marca}"/><br></br><br></br>
 	
-	<p:button value="Salvar"/>
+	<p:commandButton value="Salvar" actionListener="#{marcaMB.salvar}" update=":form"/>
 	<br></br><br></br><br></br>
 	
 	</div>
 	
 	<div style="float:right;">
 
-		<p:outputPanel id="painelMarca" style="width:300px">
+		<p:outputPanel id="painelMarca" style="width:300px;margin-left:-550px;font-size: 14px">
 		<p:dataList value="#{marcaMB.listaMarcas}" var="marca" type="unordered" id="tabelaMarcas"
 			itemType="none" paginator="true" rows="10" styleClass="paginated">
 			<f:facet name="header">
-            Paginator
+            Lista de Marcas
         </f:facet>
-			<p:commandLink update=":form:carDetail"
-				oncomplete="PF('carDialog').show()" title="View Detail"
+			<p:commandLink update=":form:marcaDetail"
+				oncomplete="PF('marcaDialog').show()" title="View Detail"
 				styleClass="ui-icon ui-icon-search"
 				style="float:left;margin-right:10px">
 				<f:setPropertyActionListener value="#{marca}"
@@ -43,8 +43,8 @@
 		</div>
 		<!-- fim tabela de clientes  -->
 		
-		<p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="blind" hideEffect="explode" resizable="false">
-        <p:outputPanel id="carDetail" style="text-align:center;">
+		<p:dialog header="Marca Info" widgetVar="marcaDialog" modal="true" showEffect="blind" hideEffect="explode" resizable="false">
+        <p:outputPanel id="marcaDetail" style="text-align:center;">
             <p:panelGrid  columns="2" rendered="#{not empty marcaMB.listaMarcas}" columnClasses="label,value">
  
                 <h:outputText value="Id:" />

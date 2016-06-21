@@ -32,6 +32,16 @@ public class MarcaMB {
 	 * salvar Marca
 	 * @param marca
 	 */
+	public void salvar(){
+		Marca marca = new Marca();
+		marca.setMarca(this.marca.getMarca());
+		marcaController.salvar(marca);
+	}
+	
+	/**
+	 * editar Marca
+	 * @param marca
+	 */
 	public void salvar(Marca marca){
 		marcaController.salvar(marca);
 	}
