@@ -9,37 +9,46 @@
 	template="/template/template.xhtml">
 	
 	<h:form id="form">	
+	
+	<p:growl id="growl" showDetail="true" sticky="true" />	
+	
 	<div style="float:left">				 
 	<h1 class="texto2">Cadastro de Marcas</h1>
 	
 	<p:outputLabel  value="Nome: "/>
-	<p:inputText id="nome" value="#{marcaMB.marca.marca}"/><br></br><br></br>
+	<p:inputText id="nome" value="#{marcaMB.marca.marca}" required="true"/><br></br><br></br>
 	
-	<p:commandButton value="Salvar" actionListener="#{marcaMB.salvar}" update=":form"/>
+	<p:commandButton value="Salvar" actionListener="#{marcaMB.salvar}" 
+	update=":form:painelMarca :form:growl :form:nome"/>
 	<br></br><br></br><br></br>
 	
 	</div>
 	
-	<div style="float:right;">
+	<div style="float:right;" id="direita">
 
 		<p:outputPanel id="painelMarca" style="width:300px;margin-left:-550px;font-size: 14px">
-		<p:dataList value="#{marcaMB.listaMarcas}" var="marca" type="unordered" id="tabelaMarcas"
-			itemType="none" paginator="true" rows="10" styleClass="paginated">
-			<f:facet name="header">
-            Lista de Marcas
-        </f:facet>
-			<p:commandLink update=":form:marcaDetail"
+
+		<p:dataTable var="marca" value="#{marcaMB.listaMarcas}" id="tabelaMarcas" rowIndexVar="index">
+			<p:column headerText="Marca">
+				<h:outputText value="#{index+1} , #{marca.marca}" />
+			</p:column>
+
+			<p:column headerText="Acoes">
+				<p:commandLink update=":form:marcaDetail"
 				oncomplete="PF('marcaDialog').show()" title="View Detail"
 				styleClass="ui-icon ui-icon-search"
-				style="float:left;margin-right:10px">
+				style="float:left;margin-right:10px" value="teste">
 				<f:setPropertyActionListener value="#{marca}"
 					target="#{marcaMB.marca}" />
 				<h:outputText value="#{marca.codMarca}, #{marca.marca}" />
 			</p:commandLink>
-			<h:outputText value="#{marca.codMarca}, #{marca.marca}"
-				style="display:inline-block" />
-		</p:dataList>
-		</p:outputPanel>
+			<p:commandLink actionListener="#{marcaMB.deletar(marca)}"
+				 title="View Detail" update="form:painelMarca"
+				style="float:left;margin-right:10px" value="Remover	"/>
+			</p:column>
+		</p:dataTable>
+
+			</p:outputPanel>
 		</div>
 		<!-- fim tabela de clientes  -->
 		

@@ -3,8 +3,10 @@ package br.com.autoservice.mb;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import br.com.autoservice.controller.MarcaController;
 import br.com.autoservice.modelo.Marca;
@@ -36,14 +38,28 @@ public class MarcaMB {
 		Marca marca = new Marca();
 		marca.setMarca(this.marca.getMarca());
 		marcaController.salvar(marca);
+		listaMarcas = marcaController.getListaMarca();
+		this.marca.setMarca(null);
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Success",  "Registro Salvo" ) );
 	}
 	
 	/**
 	 * editar Marca
 	 * @param marca
 	 */
-	public void salvar(Marca marca){
+	public void editar(Marca marca){
 		marcaController.salvar(marca);
+	}
+	
+	/**
+	 * salvar Marca
+	 * @param marca
+	 */
+	public void deletar(Marca marca){
+		marcaController.deletar(marca);
+		listaMarcas = marcaController.getListaMarca();
 	}
 
 	public List<Marca> getListaMarcas() {

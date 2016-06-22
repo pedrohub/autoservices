@@ -32,4 +32,8 @@ public class MarcaController {
 	public void salvar(Marca marca){
 		dao.inserir(marca);
 	}
+	
+	public void deletar(Marca marca){
+		dao.excluir(marca);
+	}
 }
