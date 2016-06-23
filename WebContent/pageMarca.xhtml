@@ -42,7 +42,7 @@
 					target="#{marcaMB.marca}" />
 				<h:outputText value="#{marca.codMarca}, #{marca.marca}" />
 			</p:commandLink>
-			<p:commandLink actionListener="#{marcaMB.deletar(marca)}"
+			<p:commandLink actionListener="#{marcaMB.deletar(marca)}" process="@this"
 				 title="View Detail" update="form:painelMarca"
 				style="float:left;margin-right:10px" value="Remover	"/>
 			</p:column>
