@@ -35,22 +35,31 @@ public class MarcaMB {
 	 * @param marca
 	 */
 	public void salvar(){
-		Marca marca = new Marca();
-		marca.setMarca(this.marca.getMarca());
-		marcaController.salvar(marca);
-		listaMarcas = marcaController.getListaMarca();
-		this.marca.setMarca(null);
 		
-		FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Success",  "Registro Salvo" ) );
+		if(marcaController.find(this.marca) == null){
+		
+			Marca marca = new Marca();
+			marca.setMarca(this.marca.getMarca());
+			marcaController.salvar(marca);
+			listaMarcas = marcaController.getListaMarca();
+			this.marca.setMarca(null);
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+	        context.addMessage(null, new FacesMessage("Success",  "Registro Salvo" ) );
+		} else {
+			FacesContext context = FacesContext.getCurrentInstance();
+	        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "",  "Registro ja existe" ) );
+		}
 	}
 	
 	/**
 	 * editar Marca
 	 * @param marca
 	 */
-	public void editar(Marca marca){
-		marcaController.salvar(marca);
+	public void editar(){
+		FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Sucess",  "Registro salvo" ) );
+		listaMarcas = marcaController.getListaMarca();
 	}
 	
 	/**

@@ -25,6 +25,10 @@ public class MarcaController {
 		return marcaController;
 	}
 	
+	public Marca find(Marca marca){
+		return dao.find(marca);
+	}
+	
 	public List<Marca> getListaMarca(){
 		return dao.listar();
 	}

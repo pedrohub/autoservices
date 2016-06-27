@@ -28,45 +28,41 @@
 
 		<p:outputPanel id="painelMarca" style="width:300px;margin-left:-550px;font-size: 14px">
 
-		<p:dataTable var="marca" value="#{marcaMB.listaMarcas}" id="tabelaMarcas" rowIndexVar="index">
-			<p:column headerText="Marca">
-				<h:outputText value="#{index+1} , #{marca.marca}" />
-			</p:column>
+			<p:dataTable var="marca" value="#{marcaMB.listaMarcas}" id="tabelaMarcas" rowIndexVar="index">
+				<p:column headerText="Marca">
+					<h:outputText value="#{index+1} , #{marca.marca}" />
+				</p:column>
+	
+				<p:column headerText="Acoes">
+				<p:commandLink update=":form:marcaDetail" process="@this" 
+					oncomplete="PF('marcaDialog').show()" title="View Detail"
+					style="float:left;margin-right:10px" value="Editar">
+					<f:setPropertyActionListener target="#{marcaMB.marca}" value="#{marca}"/>
+				</p:commandLink>
+				<p:commandLink actionListener="#{marcaMB.deletar(marca)}" process="@this"
+					 title="View Detail" update="form:painelMarca"
+					style="float:left;margin-right:10px" value="Remover	">
+					<p:confirm header="Confirmation" message="Deseja deletar a Marca?" icon="ui-icon-alert" />
+				</p:commandLink>
+				</p:column>
+			</p:dataTable>
 
-			<p:column headerText="Acoes">
-				<p:commandLink update=":form:marcaDetail"
-				oncomplete="PF('marcaDialog').show()" title="View Detail"
-				styleClass="ui-icon ui-icon-search"
-				style="float:left;margin-right:10px" value="teste">
-				<f:setPropertyActionListener value="#{marca}"
-					target="#{marcaMB.marca}" />
-				<h:outputText value="#{marca.codMarca}, #{marca.marca}" />
-			</p:commandLink>
-			<p:commandLink actionListener="#{marcaMB.deletar(marca)}" process="@this"
-				 title="View Detail" update="form:painelMarca"
-				style="float:left;margin-right:10px" value="Remover	"/>
-			</p:column>
-		</p:dataTable>
-
-			</p:outputPanel>
-		</div>
+		</p:outputPanel>
+	</div>
 		<!-- fim tabela de clientes  -->
+		
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+      	 <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+       	 <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+   		</p:confirmDialog>
 		
 		<p:dialog header="Marca Info" widgetVar="marcaDialog" modal="true" showEffect="blind" hideEffect="explode" resizable="false">
         <p:outputPanel id="marcaDetail" style="text-align:center;">
-            <p:panelGrid  columns="2" rendered="#{not empty marcaMB.listaMarcas}" columnClasses="label,value">
+            <p:panelGrid  columns="2" columnClasses="label,value">
  
-                <h:outputText value="Id:" />
-                <h:outputText value="teste" />
+                <h:outputText value="Descrição" />
+                <p:inputText value="#{marcaMB.marca.marca}" />
  
-                <h:outputText value="Year" />
-                <h:outputText value="teste" />
- 
-                <h:outputText value="Color:" />
-                <h:outputText value="teste" />
- 
-                <h:outputText value="Price" />
-                <h:outputText value="teste" />
             </p:panelGrid>
         </p:outputPanel>
     </p:dialog>
