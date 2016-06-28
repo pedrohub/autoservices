@@ -19,6 +19,7 @@ import br.com.autoservice.modelo.Marca;
 @ViewScoped
 public class MarcaMB {
 	
+	private static final String VAZIO = " ";
 	private List<Marca> listaMarcas;
 	private MarcaController marcaController;
 	private Marca marca;
@@ -36,13 +37,13 @@ public class MarcaMB {
 	 */
 	public void salvar(){
 		
-		if(marcaController.find(this.marca) == null){
+		if(marcaController.find(this.marca) == null && !VAZIO.equals(this.marca.getMarca())){
 		
 			Marca marca = new Marca();
 			marca.setMarca(this.marca.getMarca());
 			marcaController.salvar(marca);
-			listaMarcas = marcaController.getListaMarca();
 			this.marca.setMarca(null);
+			listaMarcas = marcaController.getListaMarca();
 			
 			FacesContext context = FacesContext.getCurrentInstance();
 	        context.addMessage(null, new FacesMessage("Success",  "Registro Salvo" ) );
@@ -57,8 +58,10 @@ public class MarcaMB {
 	 * @param marca
 	 */
 	public void editar(){
+		
+		marcaController.editar(marca);
 		FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Sucess",  "Registro salvo" ) );
+        context.addMessage(null, new FacesMessage("Sucess",  "Registro Alterado" ) );
 		listaMarcas = marcaController.getListaMarca();
 	}
 	

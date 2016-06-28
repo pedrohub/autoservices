@@ -40,4 +40,8 @@ public class MarcaController {
 	public void deletar(Marca marca){
 		dao.excluir(marca);
 	}
+	
+	public void editar(Marca marca){
+		dao.alterar(marca);
+	}
 }
