@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 
 import br.com.autoservice.controller.MarcaController;
 import br.com.autoservice.modelo.Marca;
+import br.com.autoservice.util.Constantes;
 
 /**
  * @author binha
@@ -21,7 +22,6 @@ import br.com.autoservice.modelo.Marca;
 public class MarcaMB implements Serializable{
 	
 	private static final long serialVersionUID = 4440290477587445347L;
-	private static final String VAZIO = " ";
 	private List<Marca> listaMarcas;
 	private MarcaController marcaController;
 	private Marca marca;
@@ -39,7 +39,7 @@ public class MarcaMB implements Serializable{
 	 */
 	public void salvar(){
 		
-		if(marcaController.find(this.marca) == null && !VAZIO.equals(this.marca.getMarca())){
+		if(marcaController.find(this.marca) == null && !Constantes.VAZIO.equals(this.marca.getMarca())){
 		
 			Marca marca = new Marca();
 			marca.setMarca(this.marca.getMarca());

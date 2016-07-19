@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/template/template.xhtml">
+	
+	<p:button value="Abrir Ordem" icon="ui-icon-wrench">
+		</p:button>
+		
+	<p:button value="Cadastrar Marca" icon="ui-icon-wrench" href="pageMarca.xhtml">
+		</p:button>
+		
+	<p:button value="Categorizar Serviços" icon="ui-icon-wrench" href="pageMarca.xhtml">
+		</p:button><br></br>
+
+	<br></br>
+	<p:outputLabel for="nome" value="Pesquisar Ordem por Placa: " />
+						<p:inputText id="nome"  alt="Exemplo: pdx5554"
+							 /><br></br>
+							 
+	<p:spacer height="10px"></p:spacer>
+
+	 <p:accordionPanel>
+        <p:tab title="Serviços Agendados">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
+                <h:outputText
+                    value="The story begins as Don Vito Corleone..." />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Agendamentos Vencidos">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+                <h:outputText value="Francis Ford Coppola's legendary..." />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Serviços Realizados">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+                <h:outputText value="After a break of more than 15 years..." />
+            </h:panelGrid>
+        </p:tab>
+    </p:accordionPanel>
+
+	
+</ui:decorate>

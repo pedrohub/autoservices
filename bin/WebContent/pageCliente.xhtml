@@ -1,0 +1,281 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<h:form id="form">
+	
+	  <p:growl id="message" showDetail="true" />
+
+		<!-- *************** painel de botoes *************** -->
+		<h:panelGrid columns="2" cellpadding="5">
+			<h:panelGrid columns="1" cellpadding="5">
+				<h1 class="texto2">Clientes</h1>
+			</h:panelGrid>
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:commandButton update=":form:documentPanelIn" value="Inserir"
+					oncomplete="PF('documentDialogIn').show()" icon="fa fa-fw fa-edit"
+					actionListener="#{clienteMB.limparModal}">
+				</p:commandButton>
+				<p:commandButton update=":form:painelConsultar" value="Consultar"
+					oncomplete="PF('dialogConsulta').show();">
+				</p:commandButton>
+			</h:panelGrid>
+		</h:panelGrid>
+		<!-- *************** fim painel de botoes *************** -->
+		
+		<!-- *************** modal consultar clientes *************** -->
+		<p:dialog id="painelConsultar" header="Consultar" widgetVar="dialogConsulta" modal="true" width="450" height="100">
+
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+				<p:outputLabel for="console" value="Tipo Consulta:" />
+				<p:selectOneRadio id="console" value="#{clienteMB.flagTipoConsulta}" >
+					<f:selectItem itemLabel="Nome" itemValue="nome" />
+					<f:selectItem itemLabel="Telefone" itemValue="telefone" />
+					<f:selectItem itemLabel="Placa" itemValue="placa" />
+					<f:ajax event="click" listener="#{clienteMB.selecionarTipoConsulta}"/>
+				</p:selectOneRadio>
+			</h:panelGrid>
+
+            <p:autoComplete id="acSimple" value="#{clienteMB.clienteSelected}" completeMethod="#{clienteMB.completeCliente}" 
+             var="cliente" itemLabel="#{clienteMB.consultaNome ? cliente.nome : clienteMB.consultaFone ? cliente.fone1 : clienteMB.consultaPlaca ? clienteMB.veiculo.placa : ''}"
+             itemValue="#{cliente}" converter="ClienteConverter" forceSelection="true" />
+             
+             <p:spacer width="6"></p:spacer>
+             <p:commandButton update=":form:painelTabela" value="Selecionar" actionListener="#{clienteMB.selecionarClienteConsulta}"
+					oncomplete="PF('dialogConsulta').hide();"/>
+		</p:dialog> 
+		<!-- *************** fim modal consultar clientes *************** -->
+
+		<!-- *************** tabela de clientes ************* -->
+		<p:outputPanel id="painelTabela">
+		<p:dataTable id="tabelaClientes" var="cliente" value="#{clienteMB.listaClientes}" 
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+			paginator="true" rows="11" style="margin-bottom:20px;font-size: 14px !important">
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Nome" />
+				</f:facet>
+				<h:outputText value="#{cliente.nome}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Email" />
+				</f:facet>
+				<h:outputText value="#{cliente.email}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Fone1" />
+				</f:facet>
+				<h:outputText value="#{cliente.fone1}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Bairro" />
+				</f:facet>
+				<h:outputText value="#{cliente.endereco.bairro}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Ações" />
+				</f:facet>
+				<p:commandLink update=":form:documentPanelDelete"
+					oncomplete="PF('documentDialogDelete').show()" title="View Detail"
+					value="Visualizar">
+					<f:setPropertyActionListener value="#{cliente}"
+						target="#{clienteMB.cliente}" />
+				</p:commandLink>
+				<p:spacer width="4px"></p:spacer>
+				<p:commandLink actionListener="#{clienteMB.removeCliente(cliente)}"
+							process="@this" update=":form:painelTabela"
+							value="Deletar">
+							<p:confirm header="Confirmation"
+								message="Deseja deletar o Cliente?" icon="ui-icon-alert" />
+				</p:commandLink>
+			</p:column>
+		</p:dataTable>
+		</p:outputPanel>
+		<!-- **************** fim tabela de clientes *************** -->
+		
+		<!-- *************** confirme delete cliente ************** -->
+		<p:dialog id="dialogDelete" header="Document Detail" showEffect="fade"
+			widgetVar="documentDialogDelete" modal="true" resizable="true">
+			<p:outputPanel id="documentPanelDelete" >
+
+				<!--  <p:commandButton value="Destroy the World"
+					actionListener="#{dialogView.destroyWorld}" update="message">
+					<p:confirm header="Confirmation" message="Are you sure?"
+						icon="ui-icon-alert" />
+				</p:commandButton>
+
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+					<p:commandButton value="Yes" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="No" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>-->
+
+			</p:outputPanel>
+		</p:dialog>
+
+		<!-- ***************** dialog inserir clientes ***************** -->
+		<p:dialog id="dialogIn" header="Cadastrar Cliente" showEffect="fade" 
+			widgetVar="documentDialogIn" modal="true"  resizable="false"  
+			style="max-height:700px;overflow:auto">
+			<p:outputPanel id="documentPanelIn" styleClass="modal">
+
+				<p:messages id="dialogInMSG" />
+
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:panelGrid columns="2" cellpadding="5">
+
+						<p:outputLabel for="nome" value="Nome: " />
+						<p:inputText id="nome" value="#{clienteMB.cliente.nome}" 
+							disabled="#{clienteMB.botaoCliente}" />
+
+						<p:outputLabel value="Email: " />
+						<p:inputText value="#{clienteMB.cliente.email}"
+							disabled="#{clienteMB.botaoCliente}" />
+
+						<p:outputLabel for="fone1" value="Fone 1: " />
+						<p:inputMask id="fone1" value="#{clienteMB.cliente.fone1}" mask="(999) 99999-9999"
+						    disabled="#{clienteMB.botaoCliente}"/>
+
+						<p:outputLabel for="fone2" value="Fone 2: " />
+						<p:inputMask id="fone2" value="#{clienteMB.cliente.fone2}" mask="(999) 99999-9999"
+						    disabled="#{clienteMB.botaoCliente}"/>
+
+						<p:outputLabel value="Observação: " />
+						<p:inputTextarea value="#{clienteMB.cliente.obs}" autoResize="false"
+							rows="3" cols="22" disabled="#{clienteMB.botaoCliente}" />
+
+					</h:panelGrid>
+
+					<h:panelGrid columns="2" cellpadding="5">
+
+						<p:outputLabel value="Estado: " />
+						<p:selectOneMenu value="#{clienteMB.endereco.uf}" disabled="#{clienteMB.botaoCliente}">
+							<f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+             		        <f:selectItems value="#{clienteMB.estados}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Cidade: " />
+						<p:inputText value="#{clienteMB.endereco.cidade}"
+							disabled="#{clienteMB.botaoCliente}" />
+
+						<p:outputLabel for="cep" value="Cep: " />
+						<p:inputMask id="cep" value="#{clienteMB.endereco.cep}" mask="99.999-999"
+						    disabled="#{clienteMB.botaoCliente}"/>
+
+						<p:outputLabel for="bairro" value="Bairro: " />
+						<p:inputText id="bairro" value="#{clienteMB.endereco.bairro}"
+							disabled="#{clienteMB.botaoCliente}" />
+
+						<p:outputLabel value="Logradouro: " />
+						<p:inputTextarea value="#{clienteMB.endereco.logradouro}" autoResize="false"
+							rows="3" cols="22" disabled="#{clienteMB.botaoCliente}" />
+
+						<p:outputLabel value="Numero: " />
+						<p:inputText value="#{clienteMB.endereco.numero}"
+							disabled="#{clienteMB.botaoCliente}" />
+
+					</h:panelGrid>
+				</h:panelGrid>
+
+				<p:commandButton update=":form:documentPanelIn :form:painelTabela :form:dlgForm2:painelVeiculo"  
+					value="Salvar" icon="ui-icon-check"
+					disabled="#{clienteMB.botaoCliente}"
+					actionListener="#{clienteMB.salvar}"/>
+					
+				<p:commandButton update=":form:dlgForm2:painelVeiculo" value="Adicionar veiculo"
+					rendered="#{clienteMB.renderPainelVeiculo}" 
+					oncomplete="PF('documentDialogInVeiculo').show()" icon="fa fa-fw fa-edit"
+					actionListener="#{clienteMB.adicionarVeiculo}"/>
+					
+				<p:commandButton
+					value="Fechar Janela" icon="ui-icon-check"
+					onclick="PF('documentDialogIn').hide();" immediate="true"/>
+				
+			</p:outputPanel>
+		</p:dialog>
+		<!-- *************** fim dialog inserir clientes **************** -->
+		
+		<!-- *************** dialog inserir veiculos ************** -->
+		<p:dialog id="dialogInVeiculo" header="Cadastrar Veiculo" showEffect="fade"
+			widgetVar="documentDialogInVeiculo" modal="true"  resizable="false"  
+			style="max-height:700px;overflow:auto">
+			
+			 <h:form id="dlgForm2">
+			 
+		 			<p:messages id="msg" showDetail="true" autoUpdate="true" closable="true" />
+		 			
+					<p:outputPanel id="painelVeiculo" styleClass="modal">
+				
+						<h:panelGrid columns="2" cellpadding="10">
+							<h:panelGrid columns="2" cellpadding="10">
+							
+								<h:outputText value="Marca: " />
+								 <p:selectOneMenu id="marca" value="#{clienteMB.veiculo.marca}"
+									 disabled="#{clienteMB.botaoVeiculo}">
+						            <f:selectItem itemLabel="- Selecione -" itemValue="" />
+						            <f:selectItems value="#{clienteMB.listaMarcas}" var="marca" itemValue="#{marca.marca}" itemLabel="#{marca.marca}"/>
+						        </p:selectOneMenu>
+
+								<h:outputText value="Modelo: " />
+								<p:inputText value="#{clienteMB.veiculo.modelo}"
+									disabled="#{clienteMB.botaoVeiculo}" />
+
+								<h:outputText value="Placa: " />
+								<p:inputMask id="placa" value="#{clienteMB.veiculo.placa}"  mask="aaa-9999"
+					    			disabled="#{clienteMB.botaoVeiculo}">
+					    		</p:inputMask>
+
+							</h:panelGrid>
+							<h:panelGrid columns="2" cellpadding="10">
+
+								<h:outputText value="Ano: " />
+								<p:inputText value="#{clienteMB.veiculo.ano}"
+									disabled="#{clienteMB.botaoVeiculo}" />
+
+								<h:outputText value="Cor: " />
+								<p:inputText value="#{clienteMB.veiculo.cor}"
+									disabled="#{clienteMB.botaoVeiculo}" />
+
+								<h:outputText value="Obs: " />
+								<p:inputText value="#{clienteMB.veiculo.obs}"
+									disabled="#{clienteMB.botaoVeiculo}" />
+
+							</h:panelGrid>
+
+						</h:panelGrid>
+						
+						<p:commandButton
+								update=":form:dlgForm2:painelVeiculo"  
+								value="Salvar" icon="ui-icon-check"
+								disabled="#{clienteMB.botaoVeiculo}"
+								actionListener="#{clienteMB.salvarVeiculo}" />
+						<p:commandButton ajax="true" update=":form:dialogInVeiculo" value="Fechar Janela" icon="ui-icon-check"
+						onclick="PF('documentDialogInVeiculo').hide();" immediate="true" />
+
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+		<!-- **************** fim dialog inserir veiculos *************** -->
+		
+		<!-- **************** modal de confimacao *************** -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Yes" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+
+	</h:form>
+
+</ui:decorate>
