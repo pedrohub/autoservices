@@ -1,5 +1,6 @@
 package br.com.autoservice.mb;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -17,8 +18,9 @@ import br.com.autoservice.modelo.Marca;
  */
 @ManagedBean
 @ViewScoped
-public class MarcaMB {
+public class MarcaMB implements Serializable{
 	
+	private static final long serialVersionUID = 4440290477587445347L;
 	private static final String VAZIO = " ";
 	private List<Marca> listaMarcas;
 	private MarcaController marcaController;

@@ -17,6 +17,7 @@ import br.com.autoservice.modelo.Cliente;
 import br.com.autoservice.modelo.Endereco;
 import br.com.autoservice.modelo.Marca;
 import br.com.autoservice.modelo.Veiculo;
+import br.com.autoservice.util.Constantes;
 import br.com.autoservice.util.LogUtil;
 
 /**
@@ -33,10 +34,9 @@ public class ClienteMB implements Serializable{
 	private Cliente cliente;
 	private Endereco endereco;
 	private Veiculo veiculo;
-	private List<Veiculo> listaVeiculo;
 	private boolean renderPainelVeiculo;
 	private boolean botaoCliente;
-	private boolean botaoVeiculo;
+	private boolean botaoVeiculo;	
 	private List<Cliente> listaClientes;
 	private List<Marca> listaMarcas = null;
 	private Cliente clienteSelected;
@@ -50,10 +50,6 @@ public class ClienteMB implements Serializable{
 	private boolean consultaFone;
 	private boolean consultaPlaca;
 	
-	private static final String VAZIO = "";
-	private static final String NOME = "nome";
-	private static final String TELEFONE = "telefone";
-	private static final String PLACA = "placa";
 
 	@PostConstruct
 	public void init() {
@@ -61,7 +57,6 @@ public class ClienteMB implements Serializable{
 		cliente = new Cliente();
 		endereco = new Endereco();
 		veiculo = new Veiculo();
-		listaVeiculo = new ArrayList<Veiculo>();
 		renderPainelVeiculo = false;
 		controladorVeiculo = new VeiculoController();
 		botaoCliente = false;
@@ -76,7 +71,7 @@ public class ClienteMB implements Serializable{
 	public void salvar() {
 		logger.info("salvando Cliente");
 		
-		if (endereco.getUf() == null || endereco.getUf().equals(VAZIO)) {
+		if (endereco.getUf() == null || endereco.getUf().equals(Constantes.VAZIO)) {
 			endereco.setUf("Pernambuco");
 		}
 		
@@ -97,10 +92,10 @@ public class ClienteMB implements Serializable{
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao Salvar", "Cliente"));
 				}
 			} else {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente J� Existe", ""));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cliente Ja Existe", ""));
 			}
 		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos Obrigatorios n�o preenchidos: Nome, Fone 1 e Bairro", ""));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos Obrigatorios nao preenchidos: Nome, Fone 1 e Bairro", ""));
 		}
 	}
 
@@ -110,21 +105,22 @@ public class ClienteMB implements Serializable{
 	public void salvarVeiculo() {
 		veiculo.setCliente(cliente);
 		veiculo.setStatus(true);
-		listaVeiculo.add(veiculo);
+		
 		if (validarVeiculo(veiculo)){
 			if (controladorVeiculo.find(veiculo) == null) {
 				try{
+					veiculo.setPlaca(veiculo.getPlaca().toUpperCase());
 					controladorVeiculo.inserir(veiculo);
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ve�culo Salvo"));
 					botaoVeiculo = true;
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Veiculo Salvo"));
 				} catch (Exception e) {
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao Salvar", "Ve�culo"));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao Salvar", "Veiculo"));
 				}
 			} else {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ve�culo j� cadastrado", ""));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Veiculo ja cadastrado", ""));
 			}
 		} else {
-			FacesContext.getCurrentInstance().addMessage( null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Informar o Modelo", ""));
+			FacesContext.getCurrentInstance().addMessage( null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Informar Campos Obrigatorios", ""));
 		}
 	}
 	
@@ -142,6 +138,11 @@ public class ClienteMB implements Serializable{
 		botaoVeiculo = false;
 	}
 	
+	/**
+	 * validar atributos do cliente
+	 * @param cliente
+	 * @return
+	 */
 	private boolean validarCliente(Cliente cliente){
 		if ((cliente.getNome() != null && !cliente.getNome().isEmpty()) && 
 				(cliente.getFone1()!=null && !cliente.getFone1().isEmpty())
@@ -152,12 +153,27 @@ public class ClienteMB implements Serializable{
 		}
 	}
 	
+	/**
+	 * validar campos do veiculo
+	 * @param veiculo
+	 * @return
+	 */
 	private boolean validarVeiculo(Veiculo veiculo){
-		if (veiculo.getModelo() != null && !veiculo.getModelo().isEmpty()){
+		if ((veiculo.getModelo() != null && !veiculo.getModelo().isEmpty()) &&
+				veiculo.getPlaca() != null && !veiculo.getPlaca().isEmpty()){
 			return true;
 		} else {
 			return false;
 		}
+	}
+	
+	/**
+	 * Excluir clientes e seus veiculos
+	 * @param cliente
+	 */
+	public void removeCliente(Cliente cliente){
+		controladorCliente.excluir(cliente);
+		listaClientes = controladorCliente.listar();
 	}
 	
 	public List<Cliente> completeCliente(String query) {
@@ -176,23 +192,23 @@ public class ClienteMB implements Serializable{
     	
         for (int i = 0; i < allClientes.size(); i++) {
             Cliente cliente = allClientes.get(i);
-            if (flagTipoConsulta.equalsIgnoreCase(NOME)) {
+            if (flagTipoConsulta.equalsIgnoreCase(Constantes.NOME)) {
 	            if(cliente.getNome().toLowerCase().startsWith(query)) {
 	            	filteredClientes.add(cliente);
 	            	consultaNome = true;
 	            }
-            } else if (flagTipoConsulta.equalsIgnoreCase(TELEFONE)) {
-            	if (cliente.getFone1() != null || !cliente.getFone1().equals(VAZIO)) {
+            } else if (flagTipoConsulta.equalsIgnoreCase(Constantes.TELEFONE)) {
+            	if (cliente.getFone1() != null || !cliente.getFone1().equals(Constantes.VAZIO)) {
 	            	String fone1 = cliente.getFone1().substring(6, 16);
 	            	 if(fone1.startsWith(query)) {
 	 	            	filteredClientes.add(cliente);
 	 	            	consultaFone = true;
 	 	            }
             	}
-            } else if (flagTipoConsulta.equalsIgnoreCase(PLACA)) {
+            } else if (flagTipoConsulta.equalsIgnoreCase(Constantes.PLACA)) {
             	if (!cliente.getVeiculos().isEmpty() && cliente.getVeiculos() != null) {
 	            	for (Veiculo veiculo : cliente.getVeiculos()) {
-	            		if (veiculo.getPlaca() != null && !veiculo.getPlaca().equals(VAZIO)) {
+	            		if (veiculo.getPlaca() != null && !veiculo.getPlaca().equals(Constantes.VAZIO)) {
 		            		 if(veiculo.getPlaca().toLowerCase().startsWith(query)) {
 		      	            	filteredClientes.add(cliente);
 		      	            	consultaPlaca = true;
@@ -219,17 +235,8 @@ public class ClienteMB implements Serializable{
 	}
 	
 	
-	/**
-	 * Metodo para converter placa para UpperCase
-	 * @return veiculo
-	 */
-	public Veiculo convertetoUpperCase(){
-		
-		if (veiculo.getPlaca() != null) {
-			veiculo.setPlaca(veiculo.getPlaca().toUpperCase());
-		}
-		
-		return veiculo;
+	public List<String> getEstados(){
+		return ClienteController.getInstance().getEstados();
 	}
 	/**
 	 * Getters e Setters abaixo
@@ -282,14 +289,6 @@ public class ClienteMB implements Serializable{
 
 	public void setBotaoVeiculo(boolean botaoVeiculo) {
 		this.botaoVeiculo = botaoVeiculo;
-	}
-
-	public List<Veiculo> getListaVeiculo() {
-		return listaVeiculo;
-	}
-
-	public void setListaVeiculo(List<Veiculo> listaVeiculo) {
-		this.listaVeiculo = listaVeiculo;
 	}
 
 	public List<Cliente> getListaClientes() {

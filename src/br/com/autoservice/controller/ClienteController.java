@@ -1,14 +1,14 @@
 package br.com.autoservice.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-
-import javax.faces.convert.FacesConverter;
 
 import org.hibernate.HibernateException;
 
 import br.com.autoservice.dao.ClienteDao;
 import br.com.autoservice.modelo.Cliente;
+import br.com.autoservice.modelo.Veiculo;
 
 /**
  * @author binha
@@ -19,11 +19,12 @@ public class ClienteController {
 
 	private ClienteDao clienteDao = new ClienteDao();
 	private Logger logger = Logger.getLogger("ClienteController");
+	private VeiculoController veiculoController;
 	
 	private static ClienteController uniqueInstance; 
 	
 	private ClienteController() { 
-		
+		veiculoController = new VeiculoController();
 	} 
 	
 	public static synchronized ClienteController getInstance() { 
@@ -45,6 +46,10 @@ public class ClienteController {
 	}
 
 	public void excluir(Cliente cliente) {
+		
+		for (Veiculo veiculo : cliente.getVeiculos()) {
+			veiculoController.excluir(veiculo);
+		}
 		clienteDao.excluir(cliente);
 	}
 
@@ -68,5 +73,39 @@ public class ClienteController {
 	public Cliente findByNameFone(Cliente cliente) {
 		Cliente clienteRetorno = clienteDao.findByNameFone(cliente);
 		return clienteRetorno;
+	}
+	
+	public List<String> getEstados(){
+		List<String> estados = new ArrayList<>();
+		
+		estados.add("AC");
+		estados.add("AL");
+		estados.add("AP");
+		estados.add("AM");
+		estados.add("BA");
+		estados.add("CE");
+		estados.add("DF");
+		estados.add("ES");
+		estados.add("GO");
+		estados.add("MA");
+		estados.add("MT");
+		estados.add("MS");
+		estados.add("MG");
+		estados.add("PA");
+		estados.add("PB");
+		estados.add("PR");
+		estados.add("PE");
+		estados.add("PI");
+			estados.add("RJ");
+		estados.add("RN");
+		estados.add("RS");
+		estados.add("RO");
+		estados.add("RR");
+		estados.add("SC");
+		estados.add("SP");
+		estados.add("SE");
+		estados.add("TO");
+		
+		return estados;
 	}
 }

@@ -12,26 +12,39 @@
 		</p:button>
 		
 	<p:button value="Cadastrar Marca" icon="ui-icon-wrench" href="pageMarca.xhtml">
+		</p:button>
+		
+	<p:button value="Categorizar Serviços" icon="ui-icon-wrench" href="pageMarca.xhtml">
 		</p:button><br></br>
 
 	<br></br>
 	<p:outputLabel for="nome" value="Pesquisar Ordem por Placa: " />
 						<p:inputText id="nome"  alt="Exemplo: pdx5554"
 							 /><br></br>
+							 
+	<p:spacer height="10px"></p:spacer>
 
-	<p:panelGrid columns="2">
-		<p:panelGrid >
-			<p:dataList   type="unordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
-		        <f:facet name="header">
-		            Ordens Pendentes:
-		        </f:facet>
-		        <p:commandLink  title="View Detail" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px;width:40px">
-		            <h:outputText value="valor, v2" />
-		        </p:commandLink>
-		        <h:outputText value="valor, v2" style="display:inline-block"/>
-		    </p:dataList>
-	    </p:panelGrid>
-    </p:panelGrid>
+	 <p:accordionPanel>
+        <p:tab title="Serviços Agendados">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
+                <h:outputText
+                    value="The story begins as Don Vito Corleone..." />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Agendamentos Vencidos">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+                <h:outputText value="Francis Ford Coppola's legendary..." />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Serviços Realizados">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+                <h:outputText value="After a break of more than 15 years..." />
+            </h:panelGrid>
+        </p:tab>
+    </p:accordionPanel>
 
 	
 </ui:decorate>

@@ -7,10 +7,21 @@ import org.hibernate.HibernateException;
 import br.com.autoservice.dao.EnderecoDao;
 import br.com.autoservice.modelo.Endereco;
 
-public class ControladorEndereco {
+public class EnderecoController {
 
 	private EnderecoDao enderecoDao = new EnderecoDao();
 
+	private static EnderecoController uniqueInstance;
+
+	private EnderecoController() { 
+	}
+
+	public static synchronized EnderecoController getInstance() {
+		if (uniqueInstance == null)
+			uniqueInstance = new EnderecoController();
+		return uniqueInstance;
+	}
+	
 	/**
 	 * inserir o objeto
 	 * 
