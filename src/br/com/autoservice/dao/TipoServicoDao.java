@@ -18,7 +18,7 @@ public class TipoServicoDao extends GenericDao{
 
 		session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			Criteria cri = session.createCriteria(Marca.class);
+			Criteria cri = session.createCriteria(TipoServico.class);
 
 			return (List<TipoServico>) cri.list();
 		} finally {

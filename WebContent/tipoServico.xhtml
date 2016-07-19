@@ -12,7 +12,7 @@
 		<p:growl id="growl" showDetail="true" sticky="true" />
 
 		<div style="float: left">
-			<h1 class="texto2">Cadastrar Tipos de Serviços</h1>
+			<h1 class="texto2">Tipos de Serviços</h1>
 
 			<p:outputLabel value="Descrição: " />
 			<p:inputText id="nome" value="#{tipoServicoMB.tipo.descricao}" required="true" />
@@ -29,26 +29,26 @@
 
 		<div style="float: right;" id="direita">
 			<p:outputPanel id="painelMarca"
-				style="width:300px;margin-left:-550px;font-size: 14px">
+				style="width:540px;margin-left:-550px;font-size: 14px">
 
-				<p:dataTable var="marca" value="#{marcaMB.listaMarcas}"
-					id="tabelaMarcas" rowIndexVar="index">
-					<p:column headerText="Marca">
-						<h:outputText value="#{index+1} , #{marca.marca}" />
+				<p:dataTable var="tipo" value="#{tipoServicoMB.listaTipos}"
+					id="tabelaTipos" rowIndexVar="index">
+					<p:column headerText="Serviço" style="width:360px;">
+						<h:outputText value="#{index+1} , #{tipo.descricao}" />
 					</p:column>
 
-					<p:column headerText="Acoes">
+					<p:column headerText="Acoes" style="width:120px;">
 						<p:commandLink update=":form:marcaDetail" process="@this"
 							oncomplete="PF('marcaDialog').show()" title="View Detail"
 							style="float:left;margin-right:10px" value="Editar">
-							<f:setPropertyActionListener target="#{marcaMB.marca}"
-								value="#{marca}" />
+							<f:setPropertyActionListener target="#{tipoServicoMB.tipo}"
+								value="#{tipo}" />
 						</p:commandLink>
-						<p:commandLink actionListener="#{marcaMB.deletar(marca)}"
+						<p:commandLink actionListener="#{tipoServicoMB.deletar(tipo)}"
 							process="@this" title="View Detail" update="form:painelMarca"
 							style="float:left;margin-right:10px" value="Remover	">
 							<p:confirm header="Confirmation"
-								message="Deseja deletar a Marca?" icon="ui-icon-alert" />
+								message="Deseja deletar esta Descrição de Serviço?" icon="ui-icon-alert" />
 						</p:commandLink>
 					</p:column>
 				</p:dataTable>
@@ -64,15 +64,15 @@
 				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 		</p:confirmDialog>
 
-		<p:dialog header="Marca Info" widgetVar="marcaDialog" modal="true"
+		<p:dialog header="Serviço Info" widgetVar="marcaDialog" modal="true"
 			showEffect="blind" hideEffect="explode" resizable="false">
 			<p:outputPanel id="marcaDetail" style="text-align:center;">
 
 					<h:outputText value="Descrição: " />
-					<p:inputText id="alterMarca" value="#{marcaMB.marca.marca}" required="true"/>
+					<p:inputText id="alterMarca" value="#{tipoServicoMB.tipo.descricao}" required="true"/>
 					
 				<br></br><br></br>
-				<p:commandButton value="Salvar" actionListener="#{marcaMB.editar}" process="@this :form:alterMarca"
+				<p:commandButton value="Salvar" actionListener="#{tipoServicoMB.editar}" process="@this :form:alterMarca"
 					update=":form:painelMarca :form:growl :form:alterMarca" oncomplete="PF('marcaDialog').hide()" />	
 			</p:outputPanel>
 		</p:dialog>

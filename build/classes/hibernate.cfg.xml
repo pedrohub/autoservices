@@ -18,6 +18,7 @@
   <mapping class="br.com.autoservice.modelo.Veiculo"/>
   <mapping class="br.com.autoservice.modelo.Endereco"/>
   <mapping class="br.com.autoservice.modelo.Marca"/>
+  <mapping class="br.com.autoservice.modelo.TipoServico"/>
   
  </session-factory>
 </hibernate-configuration>

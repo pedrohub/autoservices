@@ -1,5 +1,6 @@
 package br.com.autoservice.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -15,8 +16,12 @@ import br.com.autoservice.modelo.Veiculo;
  *
  * Controller Clientes
  */
-public class ClienteController {
+public class ClienteController implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3339055576572426402L;
 	private ClienteDao clienteDao = new ClienteDao();
 	private Logger logger = Logger.getLogger("ClienteController");
 	private VeiculoController veiculoController;
