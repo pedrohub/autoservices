@@ -234,6 +234,10 @@ public class ClienteMB implements Serializable{
 		}
 	}
 	
+	public void redirectGeral(Cliente cliente){
+		GeralMB mb = new GeralMB();
+		mb.setCliente(cliente);
+	}
 	
 	public List<String> getEstados(){
 		return ClienteController.getInstance().getEstados();

@@ -17,23 +17,23 @@
 				<h:panelGrid columns="4" cellpadding="5">
 
 					<h:outputText value="Nome: " />
-					<p:inputText id="default" value="#{clienteMB.cliente.nome}" />
+					<p:inputText id="default" value="#{geralMB.cliente.nome}" />
 
 					<h:outputText value="Marca: " />
-					<p:inputText id="qwerty" value="#{clienteMB.cliente.nome}"
+					<p:inputText id="qwerty" value="#{geralMB.cliente.nome}"
 						layout="qwertyBasic" />
 
 					<h:outputText value="Quantidade: " />
-					<p:inputText id="alphabetic" value="#clienteMB.cliente.nome}"
+					<p:inputText id="alphabetic" value="#{geralMB.cliente.nome}"
 						layout="alphabetic" />
 
 					<h:outputText value="Descricao: " />
-					<p:inputText id="custom1" value="#{clienteMB.cliente.nome}"
+					<p:inputText id="custom1" value="#{geralMB.cliente.nome}"
 						layout="custom"
 						layoutTemplate="prime-back,faces-clear,rocks-close" />
 
 					<h:outputText value="Observacao: " />
-					<p:inputText id="custom2" value="#{clienteMB.cliente.nome}"
+					<p:inputText id="custom2" value="#{geralMB.cliente.nome}"
 						layout="custom"
 						layoutTemplate="create-space-your-close,owntemplate-shift,easily-space-spacebar" />
 
@@ -86,14 +86,14 @@
 					<h:outputText value="Ações" />
 				</f:facet>
 				<p:panelGrid columns="2">
-				<p:commandLink update=":form:documentPanel"
-					oncomplete="PF('documentDialog').show()" title="View Detail"
+				<p:commandLink 
+					title="View Detail"
 					styleClass="ui-icon ui-icon-search">
 					<f:setPropertyActionListener value="#{cliente}"
 						target="#{clienteMB.cliente}" />
 				</p:commandLink>
-				 <p:commandLink update=":form:documentPanelDelete"
-					oncomplete="PF('documentDialogDelete').show()" title="View Detail"
+				 <p:commandLink 
+					 title="View Detail"
 					styleClass="ui-icon ui-icon-search">
 					<f:setPropertyActionListener value="#{cliente}"
 						target="#{clienteMB.cliente}" />
@@ -152,14 +152,14 @@
 					<h:outputText value="Ações" />
 				</f:facet>
 				<p:panelGrid columns="2">
-				<p:commandLink update=":form:documentPanel"
-					oncomplete="PF('documentDialog').show()" title="View Detail"
+				<p:commandLink 
+					 title="View Detail"
 					styleClass="ui-icon ui-icon-search">
 					<f:setPropertyActionListener value="#{cliente}"
 						target="#{clienteMB.cliente}" />
 				</p:commandLink>
-				 <p:commandLink update=":form:documentPanelDelete"
-					oncomplete="PF('documentDialogDelete').show()" title="View Detail"
+				 <p:commandLink 
+					 title="View Detail"
 					styleClass="ui-icon ui-icon-search">
 					<f:setPropertyActionListener value="#{cliente}"
 						target="#{clienteMB.cliente}" />
@@ -218,13 +218,13 @@
 					<h:outputText value="Ações" />
 				</f:facet>
 				<p:panelGrid columns="2">
-				<p:commandLink update=":form:documentPanel"
+				<p:commandLink 
 					oncomplete="PF('documentDialog').show()" title="View Detail"
 					styleClass="ui-icon ui-icon-search">
 					<f:setPropertyActionListener value="#{cliente}"
 						target="#{clienteMB.cliente}" />
 				</p:commandLink>
-				 <p:commandLink update=":form:documentPanelDelete"
+				 <p:commandLink 
 					oncomplete="PF('documentDialogDelete').show()" title="View Detail"
 					styleClass="ui-icon ui-icon-search">
 					<f:setPropertyActionListener value="#{cliente}"

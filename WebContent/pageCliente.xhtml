@@ -85,8 +85,8 @@
 				<f:facet name="header">
 					<h:outputText value="Ações" />
 				</f:facet>
-				<p:commandLink update=":form:documentPanelDelete"
-					oncomplete="PF('documentDialogDelete').show()" title="View Detail"
+				<p:commandLink action="geralCliente.xhtml?faces-redirect=true" 
+					 title="View Detail"
 					value="Visualizar">
 					<f:setPropertyActionListener value="#{cliente}"
 						target="#{clienteMB.cliente}" />
