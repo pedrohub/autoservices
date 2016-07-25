@@ -86,7 +86,7 @@
 					<h:outputText value="Ações" />
 				</f:facet>
 				<p:commandLink action="geralCliente.xhtml?faces-redirect=true" 
-					 title="View Detail"
+					 title="View Detail" actionListener="#{clienteMB.redirectGeral(cliente)}"
 					value="Visualizar">
 					<f:setPropertyActionListener value="#{cliente}"
 						target="#{clienteMB.cliente}" />

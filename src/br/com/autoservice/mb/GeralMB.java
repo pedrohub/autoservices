@@ -1,9 +1,11 @@
 package br.com.autoservice.mb;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
 import br.com.autoservice.controller.ClienteController;
@@ -14,7 +16,7 @@ import br.com.autoservice.modelo.Endereco;
 import br.com.autoservice.modelo.Veiculo;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class GeralMB implements Serializable{
 	
 	private static final long serialVersionUID = 689572449911905267L;
@@ -25,7 +27,6 @@ public class GeralMB implements Serializable{
 	@PostConstruct
 	public void init() {
 		controladorCliente = controladorCliente.getInstance();
-		cliente = new Cliente();
 	}
 
 
@@ -36,6 +37,10 @@ public class GeralMB implements Serializable{
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	
+	public List<String> getEstados(){
+		return ClienteController.getInstance().getEstados();
 	}
 
 

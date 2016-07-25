@@ -80,6 +80,11 @@ public class ClienteController implements Serializable{
 		return clienteRetorno;
 	}
 	
+	public Cliente findByPlaca(String placa) {
+		Cliente clienteRetorno = clienteDao.findByPlaca(placa);
+		return clienteRetorno;
+	}
+	
 	public List<String> getEstados(){
 		List<String> estados = new ArrayList<>();
 		

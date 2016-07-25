@@ -4,6 +4,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
 import br.com.autoservice.modelo.Cliente;
+import br.com.autoservice.modelo.Veiculo;
 import br.com.autoservice.util.HibernateUtil;
 
 
@@ -48,6 +49,26 @@ public class ClienteDao extends GenericDao {
 					.add(Restrictions.eq("status", true));
 
 			return (Cliente) cri.uniqueResult();
+		} finally {
+			session.close();
+		}
+	}
+	
+	public Cliente findByPlaca(String placa) {
+
+		session = HibernateUtil.getSessionFactory().openSession();
+		Cliente cliente = null;
+		Veiculo veiculo = new Veiculo();
+		try {
+			Criteria cri = session.createCriteria(veiculo.getClass())
+					.add(Restrictions.eq("placa", placa))
+					.add(Restrictions.eq("status", true));
+			
+			veiculo = (Veiculo) cri.uniqueResult();
+			if (veiculo != null)
+				cliente = veiculo.getCliente();
+			
+			return cliente;
 		} finally {
 			session.close();
 		}

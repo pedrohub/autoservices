@@ -10,38 +10,73 @@
 
 	<h1 class="texto2">Cliente</h1>
 	<h:form>
-	
-	<!-- painel clientes -->
-	<p:outputPanel id="documentPanel" styleClass="modal">
 
-				<h:panelGrid columns="4" cellpadding="5">
+		<!-- ************ painel clientes ************************* -->
+		<p:outputPanel id="documentPanel" styleClass="modal">
 
-					<h:outputText value="Nome: " />
-					<p:inputText id="default" value="#{geralMB.cliente.nome}" />
 
-					<h:outputText value="Marca: " />
-					<p:inputText id="qwerty" value="#{geralMB.cliente.nome}"
-						layout="qwertyBasic" />
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:panelGrid columns="2" cellpadding="5">
 
-					<h:outputText value="Quantidade: " />
-					<p:inputText id="alphabetic" value="#{geralMB.cliente.nome}"
-						layout="alphabetic" />
+					<p:outputLabel for="nome" value="Nome: " />
+					<p:inputText id="nome" value="#{geralMB.cliente.nome}"
+						 />
 
-					<h:outputText value="Descricao: " />
-					<p:inputText id="custom1" value="#{geralMB.cliente.nome}"
-						layout="custom"
-						layoutTemplate="prime-back,faces-clear,rocks-close" />
+					<p:outputLabel value="Email: " />
+					<p:inputText value="#{geralMB.cliente.email}"
+						 />
 
-					<h:outputText value="Observacao: " />
-					<p:inputText id="custom2" value="#{geralMB.cliente.nome}"
-						layout="custom"
-						layoutTemplate="create-space-your-close,owntemplate-shift,easily-space-spacebar" />
+					<p:outputLabel for="fone1" value="Fone 1: " />
+					<p:inputMask id="fone1" value="#{geralMB.cliente.fone1}"
+						mask="(999) 99999-9999"  />
 
-					<h:outputText value="" />
-					<p:commandButton value="Salvar" />
+					<p:outputLabel for="fone2" value="Fone 2: " />
+					<p:inputMask id="fone2" value="#{geralMB.cliente.fone2}"
+						mask="(999) 99999-9999"  />
+
+					<p:outputLabel value="Observação: " />
+					<p:inputTextarea value="#{geralMB.cliente.obs}"
+						autoResize="false" rows="3" cols="22"
+						 />
 
 				</h:panelGrid>
-			</p:outputPanel>
+
+				<h:panelGrid columns="2" cellpadding="5">
+
+					<p:outputLabel value="Estado: " />
+					<p:selectOneMenu value="#{geralMB.cliente.endereco.uf}"
+						>
+						<f:selectItem itemLabel="Selecione" itemValue=""
+							noSelectionOption="true" />
+						<f:selectItems value="#{geralMB.estados}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Cidade: " />
+					<p:inputText value="#{geralMB.cliente.endereco.cidade}"
+						 />
+
+					<p:outputLabel for="cep" value="Cep: " />
+					<p:inputMask id="cep" value="#{geralMB.cliente.endereco.cep}"
+						mask="99.999-999"  />
+
+					<p:outputLabel for="bairro" value="Bairro: " />
+					<p:inputText id="bairro" value="#{geralMB.cliente.endereco.bairro}"
+						 />
+
+					<p:outputLabel value="Logradouro: " />
+					<p:inputTextarea value="#{geralMB.cliente.endereco.logradouro}"
+						autoResize="false" rows="3" cols="22"
+						 />
+
+					<p:outputLabel value="Numero: " />
+					<p:inputText value="#{geralMB.cliente.endereco.numero}"
+						 />
+
+				</h:panelGrid>
+			</h:panelGrid>
+			<p:commandButton value="Salvar" />
+
+		</p:outputPanel>
 		<hr />
 	
 		<!-- tabela de veiculos  -->

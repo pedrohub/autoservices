@@ -7,7 +7,9 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import br.com.autoservice.controller.ClienteController;
@@ -25,7 +27,7 @@ import br.com.autoservice.util.LogUtil;
  *
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class ClienteMB implements Serializable{
 
 	private static final long serialVersionUID = -2814761488716950745L;
@@ -49,6 +51,8 @@ public class ClienteMB implements Serializable{
 	private boolean consultaNome;
 	private boolean consultaFone;
 	private boolean consultaPlaca;
+	@ManagedProperty(value="#{geralMB}")
+	private GeralMB geralMB;
 	
 
 	@PostConstruct
@@ -180,12 +184,6 @@ public class ClienteMB implements Serializable{
         List<Cliente> allClientes = controladorCliente.listar();
         List<Cliente> filteredClientes = new ArrayList<Cliente>();
         
-//        for (int i = 0; i < allClientes.size(); i++) {
-//            Cliente cliente = allClientes.get(i);
-//            if(cliente.getNome().toLowerCase().startsWith(query)) {
-//            	filteredClientes.add(cliente);
-//            }
-//        }
         consultaNome = false;
     	consultaFone = false;
     	consultaPlaca = false;
@@ -235,8 +233,7 @@ public class ClienteMB implements Serializable{
 	}
 	
 	public void redirectGeral(Cliente cliente){
-		GeralMB mb = new GeralMB();
-		mb.setCliente(cliente);
+		geralMB.setCliente(cliente);
 	}
 	
 	public List<String> getEstados(){
@@ -369,6 +366,14 @@ public class ClienteMB implements Serializable{
 
 	public List<Marca> getListaMarcas() {
 		return listaMarcas;
+	}
+	
+	public GeralMB getGeralMB() {
+		return geralMB;
+	}
+
+	public void setGeralMB(GeralMB geralMB) {
+		this.geralMB = geralMB;
 	}
 
 	public void setListaMarcas(List<Marca> listaMarcas) {

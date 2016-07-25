@@ -8,6 +8,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	template="/template/template.xhtml">
 	
+	<h:form id="form">	
 	<p:button value="Abrir Ordem" icon="ui-icon-wrench">
 		</p:button>
 		
@@ -21,12 +22,32 @@
 		</p:button><br></br>
 
 	<br></br>
-	<p:outputLabel for="nome" value="Pesquisar Ordem por Placa: " />
-						<p:inputText id="nome"  alt="Exemplo: pdx5554"
-							 /><br></br>
+	<p:outputLabel for="nome" value="Pesquisar Cliente por Placa: " />
+						<p:inputText id="nome"  alt="Exemplo: pdx5554" value="#{homeMB.placa}"
+							 /> 
+							 <p:spacer width="4px"></p:spacer>
+							 <p:commandButton value="Buscar" actionListener="#{homeMB.findCliente}" 
+							  update=":form:nome :form:painelBusca">
+							 </p:commandButton> <br></br>
 							 
 	<p:spacer height="10px"></p:spacer>
-
+	
+	<p:outputPanel id="painelBusca">
+	
+		<p:outputPanel rendered="#{homeMB.painelCliente}">
+			<p:commandLink value="#{homeMB.cliente.nome} Fone:#{homeMB.cliente.fone1}" ></p:commandLink>
+			<br></br>
+		</p:outputPanel>
+		
+		<p:outputPanel rendered="#{homeMB.painelMensagem}">
+			<p:outputLabel value="#{homeMB.mensagemConsulta}" style="color:red"></p:outputLabel>
+			<br></br>
+		</p:outputPanel>
+	
+	</p:outputPanel>
+	</h:form>
+	
+	
 	 <p:accordionPanel>
         <p:tab title="Serviços Agendados">
             <h:panelGrid columns="2" cellpadding="10">
@@ -47,6 +68,6 @@
             </h:panelGrid>
         </p:tab>
     </p:accordionPanel>
-
+	
 	
 </ui:decorate>

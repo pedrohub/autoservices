@@ -24,7 +24,7 @@ public class Veiculo {
 	private String placa;
 	private boolean status;
 	@ManyToOne//(cascade = CascadeType.PERSIST)
-	@JoinColumn(name="team_id")
+	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
 
 	public Veiculo() {
