@@ -1,5 +1,7 @@
 package br.com.autoservice.mb;
 
+import java.io.Serializable;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -9,14 +11,18 @@ import br.com.autoservice.modelo.Cliente;
 
 @ManagedBean
 @ViewScoped
-public class HomeMB {
+public class HomeMB implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5831543201389925568L;
 	private Cliente cliente;
 	private ClienteController controladorCliente;
 	private String placa;
 	private boolean painelCliente;
 	private boolean painelMensagem;
-	private String mensagemConsulta = "Não existe cliente com esta placa";
+	private String mensagemConsulta = "Nao existe cliente com esta placa";
 	
 	@PostConstruct
 	public void init() {
