@@ -233,7 +233,7 @@ public class ClienteMB implements Serializable{
 	}
 	
 	public void redirectGeral(Cliente cliente){
-		geralMB.setCliente(cliente);
+		geralMB.carregarInformacoes(cliente);
 	}
 	
 	public List<String> getEstados(){

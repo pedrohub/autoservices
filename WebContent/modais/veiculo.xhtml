@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	
+	  <p:growl id="message" showDetail="true" />
+		
+		<!-- *************** dialog inserir veiculos ************** -->
+		<p:dialog id="dialogInVeiculo" header="Cadastrar Veiculo" showEffect="fade"
+			widgetVar="documentDialogInVeiculo" modal="true"  resizable="false"  
+			style="max-height:700px;overflow:auto">
+			
+			 <h:form id="dlgForm2">
+			 
+		 			<p:messages id="msg" showDetail="true" autoUpdate="true" closable="true" />
+		 			
+					<p:outputPanel id="painelVeiculo" styleClass="modal">
+				
+						<h:panelGrid columns="2" cellpadding="10">
+							<h:panelGrid columns="2" cellpadding="10">
+							
+								<h:outputText value="Marca: " />
+								 <p:selectOneMenu id="marca" value="#{clienteMB.veiculo.marca}"
+									 disabled="#{clienteMB.botaoVeiculo}">
+						            <f:selectItem itemLabel="- Selecione -" itemValue="" />
+						            <f:selectItems value="#{clienteMB.listaMarcas}" var="marca" itemValue="#{marca.marca}" itemLabel="#{marca.marca}"/>
+						        </p:selectOneMenu>
+
+								<h:outputText value="Modelo: " />
+								<p:inputText value="#{clienteMB.veiculo.modelo}"
+									disabled="#{clienteMB.botaoVeiculo}" />
+
+								<h:outputText value="Placa: " />
+								<p:inputMask id="placa" value="#{clienteMB.veiculo.placa}"  mask="aaa-9999"
+					    			disabled="#{clienteMB.botaoVeiculo}">
+					    		</p:inputMask>
+
+							</h:panelGrid>
+							<h:panelGrid columns="2" cellpadding="10">
+
+								<h:outputText value="Ano: " />
+								<p:inputText value="#{clienteMB.veiculo.ano}"
+									disabled="#{clienteMB.botaoVeiculo}" />
+
+								<h:outputText value="Cor: " />
+								<p:inputText value="#{clienteMB.veiculo.cor}"
+									disabled="#{clienteMB.botaoVeiculo}" />
+
+								<h:outputText value="Obs: " />
+								<p:inputText value="#{clienteMB.veiculo.obs}"
+									disabled="#{clienteMB.botaoVeiculo}" />
+
+							</h:panelGrid>
+
+						</h:panelGrid>
+						
+						<p:commandButton
+								update=":dlgForm2:painelVeiculo"  
+								value="Salvar" icon="ui-icon-check"
+								disabled="#{clienteMB.botaoVeiculo}"
+								actionListener="#{clienteMB.salvarVeiculo}" />
+						<p:commandButton ajax="true" update=":dialogInVeiculo" value="Fechar Janela" icon="ui-icon-check"
+						onclick="PF('documentDialogInVeiculo').hide();" immediate="true" />
+
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+		<!-- **************** fim dialog inserir veiculos *************** -->
+		
+		<!-- **************** modal de confimacao *************** -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Yes" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+
+
+</ui:composition>

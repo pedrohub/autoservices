@@ -82,7 +82,7 @@
 		<!-- tabela de veiculos  -->
 		<h1 class="texto2">Veículos</h1>
 		<p:outputPanel id="painelTabela">
-		<p:dataTable id="tabelaClientes" var="cliente" value="#{clienteMB.listaClientes}" 
+		<p:dataTable id="tabelaClientes" var="veiculo" value="#{geralMB.veiculos}" 
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 			paginator="true" rows="6" style="margin-bottom:20px;font-size: 14px !important">
 
@@ -90,31 +90,31 @@
 				<f:facet name="header">
 					<h:outputText value="Ano" />
 				</f:facet>
-				<h:outputText value="#{cliente.nome}" />
+				<h:outputText value="#{veiculo.placa}" />
 			</p:column>
 			<p:column>
 				<f:facet name="header">
 					<h:outputText value="Cor" />
 				</f:facet>
-				<h:outputText value="#{cliente.email}" />
+				<h:outputText value="#{veiculo.placa}" />
 			</p:column>
 			<p:column>
 				<f:facet name="header">
 					<h:outputText value="Marca" />
 				</f:facet>
-				<h:outputText value="#{cliente.fone1}" />
+				<h:outputText value="#{veiculo.placa}" />
 			</p:column>
 			<p:column>
 				<f:facet name="header">
 					<h:outputText value="Modelo" />
 				</f:facet>
-				<h:outputText value="#{cliente.endereco.bairro}" />
+				<h:outputText value="#{veiculo.placa}" />
 			</p:column>
 			<p:column>
 				<f:facet name="header">
 					<h:outputText value="Placa" />
 				</f:facet>
-				<h:outputText value="#{cliente.endereco.bairro}" />
+				<h:outputText value="#{veiculo.placa}" />
 			</p:column>
 			<p:column>
 				<f:facet name="header">
@@ -124,13 +124,13 @@
 				<p:commandLink 
 					title="View Detail"
 					styleClass="ui-icon ui-icon-search">
-					<f:setPropertyActionListener value="#{cliente}"
+					<f:setPropertyActionListener value="#{veiculo}"
 						target="#{clienteMB.cliente}" />
 				</p:commandLink>
 				 <p:commandLink 
 					 title="View Detail"
 					styleClass="ui-icon ui-icon-search">
-					<f:setPropertyActionListener value="#{cliente}"
+					<f:setPropertyActionListener value="#{veiculo}"
 						target="#{clienteMB.cliente}" />
 				</p:commandLink> 
 				</p:panelGrid>
@@ -139,7 +139,9 @@
 		</p:dataTable>
 		
 		<h:outputText value="" />
-		<p:commandButton value="Adicionar Veículo" />
+		<p:commandButton update=":dlgForm2:painelVeiculo" value="Adicionar Veiculo"
+					oncomplete="PF('documentDialogInVeiculo').show()" icon="fa fa-fw fa-edit"
+					actionListener="#{clienteMB.limparModal}"></p:commandButton>
 		
 		</p:outputPanel>
 		<!-- fim tabela de veiculos  -->
@@ -275,7 +277,8 @@
 		
 		</p:outputPanel>
 		<!-- fim tabela de veiculos  -->
-	
-	
 	</h:form>
+	
+	<ui:include src="modais/veiculo.xhtml"></ui:include>
+	
 </ui:decorate>

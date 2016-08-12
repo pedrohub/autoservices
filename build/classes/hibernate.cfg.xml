@@ -8,7 +8,7 @@
    <property name="hibernate.connection.username">root</property>
   <property name="hibernate.connection.password">sicoadmin</property>
   <property name="hibernate.connection.url">jdbc:mysql://localhost/auto_services</property>
- <property name="hibernate.hbm2ddl.auto">false	</property>
+ <property name="hibernate.hbm2ddl.auto">false</property>
  <!-- Para criar as tabelas no banco de dados -->
  <!--  
  	<property name="hibernate.hbm2ddl.auto">create</property>
