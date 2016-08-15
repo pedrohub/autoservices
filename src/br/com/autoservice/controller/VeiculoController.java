@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 
 import br.com.autoservice.dao.VeiculoDao;
+import br.com.autoservice.modelo.Cliente;
 import br.com.autoservice.modelo.Veiculo;
 
 public class VeiculoController {
@@ -63,5 +64,11 @@ public class VeiculoController {
 	public Veiculo find(Veiculo veiculo) {
 		Veiculo veiculoRetorno = veiculoDao.find(veiculo); 
 		return veiculoRetorno;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Veiculo> listar(Cliente cliente) throws HibernateException {
+		List<Veiculo> listaPeca = veiculoDao.listar(cliente);
+		return listaPeca;
 	}
 }

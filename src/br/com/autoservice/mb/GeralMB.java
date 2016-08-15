@@ -13,6 +13,7 @@ import br.com.autoservice.controller.ClienteController;
 import br.com.autoservice.controller.VeiculoController;
 import br.com.autoservice.modelo.Cliente;
 import br.com.autoservice.modelo.Veiculo;
+import br.com.autoservice.util.Constantes;
 
 @ManagedBean
 @SessionScoped
@@ -25,12 +26,14 @@ public class GeralMB implements Serializable{
 	private List<Veiculo> veiculos;
 	private Veiculo veiculo;
 	private boolean botaoVeiculo;
+	private String acaoVeiculo;
 	
 	
 	@PostConstruct
 	public void init() {
 		controladorCliente = controladorCliente.getInstance();
 		controladorVeiculo = controladorVeiculo.getInstance();
+		veiculo = new Veiculo();
 	}
 	
 	public void carregarInformacoes(Cliente cliente){
@@ -39,8 +42,6 @@ public class GeralMB implements Serializable{
 		
 		if (cliente.getVeiculos() != null)
 			veiculos = cliente.getVeiculos();
-		
-		
 	}
 	
 	/**
@@ -48,25 +49,35 @@ public class GeralMB implements Serializable{
 	 */
 	public void salvarVeiculo() {
 		
-		if (veiculo == null)
-			veiculo = new Veiculo();
-		
 		veiculo.setCliente(cliente);
 		veiculo.setStatus(true);
 		
 		if (validarVeiculo(veiculo)){
 			
-			if (controladorVeiculo.find(veiculo) == null) {
+			if (acaoVeiculo.equals(Constantes.INSERIR)){
+				if (controladorVeiculo.find(veiculo) == null) {
+					try{
+						veiculo.setPlaca(veiculo.getPlaca().toUpperCase());
+						controladorVeiculo.inserir(veiculo);
+						botaoVeiculo = true;
+						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Veiculo Salvo"));
+						veiculos = VeiculoController.getInstance().listar(cliente);
+					} catch (Exception e) {
+						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao Salvar", "Veiculo"));
+					}
+				} else {
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Veiculo ja cadastrado", ""));
+				}
+			} else if (acaoVeiculo.equals(Constantes.ALTERAR)){// fluxo alterar
 				try{
 					veiculo.setPlaca(veiculo.getPlaca().toUpperCase());
-					controladorVeiculo.inserir(veiculo);
-				//	botaoVeiculo = true;
+					controladorVeiculo.alterar(veiculo);
+					botaoVeiculo = true;
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Veiculo Salvo"));
+					veiculos = VeiculoController.getInstance().listar(cliente);
 				} catch (Exception e) {
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao Salvar", "Veiculo"));
 				}
-			} else {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Veiculo ja cadastrado", ""));
 			}
 		} else {
 			FacesContext.getCurrentInstance().addMessage( null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Informar Campos Obrigatorios", ""));
@@ -81,6 +92,62 @@ public class GeralMB implements Serializable{
 	private boolean validarVeiculo(Veiculo veiculo){
 		if ((veiculo.getModelo() != null && !veiculo.getModelo().isEmpty()) &&
 				veiculo.getPlaca() != null && !veiculo.getPlaca().isEmpty()){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * limpar modal de veiculos
+	 */
+	public void limparModalVeiculo (){
+		this.veiculo = new Veiculo();
+		botaoVeiculo  = false;
+		acaoVeiculo = Constantes.INSERIR;
+	}
+	
+	public void habilitarModalVeiculo(){
+		botaoVeiculo = false;
+		acaoVeiculo = Constantes.ALTERAR;
+	}
+	
+	/**
+	 * deletar veiculo
+	 * @param cliente
+	 */
+	public void deletarVeiculo(Veiculo veiculo){
+		controladorVeiculo.excluir(veiculo);
+		veiculos = VeiculoController.getInstance().listar(cliente);
+	}
+	
+	/**
+	 * Alterar Cliente
+	 */
+	public void alterarCliente() {
+		
+		if (validarCliente(cliente)) {
+			try {
+				controladorCliente.alterar(cliente);
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cliente Salvo"));
+				
+			} catch (Exception e) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao Salvar", "Cliente"));
+			}
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos Obrigatorios nao preenchidos: Nome, Fone 1 e Bairro", ""));
+		}
+	}
+	
+	/**
+	 * validar atributos do cliente
+	 * @param cliente
+	 * @return
+	 */
+	private boolean validarCliente(Cliente cliente){
+		if ((cliente.getNome() != null && !cliente.getNome().isEmpty()) && 
+				(cliente.getFone1()!=null && !cliente.getFone1().isEmpty())
+				&& (cliente.getEndereco().getBairro() != null && !cliente.getEndereco().getBairro().isEmpty())){
 			return true;
 		} else {
 			return false;
@@ -126,8 +193,6 @@ public class GeralMB implements Serializable{
 	public void setBotaoVeiculo(boolean botaoVeiculo) {
 		this.botaoVeiculo = botaoVeiculo;
 	}
-	
-	
-		
+
 
 }

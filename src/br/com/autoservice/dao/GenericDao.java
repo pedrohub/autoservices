@@ -75,6 +75,7 @@ public class GenericDao {
 
 		try{
 			Criteria cri = session.createCriteria(o.getClass()).add(Restrictions.eq("status", true));
+			cri.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			return cri.list();
 		}finally{
 			session.close();

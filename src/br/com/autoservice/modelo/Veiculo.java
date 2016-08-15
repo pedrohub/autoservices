@@ -1,6 +1,5 @@
 package br.com.autoservice.modelo;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

@@ -9,7 +9,9 @@
 
 
 	<h1 class="texto2">Cliente</h1>
-	<h:form>
+	<h:form id="form">
+	
+	<p:growl id="growl" showDetail="true" sticky="true" /> 
 
 		<!-- ************ painel clientes ************************* -->
 		<p:outputPanel id="documentPanel" styleClass="modal">
@@ -74,44 +76,22 @@
 
 				</h:panelGrid>
 			</h:panelGrid>
-			<p:commandButton value="Salvar" />
+			<p:commandButton update=":form:documentPanel :form:growl" value="Salvar"
+					 icon="fa fa-fw fa-edit"
+					actionListener="#{geralMB.alterarCliente}"/>
 
 		</p:outputPanel><br></br>
 	
 	<!-- tab view geral -->
-	 <p:tabView>
-        <p:tab title="Veiculos">
+	 <p:tabView id="tabView">
+        <p:tab title="Veiculos" id="tabVeiculo">
 	        <!-- tabela de veiculos  -->
 			
-			<p:outputPanel id="painelTabela">
-			<p:dataTable id="tabelaClientes" var="veiculo" value="#{geralMB.veiculos}" 
+			<p:outputPanel id="painelVeiculos">
+			<p:dataTable id="tabelaVeiculos" var="veiculo" value="#{geralMB.veiculos}" 
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-				paginator="true" rows="6" style="margin-bottom:20px;font-size: 14px !important">
+				paginator="true" rows="10" style="margin-bottom:20px;font-size: 14px !important">
 	
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Ano" />
-					</f:facet>
-					<h:outputText value="#{veiculo.placa}" />
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Cor" />
-					</f:facet>
-					<h:outputText value="#{veiculo.placa}" />
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Marca" />
-					</f:facet>
-					<h:outputText value="#{veiculo.placa}" />
-				</p:column>
-				<p:column>
-					<f:facet name="header">
-						<h:outputText value="Modelo" />
-					</f:facet>
-					<h:outputText value="#{veiculo.placa}" />
-				</p:column>
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Placa" />
@@ -120,30 +100,52 @@
 				</p:column>
 				<p:column>
 					<f:facet name="header">
+						<h:outputText value="Ano" />
+					</f:facet>
+					<h:outputText value="#{veiculo.ano}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Cor" />
+					</f:facet>
+					<h:outputText value="#{veiculo.cor}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Marca" />
+					</f:facet>
+					<h:outputText value="#{veiculo.marca}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Modelo" />
+					</f:facet>
+					<h:outputText value="#{veiculo.modelo}" />
+				</p:column>
+				
+				<p:column width="50">
+					<f:facet name="header">
 						<h:outputText value="Ações" />
 					</f:facet>
-					<p:panelGrid columns="2">
-					<p:commandLink 
-						title="View Detail"
-						styleClass="ui-icon ui-icon-search">
-						<f:setPropertyActionListener value="#{veiculo}"
-							target="#{clienteMB.cliente}" />
-					</p:commandLink>
-					 <p:commandLink 
-						 title="View Detail"
-						styleClass="ui-icon ui-icon-search">
-						<f:setPropertyActionListener value="#{veiculo}"
-							target="#{clienteMB.cliente}" />
-					</p:commandLink> 
-					</p:panelGrid>
-					
+					<p:commandLink update=":dlgForm2:painelVeiculo :form:tabView:tabelaVeiculos" process="@this"
+							oncomplete="PF('documentDialogInVeiculo').show()" title="Editar " styleClass="ui-icon ui-icon-pencil"
+							style="float:left;margin-right:1px" actionListener="#{geralMB.habilitarModalVeiculo}">
+							<f:setPropertyActionListener target="#{geralMB.veiculo}"
+								value="#{veiculo}" />
+						</p:commandLink>
+						<p:commandLink actionListener="#{geralMB.deletarVeiculo(veiculo)}" styleClass="ui-icon ui-icon-close"
+							process="@this" title="Deletar" update=":dlgForm2:painelVeiculo :form:tabView:tabelaVeiculos"
+							style="float:left;margin-right:1px" >
+							<p:confirm header="Confirmation"
+								message="Deseja deletar o veiculo?" icon="ui-icon-alert" />
+						</p:commandLink>
 				</p:column>
 			</p:dataTable>
 			
 			<h:outputText value="" />
 			<p:commandButton update=":dlgForm2:painelVeiculo" value="Adicionar Veiculo"
 						oncomplete="PF('documentDialogInVeiculo').show()" icon="fa fa-fw fa-edit"
-						actionListener="#{clienteMB.limparModal}"></p:commandButton>
+						actionListener="#{geralMB.limparModalVeiculo}"></p:commandButton>
 			
 			</p:outputPanel>
 			<!-- fim tabela de veiculos  -->
@@ -286,6 +288,13 @@
         </p:tab>
         
     </p:tabView>
+    
+    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Yes" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
 		
 	</h:form>
 	

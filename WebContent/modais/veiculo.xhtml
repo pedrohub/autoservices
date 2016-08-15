@@ -35,7 +35,7 @@
 									disabled="#{geralMB.botaoVeiculo}" />
 
 								<h:outputText value="Placa: " />
-								<p:inputMask id="placa" value="#{clienteMB.veiculo.placa}"  mask="aaa-9999"
+								<p:inputMask id="placa" value="#{geralMB.veiculo.placa}"  mask="aaa-9999"
 					    			disabled="#{geralMB.botaoVeiculo}">
 					    		</p:inputMask>
 
@@ -47,7 +47,7 @@
 									disabled="#{geralMB.botaoVeiculo}" />
 
 								<h:outputText value="Cor: " />
-								<p:inputText value="#{clienteMB.veiculo.cor}"
+								<p:inputText value="#{geralMB.veiculo.cor}"
 									disabled="#{geralMB.botaoVeiculo}" />
 
 								<h:outputText value="Obs: " />
@@ -59,7 +59,7 @@
 						</h:panelGrid>
 						
 						<p:commandButton
-								update=":dlgForm2:painelVeiculo"  
+								update=":dlgForm2:painelVeiculo :form:tabView:tabelaVeiculos"  
 								value="Salvar" icon="ui-icon-check"
 								disabled="#{geralMB.botaoVeiculo}"
 								actionListener="#{geralMB.salvarVeiculo}" />

@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -102,7 +101,7 @@ public class ClienteMB implements Serializable{
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Campos Obrigatorios nao preenchidos: Nome, Fone 1 e Bairro", ""));
 		}
 	}
-
+	
 	/**
 	 * Salvar Veiculos
 	 */
