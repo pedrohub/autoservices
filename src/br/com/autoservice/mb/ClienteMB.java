@@ -62,7 +62,7 @@ public class ClienteMB implements Serializable{
 		endereco = new Endereco();
 		veiculo = new Veiculo();
 		renderPainelVeiculo = false;
-		controladorVeiculo = new VeiculoController();
+		controladorVeiculo = controladorVeiculo.getInstance();
 		botaoCliente = false;
 		botaoVeiculo = false;
 		listaClientes = controladorCliente.listar();

@@ -24,35 +24,35 @@
 							<h:panelGrid columns="2" cellpadding="10">
 							
 								<h:outputText value="Marca: " />
-								 <p:selectOneMenu id="marca" value="#{clienteMB.veiculo.marca}"
-									 disabled="#{clienteMB.botaoVeiculo}">
+								 <p:selectOneMenu id="marca" value="#{geralMB.veiculo.marca}"
+									 disabled="#{geralMB.botaoVeiculo}">
 						            <f:selectItem itemLabel="- Selecione -" itemValue="" />
 						            <f:selectItems value="#{clienteMB.listaMarcas}" var="marca" itemValue="#{marca.marca}" itemLabel="#{marca.marca}"/>
 						        </p:selectOneMenu>
 
 								<h:outputText value="Modelo: " />
-								<p:inputText value="#{clienteMB.veiculo.modelo}"
-									disabled="#{clienteMB.botaoVeiculo}" />
+								<p:inputText value="#{geralMB.veiculo.modelo}"
+									disabled="#{geralMB.botaoVeiculo}" />
 
 								<h:outputText value="Placa: " />
 								<p:inputMask id="placa" value="#{clienteMB.veiculo.placa}"  mask="aaa-9999"
-					    			disabled="#{clienteMB.botaoVeiculo}">
+					    			disabled="#{geralMB.botaoVeiculo}">
 					    		</p:inputMask>
 
 							</h:panelGrid>
 							<h:panelGrid columns="2" cellpadding="10">
 
 								<h:outputText value="Ano: " />
-								<p:inputText value="#{clienteMB.veiculo.ano}"
-									disabled="#{clienteMB.botaoVeiculo}" />
+								<p:inputText value="#{geralMB.veiculo.ano}"
+									disabled="#{geralMB.botaoVeiculo}" />
 
 								<h:outputText value="Cor: " />
 								<p:inputText value="#{clienteMB.veiculo.cor}"
-									disabled="#{clienteMB.botaoVeiculo}" />
+									disabled="#{geralMB.botaoVeiculo}" />
 
 								<h:outputText value="Obs: " />
-								<p:inputText value="#{clienteMB.veiculo.obs}"
-									disabled="#{clienteMB.botaoVeiculo}" />
+								<p:inputText value="#{geralMB.veiculo.obs}"
+									disabled="#{geralMB.botaoVeiculo}" />
 
 							</h:panelGrid>
 
@@ -61,8 +61,8 @@
 						<p:commandButton
 								update=":dlgForm2:painelVeiculo"  
 								value="Salvar" icon="ui-icon-check"
-								disabled="#{clienteMB.botaoVeiculo}"
-								actionListener="#{clienteMB.salvarVeiculo}" />
+								disabled="#{geralMB.botaoVeiculo}"
+								actionListener="#{geralMB.salvarVeiculo}" />
 						<p:commandButton ajax="true" update=":dialogInVeiculo" value="Fechar Janela" icon="ui-icon-check"
 						onclick="PF('documentDialogInVeiculo').hide();" immediate="true" />
 

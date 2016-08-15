@@ -29,7 +29,7 @@ public class ClienteController implements Serializable{
 	private static ClienteController uniqueInstance; 
 	
 	private ClienteController() { 
-		veiculoController = new VeiculoController();
+		veiculoController = veiculoController.getInstance();
 	} 
 	
 	public static synchronized ClienteController getInstance() { 

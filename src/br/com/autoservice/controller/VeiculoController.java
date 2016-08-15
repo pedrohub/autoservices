@@ -9,8 +9,19 @@ import br.com.autoservice.modelo.Veiculo;
 
 public class VeiculoController {
 
-	private VeiculoDao veiculoDao = new VeiculoDao();
+	private VeiculoDao veiculoDao;
 
+	private static VeiculoController uniqueInstance; 
+	
+	private VeiculoController() { 
+		veiculoDao = new VeiculoDao();
+	} 
+	
+	public static synchronized VeiculoController getInstance() { 
+		if (uniqueInstance == null) uniqueInstance = new VeiculoController(); 
+		return uniqueInstance;
+	}
+	
 	/**
 	 * inserir o objeto
 	 * 
