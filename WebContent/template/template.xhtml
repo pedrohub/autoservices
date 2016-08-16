@@ -12,33 +12,34 @@
 
 </h:head>
 
-<h:body styleClass="principal">
-	<table>
-		<tr >
-			<td><h:graphicImage library="imagens" name="mecanica.png" /></td>
-			<td style="width:600px; text-align: center;">
-				<h1>
-					<span class="texto1">SCS - Control System Services</span>
-				</h1>
-			</td>
-			<td>
-				<p:outputLabel value="#{userMB.userDao.user.login}"/> 
-				<p:spacer/>	<p:spacer/> <p:spacer/>
-				<p:link value="Sair" href="index.xhtml"/>
-			</td>
-		</tr>
-	</table>	
-	<p:menubar>
-		<p:menuitem value="Home" url="home.xhtml" />
-		<p:menuitem value="|" url="#" />
-		<p:menuitem value="Cadastro Cliente" url="pageCliente.xhtml" />
-		<p:menuitem value="|" url="#" />
-		<p:menuitem value="Agendamentos" url="agendamentos.xhtml" />
-		<p:menuitem value="|" url="#" />
-		<p:menuitem value="Ordem Serviço" url="ordemServico.xhtml" />
-	</p:menubar>
-	<hr />
-	<ui:insert></ui:insert>
+<h:body styleClass="principal" >
 
+		<table>
+			<tr >
+				<td><h:graphicImage library="imagens" name="mecanica.png" /></td>
+				<td style="width:600px; text-align: center;">
+					<h1>
+						<span class="texto1">SCS - Control System Services</span>
+					</h1>
+				</td>
+				<td>
+					<p:outputLabel value="#{userMB.userDao.user.login}"/> 
+					<p:spacer/>	<p:spacer/> <p:spacer/>
+					<p:link value="Sair" href="index.xhtml"/>
+				</td>
+			</tr>
+		</table>	
+		<p:menubar>
+			<p:menuitem value="Home" url="home.xhtml" />
+			<p:menuitem value="|" url="#" />
+			<p:menuitem value="Cadastro Cliente" url="pageCliente.xhtml" />
+			<p:menuitem value="|" url="#" />
+			<p:menuitem value="Agendamentos" url="agendamentos.xhtml" />
+			<p:menuitem value="|" url="#" />
+			<p:menuitem value="Ordem Serviço" url="ordemServico.xhtml" />
+		</p:menubar>
+		<hr />
+		<ui:insert></ui:insert>
+	
 </h:body>
 </html>

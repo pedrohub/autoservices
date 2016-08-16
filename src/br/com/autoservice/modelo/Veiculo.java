@@ -1,11 +1,16 @@
 package br.com.autoservice.modelo;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,12 +30,12 @@ public class Veiculo {
 	@ManyToOne//(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
+	@OneToMany(mappedBy = "veiculo", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Agendamento> agendamentos;
 
 	public Veiculo() {
 		super();
 	}
-
-	
 
 	public Long getCodVeiculo() {
 		return codVeiculo;
@@ -111,5 +116,19 @@ public class Veiculo {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+
+
+
+	public List<Agendamento> getAgendamentos() {
+		return agendamentos;
+	}
+
+
+
+	public void setAgendamentos(List<Agendamento> agendamentos) {
+		this.agendamentos = agendamentos;
+	}
+	
+	
 
 }
