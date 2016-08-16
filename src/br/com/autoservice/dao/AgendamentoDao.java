@@ -24,4 +24,16 @@ public class AgendamentoDao extends GenericDao{
 		}
 	}
 	
+	public List findAll() {
+
+		session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			Criteria cri = session.createCriteria(Agendamento.class);
+
+			return cri.list();
+		} finally {
+			session.close();
+		}
+	}
+	
 }

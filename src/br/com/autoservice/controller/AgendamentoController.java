@@ -1,8 +1,10 @@
 package br.com.autoservice.controller;
 
 import java.io.Serializable;
+import java.util.List;
 
 import br.com.autoservice.dao.AgendamentoDao;
+import br.com.autoservice.modelo.Agendamento;
 
 public class AgendamentoController implements Serializable{
 
@@ -23,8 +25,9 @@ public class AgendamentoController implements Serializable{
 		return uniqueInstance;
 	}
 
-	
-	
+	public List<Agendamento> listaAgendamentos(){
+		return dao.findAll();
+	}
 	
 	
 
