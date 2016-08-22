@@ -1,5 +1,6 @@
 package br.com.autoservice.modelo;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,10 +14,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.IndexColumn;
+
 @Entity
 @Table(name = "veiculo")
-public class Veiculo {
+public class Veiculo implements Serializable{
 
+	private static final long serialVersionUID = 7746473296377418052L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codVeiculo;
@@ -30,7 +34,7 @@ public class Veiculo {
 	@ManyToOne//(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
-	@OneToMany(mappedBy = "veiculo", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "veiculo", targetEntity = Agendamento.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Agendamento> agendamentos;
 
 	public Veiculo() {

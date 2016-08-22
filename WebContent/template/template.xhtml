@@ -12,9 +12,10 @@
 
 </h:head>
 
-<h:body styleClass="principal" >
+<h:body  styleClass="fundo">
 
-		<table>
+	<p:outputPanel styleClass="principal" >
+		<table style="margin-top: 20px">
 			<tr >
 				<td><h:graphicImage library="imagens" name="mecanica.png" /></td>
 				<td style="width:600px; text-align: center;">
@@ -28,8 +29,9 @@
 					<p:link value="Sair" href="index.xhtml"/>
 				</td>
 			</tr>
-		</table>	
-		<p:menubar>
+		</table>
+		
+		<p:menubar styleClass="menu">
 			<p:menuitem value="Home" url="home.xhtml" />
 			<p:menuitem value="|" url="#" />
 			<p:menuitem value="Cadastro Cliente" url="pageCliente.xhtml" />
@@ -39,7 +41,12 @@
 			<p:menuitem value="Ordem Serviço" url="ordemServico.xhtml" />
 		</p:menubar>
 		<hr />
+		
+	</p:outputPanel>
+	
+	<p:outputPanel styleClass="corpo">
 		<ui:insert></ui:insert>
+	</p:outputPanel>
 	
 </h:body>
 </html>

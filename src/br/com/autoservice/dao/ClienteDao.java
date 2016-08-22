@@ -1,5 +1,7 @@
 package br.com.autoservice.dao;
 
+import java.io.Serializable;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -13,7 +15,9 @@ import br.com.autoservice.util.HibernateUtil;
  *
  *Classe Dao Clientes
  */
-public class ClienteDao extends GenericDao {
+public class ClienteDao extends GenericDao implements Serializable{
+
+	private static final long serialVersionUID = 6034250589707265746L;
 
 	/**
 	 * consultar cliente por nome

@@ -35,7 +35,7 @@ public class Cliente implements Serializable{
 	private String fone2;
 	private String obs;
 	private String email;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, optional = true)
 	@JoinColumn(name = "endereco_id") 
 	private Endereco endereco;
 	@OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
