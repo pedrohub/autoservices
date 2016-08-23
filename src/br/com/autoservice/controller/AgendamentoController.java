@@ -1,10 +1,13 @@
 package br.com.autoservice.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.autoservice.dao.AgendamentoDao;
 import br.com.autoservice.modelo.Agendamento;
+import br.com.autoservice.modelo.Cliente;
+import br.com.autoservice.modelo.Veiculo;
 
 public class AgendamentoController implements Serializable{
 
@@ -27,6 +30,16 @@ public class AgendamentoController implements Serializable{
 
 	public List<Agendamento> listaAgendamentos(){
 		return dao.findAll();
+	}
+	
+	public List<Agendamento> listarPorcliente(Cliente cliente){
+		List<Agendamento> lista = new ArrayList<Agendamento>();
+		
+		for (Veiculo veiculo : cliente.getVeiculos()) {
+			if (dao.findByVeiculo(veiculo) != null)
+				lista.addAll(veiculo.getAgendamentos());
+		}
+		return lista;
 	}
 	
 	

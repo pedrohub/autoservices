@@ -9,8 +9,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import br.com.autoservice.controller.AgendamentoController;
 import br.com.autoservice.controller.ClienteController;
 import br.com.autoservice.controller.VeiculoController;
+import br.com.autoservice.modelo.Agendamento;
 import br.com.autoservice.modelo.Cliente;
 import br.com.autoservice.modelo.Veiculo;
 import br.com.autoservice.util.Constantes;
@@ -24,16 +26,20 @@ public class GeralMB implements Serializable{
 	private ClienteController controladorCliente;
 	private VeiculoController controladorVeiculo;
 	private List<Veiculo> veiculos;
+	private List<Agendamento> agendamentos;
 	private Veiculo veiculo;
 	private boolean botaoVeiculo;
 	private String acaoVeiculo;
+	private AgendamentoController agendamentoController;
 	
 	
 	@PostConstruct
 	public void init() {
-		controladorCliente = controladorCliente.getInstance();
-		controladorVeiculo = controladorVeiculo.getInstance();
+		controladorCliente = ClienteController.getInstance();
+		controladorVeiculo = VeiculoController.getInstance();
+		agendamentoController = AgendamentoController.getInstance();
 		veiculo = new Veiculo();
+		
 	}
 	
 	public void carregarInformacoes(Cliente cliente){
@@ -41,7 +47,9 @@ public class GeralMB implements Serializable{
 		this.cliente = cliente;
 		
 		if (cliente.getVeiculos() != null)
-			veiculos = cliente.getVeiculos();
+			veiculos = controladorVeiculo.listar(cliente);
+		
+		agendamentos = agendamentoController.listarPorcliente(cliente);
 	}
 	
 	/**

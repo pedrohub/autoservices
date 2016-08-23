@@ -2,11 +2,14 @@ package br.com.autoservice.mb;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+
 import br.com.autoservice.controller.AgendamentoController;
 import br.com.autoservice.modelo.Agendamento;
+import br.com.autoservice.modelo.Cliente;
 
 @ManagedBean
 @ViewScoped
@@ -22,11 +25,15 @@ public class AgendamentoMB implements Serializable{
 	
 	@PostConstruct
 	public void init() {
-		agendamentoController = agendamentoController.getInstance();
+		agendamentoController = AgendamentoController.getInstance();
 	}
 
 	public void findAll(){
 		agendamentos = agendamentoController.listaAgendamentos();
+	}
+	
+	public void findByCliente(Cliente cliente){
+		agendamentos = agendamentoController.listarPorcliente(cliente);
 	}
 	
 
@@ -38,6 +45,7 @@ public class AgendamentoMB implements Serializable{
 	public void setAgendamentos(List<Agendamento> agendamentos) {
 		this.agendamentos = agendamentos;
 	}
+	
 	
 	
 	
