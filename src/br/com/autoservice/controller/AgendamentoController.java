@@ -36,7 +36,8 @@ public class AgendamentoController implements Serializable{
 		List<Agendamento> lista = new ArrayList<Agendamento>();
 		
 		for (Veiculo veiculo : cliente.getVeiculos()) {
-			if (dao.findByVeiculo(veiculo) != null)
+			
+			if (dao.findByVeiculo(veiculo).size() > 0)
 				lista.addAll(veiculo.getAgendamentos());
 		}
 		return lista;

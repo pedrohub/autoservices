@@ -38,7 +38,7 @@
 					</p:column>
 
 					<p:column headerText="Acoes">
-						<p:commandLink update=":form:marcaDetail" process="@this"
+						<p:commandLink update=":form:marcaDetail" process="@this" actionListener="marcaMB.editar"
 							oncomplete="PF('marcaDialog').show()" title="View Detail"
 							style="float:left;margin-right:10px" value="Editar">
 							<f:setPropertyActionListener target="#{marcaMB.marca}"

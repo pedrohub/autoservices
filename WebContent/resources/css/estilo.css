@@ -23,12 +23,12 @@
 }
 
 .principal{
-	width: 900px;
+	width: 1000px;
 	margin: 0 auto;	
 }
 
 .corpo{
-	width: 900px;
+	width: 1000px;
 	margin: 0 auto;	
 }
 
@@ -40,7 +40,7 @@
 
 .texto1 {
 	font-size:26px;
-	color: #0080ff;
+	color: #f8fafc;
 }
 
 .texto2 {
@@ -51,3 +51,5 @@
 .textoErro {
 	color: Red !important;
 }
+
+

@@ -7,29 +7,35 @@
 
 <h:head>
 	<h:outputStylesheet library="css" name="estilo.css" />
-	<title>SCS</title>
+	<title>MecOS</title>
 
 
 </h:head>
 
 <h:body  styleClass="fundo">
 
-	<p:outputPanel styleClass="principal" >
-		<table style="margin-top: 20px">
+ <div style="height:150px; background-color:#030a16;margin-left:-10px; width: 100%; position: fixed; top: 0;">
+ 	
+ 	<p:outputPanel styleClass="principal" >
+ 	<table style="margin-top: 20px">
 			<tr >
 				<td><h:graphicImage library="imagens" name="mecanica.png" /></td>
-				<td style="width:600px; text-align: center;">
+				<td style="width:700px; text-align: center;">
 					<h1>
-						<span class="texto1">SCS - Control System Services</span>
+						<span class="texto1">MecOS - OS Mechanical System</span>
 					</h1>
 				</td>
 				<td>
 					<p:outputLabel value="#{userMB.userDao.user.login}"/> 
 					<p:spacer/>	<p:spacer/> <p:spacer/>
-					<p:link value="Sair" href="index.xhtml"/>
+					<p:link value="Sair" href="index.xhtml" styleClass="texto1"/>
 				</td>
 			</tr>
 		</table>
+		</p:outputPanel>
+ </div>
+
+	<p:outputPanel styleClass="principal" style="margin-top: 140px">
 		
 		<p:menubar styleClass="menu">
 			<p:menuitem value="Home" url="home.xhtml" />

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import br.com.autoservice.controller.ClienteController;
@@ -23,6 +24,8 @@ public class HomeMB implements Serializable{
 	private boolean painelCliente;
 	private boolean painelMensagem;
 	private String mensagemConsulta = "Nao existe cliente com esta placa";
+	@ManagedProperty(value="#{geralMB}")
+	private GeralMB geralMB;
 	
 	@PostConstruct
 	public void init() {
@@ -43,6 +46,10 @@ public class HomeMB implements Serializable{
 		}
 	}
 
+	public void redirectGeral(){
+		geralMB.carregarInformacoes(cliente);
+	}
+	
 	public Cliente getCliente() {
 		return cliente;
 	}
@@ -81,6 +88,14 @@ public class HomeMB implements Serializable{
 
 	public void setMensagemConsulta(String mensagemConsulta) {
 		this.mensagemConsulta = mensagemConsulta;
+	}
+
+	public GeralMB getGeralMB() {
+		return geralMB;
+	}
+
+	public void setGeralMB(GeralMB geralMB) {
+		this.geralMB = geralMB;
 	}
 	
 	

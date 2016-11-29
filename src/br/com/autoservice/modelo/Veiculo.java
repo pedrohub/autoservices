@@ -34,7 +34,7 @@ public class Veiculo implements Serializable{
 	@ManyToOne//(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
-	@OneToMany(mappedBy = "veiculo", targetEntity = Agendamento.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Agendamento> agendamentos;
 
 	public Veiculo() {

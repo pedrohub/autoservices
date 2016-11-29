@@ -23,8 +23,8 @@
 
 	<br></br>
 	<p:outputLabel for="nome" value="Pesquisar Cliente por Placa: " />
-						<p:inputText id="nome"  alt="Exemplo: pdx5554" value="#{homeMB.placa}"
-							 /> 
+						<p:inputMask id="nome"  alt="Exemplo: pdx5554" value="#{homeMB.placa}"  mask="aaa-9999"
+							 style="text-transform:uppercase" /> 
 							 <p:spacer width="4px"></p:spacer>
 							 <p:commandButton value="Buscar" actionListener="#{homeMB.findCliente}" 
 							  update=":form:nome :form:painelBusca">
@@ -32,19 +32,20 @@
 							 
 	<p:spacer height="10px"></p:spacer>
 	
-	<p:outputPanel id="painelBusca">
 	
+	<p:outputPanel id="painelBusca">
 		<p:outputPanel rendered="#{homeMB.painelCliente}">
-			<p:commandLink value="#{homeMB.cliente.nome} Fone:#{homeMB.cliente.fone1}" ></p:commandLink>
+			<p:commandLink value="#{homeMB.cliente.nome} Fone:#{homeMB.cliente.fone1}" 
+			action="geralCliente.xhtml?faces-redirect=true"  
+			actionListener="#{homeMB.redirectGeral()}"></p:commandLink>
 			<br></br>
 		</p:outputPanel>
-		
 		<p:outputPanel rendered="#{homeMB.painelMensagem}">
 			<p:outputLabel value="#{homeMB.mensagemConsulta}" style="color:red"></p:outputLabel>
 			<br></br>
 		</p:outputPanel>
-	
 	</p:outputPanel>
+	
 	</h:form>
 	
 	

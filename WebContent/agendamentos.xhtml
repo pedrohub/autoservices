@@ -7,9 +7,67 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
 
+<h:form id="form">
 
-	<h1 class="texto2">Cadastro de Peças</h1>
 
+<h1 class="texto2">Agendamentos</h1>
+
+	 <p:outputLabel for="mask" value="Inicio:" />
+     <p:calendar id="mask"  pattern="dd-MM-yyyy" mask="true" />
+     
+     <p:outputLabel for="mask" value="Fim:" />
+     <p:calendar id="mask2"  pattern="dd-MM-yyyy" mask="true" />
+     
+    <br></br><br></br>
+
+	<p:dataTable id="tabelaClientes" var="cliente" value="#{clienteMB.listaClientes}" 
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+			paginator="true" rows="11" style="margin-bottom:20px;font-size: 14px !important">
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Nome" />
+				</f:facet>
+				<h:outputText value="#{cliente.nome}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Email" />
+				</f:facet>
+				<h:outputText value="#{cliente.email}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Fone1" />
+				</f:facet>
+				<h:outputText value="#{cliente.fone1}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Bairro" />
+				</f:facet>
+				<h:outputText value="#{cliente.endereco.bairro}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Ações" />
+				</f:facet>
+				<p:commandLink action="geralCliente.xhtml?faces-redirect=true" 
+					 title="View Detail" actionListener="#{clienteMB.redirectGeral(cliente)}"
+					value="Visualizar">
+					<f:setPropertyActionListener value="#{cliente}"
+						target="#{clienteMB.cliente}" />
+				</p:commandLink>
+				<p:spacer width="4px"></p:spacer>
+				<p:commandLink actionListener="#{clienteMB.removeCliente(cliente)}"
+							process="@this" 
+							value="Deletar">
+							<p:confirm header="Confirmation"
+								message="Deseja deletar o Cliente?" icon="ui-icon-alert" />
+				</p:commandLink>
+			</p:column>
+		</p:dataTable>
+		<!-- **************** fim tabela de clientes *************** -->
 	
-
+</h:form>
 </ui:decorate>
