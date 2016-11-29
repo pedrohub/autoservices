@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+
+	<p:fieldset legend="Novo Registro" style="margin-bottom:20px">
+
+    <h:panelGrid columns="3" >
+    
+     <p:panelGrid columns="2">
+	     <p:outputLabel for="area" value="Área" />
+	
+	     <p:selectOneMenu id="area" 
+	      style="width:150px"
+	     >
+	      <f:selectItem itemLabel="Selecione" itemValue="aaa" />
+	    
+	     </p:selectOneMenu>
+     </p:panelGrid>
+
+	 <p:panelGrid columns="1">
+	     <h:outputLabel for="txt1" value="Instancia/Designador*" />
+	     <p:inputText id="txt1" value="teste"
+	      label="Instancia"></p:inputText>
+	      <p:selectOneRadio id="console" value="teste">
+	            <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
+	        </p:selectOneRadio>
+	</p:panelGrid>
+
+      <p:panelGrid columns="1">
+      	 <h:outputLabel for="txt1" value="Instancia/Designador*" />
+      </p:panelGrid>
+
+    </h:panelGrid>
+
+   </p:fieldset>
+   
+
+	
+</ui:decorate>

@@ -9,20 +9,73 @@
 	<h:outputStylesheet library="css" name="estilo.css" />
 	<title>MecOS</title>
 
+ <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />		
+ 
+        </f:facet>
+ 
+        <f:facet name="middle">
+            <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
+            
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />
+            
+            <h:outputScript name="bootstrap/js/bootstrap.js" />
+        </f:facet>
+        
+        <f:facet name="last">
+ 
+        </f:facet>
+ 
 
 </h:head>
 
+ <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-inverse navbar-fixed-top navbar-custom">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="#page-top">MecOS - OS Mechanical System</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#portfolio">Portfolio</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#about">About</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- Header -->
+
 <h:body  styleClass="fundo">
 
- <div style="height:150px; background-color:#030a16;margin-left:-10px; width: 100%; position: fixed; top: 0;">
  	
- 	<p:outputPanel styleClass="principal" >
+ 	<!-- <p:outputPanel styleClass="principal" >
  	<table style="margin-top: 20px">
 			<tr >
 				<td><h:graphicImage library="imagens" name="mecanica.png" /></td>
 				<td style="width:700px; text-align: center;">
 					<h1>
-						<span class="texto1">MecOS - OS Mechanical System</span>
+						<span class="texto1"></span>
 					</h1>
 				</td>
 				<td>
@@ -32,10 +85,22 @@
 				</td>
 			</tr>
 		</table>
-		</p:outputPanel>
- </div>
-
-	<p:outputPanel styleClass="principal" style="margin-top: 140px">
+		</p:outputPanel> -->
+		
+		<div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Portfolio</h2>
+                </div>
+            </div>
+            </div>
+		
+		 <div class="container-fluid">
+            <div class="row">
+             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">                    
+                    <ui:insert name="content" />                    
+                
+            	<p:outputPanel styleClass="principal" >
 		
 		<p:menubar styleClass="menu">
 			<p:menuitem value="Home" url="home.xhtml" />
@@ -46,9 +111,17 @@
 			<p:menuitem value="|" url="#" />
 			<p:menuitem value="Ordem Serviço" url="ordemServico.xhtml" />
 		</p:menubar>
+		
+		
 		<hr />
 		
 	</p:outputPanel>
+	</div>
+               
+            </div>
+        </div>
+
+
 	
 	<p:outputPanel styleClass="corpo">
 		<ui:insert></ui:insert>
