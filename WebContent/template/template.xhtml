@@ -7,105 +7,61 @@
 
 <h:head>
 	<h:outputStylesheet library="css" name="estilo.css" />
-	<title>MecOS</title>
+	<h:outputStylesheet library="css" name="font-awesome.css" />
+	<h:outputStylesheet library="css" name="menu.css" />
 
+	<h:outputScript library="js" name="function.js" target="head"></h:outputScript>
+	<h:outputScript library="js" name="jquery.js" target="head"></h:outputScript>
 
- 
+	<title>SisOfi</title>
 
+	<script type="text/javascript">
+
+		function myFunction() {
+			var x = document.getElementById("myTopnav");
+			if (x.className === "topnav") {
+				x.className += " responsive";
+			} else {
+				x.className = "topnav";
+			}
+		}
+	</script>
 </h:head>
 
- <!-- Navigation -->
-    <nav id="mainNav" class="menu">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand" href="#page-top">MecOS - OS Mechanical System</a>
-            </div>
+<h:body>
+	<div
+		style="background: #0099cc; font-size: 22px; text-align: center; color: #FFF; font-weight: bold; height: 40px; padding-top: 10px;">SisOfi
+		- Sistema Gerenciador de Oficina Mecânica</div>
+	<div id="wrap">
+		
+		<header>
+		<div class="inner relative">
+			<a class="logo" href="home.xhtml">
+			 <h:graphicImage library="imagens" name="logo2.png"	 style="height:60px" />
+			</a>
+			
+			<nav id="navigation">
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden">
-                        <a href="#page-top"></a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#portfolio">Portfolio</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#about">About</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#contact">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-
-    <!-- Header -->
-
-<h:body  styleClass="fundo">
-
- 	
- 	<!-- <p:outputPanel styleClass="principal" >
- 	<table style="margin-top: 20px">
-			<tr >
-				<td><h:graphicImage library="imagens" name="mecanica.png" /></td>
-				<td style="width:700px; text-align: center;">
-					<h1>
-						<span class="texto1"></span>
-					</h1>
-				</td>
-				<td>
-					<p:outputLabel value="#{userMB.userDao.user.login}"/> 
-					<p:spacer/>	<p:spacer/> <p:spacer/>
-					<p:link value="Sair" href="index.xhtml" styleClass="texto1"/>
-				</td>
-			</tr>
-		</table>
-		</p:outputPanel> -->
-		
-		<div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>Portfolio</h2>
-                </div>
-            </div>
-            </div>
-		
-		 <div class="container-fluid">
-            <div class="row">
-             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">                    
-                    <ui:insert name="content" />                    
-                
-            	<p:outputPanel styleClass="principal" >
-		
-		<p:menubar styleClass="menu">
-			<p:menuitem value="Home" url="home.xhtml" />
-			<p:menuitem value="|" url="#" />
-			<p:menuitem value="Cadastro Cliente" url="pageCliente.xhtml" />
-			<p:menuitem value="|" url="#" />
-			<p:menuitem value="Agendamentos" url="agendamentos.xhtml" />
-			<p:menuitem value="|" url="#" />
-			<p:menuitem value="Ordem Serviço" url="ordemServico.xhtml" />
-		</p:menubar>
-		
-		
-		<hr />
-		
-	</p:outputPanel>
-	</div>
-               
-            </div>
-        </div>
+			<ul class="topnav" id="myTopnav">
+				<li><a href="home.xhtml">Home</a></li>
+				<li><a href="pageCliente.xhtml">Clientes</a></li>
+				<li><a href="#contact">Estoque</a></li>
+				<li><a href="#about">OS</a></li>
+				<li><a href="#about">Financeiro</a></li>
+				<li><a href="#about">Configurações</a></li>
+				<li><a href="#about">Sair</a></li>
+				<li class="icon"><a href="javascript:void(0);"
+					onclick="myFunction()">&#9776;</a></li>
+			</ul>
+			</nav>
+			<div class="clear"></div>
+		</div>
 
 
-	
+		</header>
+	</div>	
+	<br></br>
+
 	<p:outputPanel styleClass="corpo">
 		<ui:insert></ui:insert>
 	</p:outputPanel>

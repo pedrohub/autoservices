@@ -38,7 +38,7 @@ public class UserMB {
 		if (user != null) {
 			habilitaLabelErro = false;
 			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+				FacesContext.getCurrentInstance().getExternalContext().redirect("pages/home.xhtml");
 				logger.info("Carregando pagina -> home.xhtml");
 			} catch (IOException e) {
 				logger.error("Erro ao tentar carregar pagina: "+e.getMessage());

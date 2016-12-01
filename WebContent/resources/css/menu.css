@@ -5,7 +5,7 @@ body {
 	background-image: url(../imagens/patterns/light_toast.png);
 	color: #666;
 	font-family: 'Open Sans', sans-serif;
-	font-size: 12px;
+	font-size: 14px;
 	margin:0px;
 	padding:0px;
 }
@@ -66,157 +66,13 @@ ol, ul {
 	float: right;
 }
 
-/* HEADER > MENU */
-#main-menu {
-	float: right;
-	font-size: 0;
-	margin: 10px 0;
-}
 
-#main-menu > li {
-	display: inline-block;
-	margin-left: 30px;
-	padding: 2px 0;
-}
-
-#main-menu > li.parent {
-	background-image: url(../imagens/plus-gray.png);
-	background-size: 7px 7px;
-	background-repeat: no-repeat;
-	background-position: left center;
-}
-
-#main-menu > li.parent > a {
-	padding-left: 14px;
-}
-
-#main-menu > li > a {
-	color: #eee;
-	font-size: 14px;
-	line-height: 14px;
-	padding: 30px 0;
-	text-decoration:none;
-}
-
-#main-menu > li:hover > a,
-#main-menu > li.current-menu-item > a {
-	color: #23dbdb;
-}
-
-/* HEADER > MENU > DROPDOWN */
-#main-menu li {
-	position: relative;
-}
-
-ul.sub-menu { /* level 2 */
-	display: none;
-	left: 0px;
-	top: 38px;
-	padding-top: 10px;
-	position: absolute;
-	width: 150px;
-	z-index: 9999;
-}
-
-ul.sub-menu ul.sub-menu { /* level 3+ */
-	margin-top: -1px;
-	padding-top: 0;
-	left: 149px;
-	top: 0px;
-}
-
-ul.sub-menu > li > a {
-	background-color: #333;
-	border: 1px solid #444;
-	border-top: none;
-	color: #bbb;
-	display: block;
-	font-size: 12px;
-	line-height: 15px;
-	padding: 10px 12px;
-}
-
-ul.sub-menu > li > a:hover {
-	background-color: #2a2a2a; 
-	color: #fff;
-}
-
-ul.sub-menu > li:first-child {
-	border-top: 3px solid #23dbdb;
-}
-
-ul.sub-menu ul.sub-menu > li:first-child {
-	border-top: 1px solid #444;
-}
-
-ul.sub-menu > li:last-child > a {
-	border-radius: 0 0 2px 2px;
-}
-
-ul.sub-menu > li > a.parent {
-	background-image: url(../imagens/arrow.png);
-	background-size: 5px 9px;
-	background-repeat: no-repeat;
-	background-position: 95% center;
-}
-
-#main-menu li:hover > ul.sub-menu {
-	display: block; /* show the submenu */
-}
 
 @media all and (max-width: 700px) {
 
 	#navigation {
 		position: static;
-		margin-top: 20px;
-	}
-
-	#menu-toggle {
-		display: block;
-	}
-
-	#main-menu {
-		display: none;
-		float: none;
-	}
-
-	#main-menu li {
-		display: block;
-		margin: 0;
-		padding: 0;
-	}
-
-	#main-menu > li {
-		margin-top: -1px;
-	}
-
-	#main-menu > li:first-child {
-		margin-top: 0;
-	}
-
-	#main-menu > li > a {
-		background-color: #333;
-		border: 1px solid #444;
-		color: #bbb;
-		display: block;
-		font-size: 14px;
-		padding: 12px !important;
-		padding: 0;
-	}
-
-	#main-menu li > a:hover {
-		background-color: #444; 
-	}
-
-	#main-menu > li.parent {
-		background: none !important;
-		padding: 0;
-	}
-
-	#main-menu > li:hover > a,
-	#main-menu > li.current-menu-item > a {
-		border: 1px solid #444 !important;
-		color: #fff !important;
+		margin-top: -60px;
 	}
 
 	ul.sub-menu {
@@ -235,4 +91,62 @@ ul.sub-menu > li > a.parent {
 	ul.sub-menu > li > a.parent {
 		background: #333 !important;
 	}
+}
+
+/*===============*/
+/* Remove margins and padding from the list, and add a black background color */
+ul.topnav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    
+}
+
+/* Float the list items side by side */
+ul.topnav li {float: left;}
+
+/* Style the links inside the list items */
+ul.topnav li a {
+    display: inline-block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of links on hover */
+ul.topnav li a:hover {background-color: #555;}
+
+/* Hide the list item that contains the link that should open and close the topnav on small screens */
+ul.topnav li.icon {display: none;}
+
+/* When the screen is less than 680 pixels wide, hide all list items, except for the first one ("Home"). Show the list item that contains the link to open and close the topnav (li.icon) */
+@media screen and (max-width:680px) {
+  ul.topnav li {display: none;}
+  ul.topnav li.icon {
+    float: right;
+    display: inline-block;
+  }
+}
+
+/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens */
+@media screen and (max-width:680px) {
+  ul.topnav.responsive {position: relative;}
+  ul.topnav.responsive li.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  ul.topnav.responsive li {
+    float: none;
+    display: inline;
+  }
+  ul.topnav.responsive li a {
+    display: block;
+    text-align: left;
+  }
 }
