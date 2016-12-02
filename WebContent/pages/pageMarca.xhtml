@@ -32,7 +32,8 @@
 				style="width:300px;margin-left:-550px;font-size: 14px">
 
 				<p:dataTable var="marca" value="#{marcaMB.listaMarcas}"
-					id="tabelaMarcas" rowIndexVar="index">
+					id="tabelaMarcas" rowIndexVar="index"
+					scrollable="true" scrollHeight="400" sortBy="#{marca.marca}">
 					<p:column headerText="Marca">
 						<h:outputText value="#{index+1} , #{marca.marca}" />
 					</p:column>
