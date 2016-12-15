@@ -16,7 +16,7 @@
 			<h:panelGrid columns="1" cellpadding="5">
 				<h1 class="texto2">Clientes</h1>
 			</h:panelGrid>
-			<h:panelGrid columns="2" cellpadding="5">
+			<h:panelGrid columns="3" cellpadding="5">
 				<p:commandButton update=":form:documentPanelIn" value="Inserir"
 					oncomplete="PF('documentDialogIn').show()" icon="fa fa-fw fa-edit"
 					actionListener="#{clienteMB.limparModal}">
@@ -24,6 +24,7 @@
 				<p:commandButton update=":form:painelConsultar" value="Consultar"
 					oncomplete="PF('dialogConsulta').show();">
 				</p:commandButton>
+				<p:outputLabel value="Registros: #{clienteMB.listSize}" id="count"/>
 			</h:panelGrid>
 		</h:panelGrid>
 		<!-- *************** fim painel de botoes *************** -->
@@ -35,9 +36,9 @@
 				<p:outputLabel for="console" value="Tipo Consulta:" />
 				<p:selectOneRadio id="console" value="#{clienteMB.flagTipoConsulta}" >
 					<f:selectItem itemLabel="Nome" itemValue="nome" />
-					<f:selectItem itemLabel="Telefone" itemValue="telefone" />
-					<f:selectItem itemLabel="Placa" itemValue="placa" />
-					<f:ajax event="click" listener="#{clienteMB.selecionarTipoConsulta}"/>
+					<!--  <f:selectItem itemLabel="Telefone" itemValue="telefone" />
+					<f:selectItem itemLabel="Placa" itemValue="placa" />-->
+					<f:ajax event="click" />
 				</p:selectOneRadio>
 			</h:panelGrid>
 
@@ -46,7 +47,7 @@
              itemValue="#{cliente}" converter="ClienteConverter" forceSelection="true" />
              
              <p:spacer width="6"></p:spacer>
-             <p:commandButton update=":form:painelTabela" value="Selecionar" actionListener="#{clienteMB.selecionarClienteConsulta}"
+             <p:commandButton update=":form:painelTabela :form:count"  value="Selecionar" actionListener="#{clienteMB.selecionarClienteConsulta}"
 					oncomplete="PF('dialogConsulta').hide();"/>
 		</p:dialog> 
 		<!-- *************** fim modal consultar clientes *************** -->
@@ -54,34 +55,40 @@
 		<!-- *************** tabela de clientes ************* -->
 		<p:outputPanel id="painelTabela">
 		<p:dataTable id="tabelaClientes" var="cliente" value="#{clienteMB.listaClientes}" 
-			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-			paginator="true" rows="11" style="margin-bottom:20px;font-size: 14px !important">
+			scrollable="true" scrollHeight="500" 
+			 style="margin-bottom:20px;font-size: 14px !important">
 
-			<p:column>
+			<p:column style="width:40px;">
+				<f:facet name="header">
+					<h:outputText value="ID" />
+				</f:facet>
+				<h:outputText value="#{cliente.idCliente}" />
+			</p:column>
+			<p:column style="width:auto;">
 				<f:facet name="header">
 					<h:outputText value="Nome" />
 				</f:facet>
 				<h:outputText value="#{cliente.nome}" />
 			</p:column>
-			<p:column>
+			<p:column style="width:auto;">
 				<f:facet name="header">
 					<h:outputText value="Email" />
 				</f:facet>
 				<h:outputText value="#{cliente.email}" />
 			</p:column>
-			<p:column>
+			<p:column style="width:auto;">
 				<f:facet name="header">
 					<h:outputText value="Fone1" />
 				</f:facet>
 				<h:outputText value="#{cliente.fone1}" />
 			</p:column>
-			<p:column>
+			<p:column style="width:auto;">
 				<f:facet name="header">
 					<h:outputText value="Bairro" />
 				</f:facet>
 				<h:outputText value="#{cliente.endereco.bairro}" />
 			</p:column>
-			<p:column>
+			<p:column style="width:auto;">
 				<f:facet name="header">
 					<h:outputText value="Ações" />
 				</f:facet>
@@ -93,7 +100,7 @@
 				</p:commandLink>
 				<p:spacer width="4px"></p:spacer>
 				<p:commandLink actionListener="#{clienteMB.removeCliente(cliente)}"
-							process="@this" update=":form:painelTabela"
+							process="@this" update=":form:painelTabela :form:count"
 							value="Deletar">
 							<p:confirm header="Confirmation"
 								message="Deseja deletar o Cliente?" icon="ui-icon-alert" />
@@ -188,7 +195,7 @@
 					</h:panelGrid>
 				</h:panelGrid>
 
-				<p:commandButton update=":form:documentPanelIn :form:painelTabela :form:dlgForm2:painelVeiculo"  
+				<p:commandButton update=":form:documentPanelIn :form:painelTabela :form:dlgForm2:painelVeiculo :form:count"  
 					value="Salvar" icon="ui-icon-check"
 					disabled="#{clienteMB.botaoCliente}"
 					actionListener="#{clienteMB.salvar}"/>

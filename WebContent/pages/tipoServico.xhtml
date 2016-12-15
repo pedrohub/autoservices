@@ -18,9 +18,13 @@
 			<p:inputText id="nome" value="#{tipoServicoMB.tipo.descricao}" required="true" />
 			<br></br>
 			<br></br>
+			<p:outputLabel value="Valor: " /> 
+			<p:inputText id="valor" value="#{tipoServicoMB.tipo.valor}" required="true" />
+			<br></br>
+			<br></br>
 
-			<p:commandButton value="Salvar" actionListener="#{tipoServicoMB.salvar}" process=":form:nome @this"
-				update=":form:painelMarca :form:growl :form:nome" />
+			<p:commandButton value="Salvar" actionListener="#{tipoServicoMB.salvar}" process=":form:nome :form:valor @this"
+				update=":form:painelMarca :form:growl :form:nome :form:valor" />
 			<br></br>
 			<br></br>
 			<br></br>
@@ -29,12 +33,16 @@
 
 		<div style="float: right;" id="direita">
 			<p:outputPanel id="painelMarca"
-				style="width:540px;margin-left:-550px;font-size: 14px">
+				style="width:600px;margin-left:-550px;font-size: 14px">
 
 				<p:dataTable var="tipo" value="#{tipoServicoMB.listaTipos}"
 					id="tabelaTipos" rowIndexVar="index">
 					<p:column headerText="Serviço" style="width:360px;">
 						<h:outputText value="#{index+1} , #{tipo.descricao}" />
+					</p:column>
+					
+					<p:column headerText="Valor" style="width:40px;">
+						<h:outputText value="#{tipo.valor}" />
 					</p:column>
 
 					<p:column headerText="Acoes" style="width:120px;">
@@ -66,14 +74,18 @@
 
 		<p:dialog header="Serviço Info" widgetVar="marcaDialog" modal="true"
 			showEffect="blind" hideEffect="explode" resizable="false">
-			<p:outputPanel id="marcaDetail" style="text-align:center;">
+			<p:outputPanel id="marcaDetail" style="width:300px">
 
 					<h:outputText value="Descrição: " />
 					<p:inputText id="alterMarca" value="#{tipoServicoMB.tipo.descricao}" required="true"/>
+					<br></br>
+					<br></br>
+					<h:outputText value="Valor: " />
+					<p:inputText id="alterValor" value="#{tipoServicoMB.tipo.valor}" required="true"/>
 					
 				<br></br><br></br>
-				<p:commandButton value="Salvar" actionListener="#{tipoServicoMB.editar}" process="@this :form:alterMarca"
-					update=":form:painelMarca :form:growl :form:alterMarca" oncomplete="PF('marcaDialog').hide()" />	
+				<p:commandButton value="Salvar" actionListener="#{tipoServicoMB.editar}" process="@this :form:alterMarca :form:alterValor"
+					update=":form:painelMarca :form:growl :form:alterMarca :form:alterValor" oncomplete="PF('marcaDialog').hide()" />	
 			</p:outputPanel>
 		</p:dialog>
 

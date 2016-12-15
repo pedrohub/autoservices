@@ -52,6 +52,7 @@ public class ClienteMB implements Serializable{
 	private boolean consultaPlaca;
 	@ManagedProperty(value="#{geralMB}")
 	private GeralMB geralMB;
+	private int listSize;
 	
 
 	@PostConstruct
@@ -65,6 +66,7 @@ public class ClienteMB implements Serializable{
 		botaoCliente = false;
 		botaoVeiculo = false;
 		listaClientes = controladorCliente.listar();
+		listSize = listaClientes.size();
 		listaMarcas = MarcaController.getInstance().getListaMarca();
 	}
 
@@ -88,6 +90,7 @@ public class ClienteMB implements Serializable{
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cliente Salvo"));
 					botaoCliente = true;
 					listaClientes = controladorCliente.listar();
+					listSize = listaClientes.size();
 					
 				} catch (Exception e) {
 					renderPainelVeiculo = false;
@@ -116,6 +119,8 @@ public class ClienteMB implements Serializable{
 					controladorVeiculo.inserir(veiculo);
 					botaoVeiculo = true;
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Veiculo Salvo"));
+					listaClientes = controladorCliente.listar();
+					listSize = listaClientes.size();
 				} catch (Exception e) {
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao Salvar", "Veiculo"));
 				}
@@ -177,6 +182,7 @@ public class ClienteMB implements Serializable{
 	public void removeCliente(Cliente cliente){
 		controladorCliente.excluir(cliente);
 		listaClientes = controladorCliente.listar();
+		listSize = listaClientes.size();
 	}
 	
 	public List<Cliente> completeCliente(String query) {
@@ -218,16 +224,15 @@ public class ClienteMB implements Serializable{
        	return filteredClientes;
     }
 	
-	public void selecionarTipoConsulta(){
-		System.out.println("tipo consulta==============");
-	}
-	
+
 	public void selecionarClienteConsulta() {
 		if (clienteSelected != null) {
 			listaClientes.clear();
 			listaClientes.add(clienteSelected);
+			listSize = listaClientes.size();
 		} else {
 			listaClientes = controladorCliente.listar();
+			listSize = listaClientes.size();
 		}
 	}
 	
@@ -377,6 +382,14 @@ public class ClienteMB implements Serializable{
 
 	public void setListaMarcas(List<Marca> listaMarcas) {
 		this.listaMarcas = listaMarcas;
+	}
+
+	public int getListSize() {
+		return listSize;
+	}
+
+	public void setListSize(int listSize) {
+		this.listSize = listSize;
 	}
 	
 	

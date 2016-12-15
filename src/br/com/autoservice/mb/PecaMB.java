@@ -24,11 +24,13 @@ public class PecaMB implements Serializable{
 	private List<Peca> listaPecas;
 	private PecaController pecaController;
 	private Peca peca;
+	private int listSize;
 	
 	@PostConstruct
 	public void init (){
 		pecaController = PecaController.getInstance();
 		listaPecas = pecaController.getLista();
+		listSize = listaPecas.size();
 		peca = new Peca();
 	}
 	
@@ -39,10 +41,15 @@ public class PecaMB implements Serializable{
 		
 			Peca tipoServico = new Peca();
 			tipoServico.setDescricao(peca.getDescricao());
+			tipoServico.setQtd(peca.getQtd());
+			tipoServico.setQtdMin(peca.getQtdMin());
+			tipoServico.setValor(peca.getValor());
+			tipoServico.setReferencia(peca.getReferencia());
 			
 			pecaController.salvar(tipoServico);
 			this.peca.setDescricao(null);
 			listaPecas = pecaController.getLista();
+			listSize = listaPecas.size();
 			
 			FacesContext context = FacesContext.getCurrentInstance();
 	        context.addMessage(null, new FacesMessage("Success",  "Registro Salvo" ) );
@@ -54,17 +61,25 @@ public class PecaMB implements Serializable{
 	
 	
 	public void editar() {
-
-		pecaController.editar(peca);
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null,
-				new FacesMessage("Sucess", "Registro Alterado"));
-		listaPecas = pecaController.getLista();
+		
+		if (!Constantes.VAZIO.equals(peca.getDescricao())){
+			pecaController.editar(peca);
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(null,
+					new FacesMessage("Sucess", "Registro Alterado"));
+			listaPecas = pecaController.getLista();
+			listSize = listaPecas.size();
+		}
 	}
 
 	public void deletar(Peca tipo) {
 		pecaController.deletar(tipo);
 		listaPecas = pecaController.getLista();
+		listSize = listaPecas.size();
+	}
+	
+	public void limparModal(){
+		peca = new Peca();
 	}
 
 
@@ -85,6 +100,16 @@ public class PecaMB implements Serializable{
 
 	public void setPeca(Peca peca) {
 		this.peca = peca;
+	}
+
+
+	public int getListSize() {
+		return listSize;
+	}
+
+
+	public void setListSize(int listSize) {
+		this.listSize = listSize;
 	}
 	
 	

@@ -38,7 +38,7 @@ public class Cliente implements Serializable{
 	@OneToOne(cascade = CascadeType.ALL, optional = true)
 	@JoinColumn(name = "endereco_id") 
 	private Endereco endereco;
-	@OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
 	private List<Veiculo> veiculos;
 	private boolean status;
 

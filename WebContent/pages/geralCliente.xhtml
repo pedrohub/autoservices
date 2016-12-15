@@ -281,7 +281,9 @@
 				</p:dataTable>
 				
 				<h:outputText value="" />
-				<p:commandButton value="Adicionar Ordem de Serviço" />
+			<p:commandButton update=":formOs:painelOs" value="Adicionar Ordem de Serviço"
+						oncomplete="PF('documentDialogInOS').show()" icon="fa fa-fw fa-edit"
+						actionListener="#{geralMB.limparModalVeiculo}"></p:commandButton>
 				
 				</p:outputPanel>
 				<!-- fim tabela de veiculos  -->
@@ -299,5 +301,6 @@
 	</h:form>
 	
 	<ui:include src="../modais/veiculo.xhtml"></ui:include>
+	<ui:include src="../modais/os.xhtml"></ui:include>
 	
 </ui:decorate>

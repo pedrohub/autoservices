@@ -15,6 +15,9 @@ public class Peca {
 	private Long id;
 	private String descricao;
 	private Double valor;
+	private int qtd;
+	private int qtdMin;
+	private String referencia;
 	
 	public Long getId() {
 		return id;
@@ -34,8 +37,24 @@ public class Peca {
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
+	public int getQtd() {
+		return qtd;
+	}
+	public void setQtd(int qtd) {
+		this.qtd = qtd;
+	}
+	public int getQtdMin() {
+		return qtdMin;
+	}
+	public void setQtdMin(int qtdMin) {
+		this.qtdMin = qtdMin;
+	}
+	public String getReferencia() {
+		return referencia;
+	}
+	public void setReferencia(String referencia) {
+		this.referencia = referencia;
+	}
 	
-	
-
 	
 }

@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<h:form id="form">
+
+		<p:growl id="growl" showDetail="true" sticky="true" />
+
+			<h1 class="texto2">Peças</h1>
+			
+			<p:commandButton update=":form:inserirDetail" value="Inserir" process="@this"
+					oncomplete="PF('inserirDialog').show()" icon="fa fa-fw fa-edit"
+					actionListener="#{pecaMB.limparModal}">
+				</p:commandButton>
+				<p:spacer width="10"></p:spacer>
+				<p:outputLabel value="Registros: #{pecaMB.listSize}" id="count"/>
+				<br></br>
+				<br></br>
+
+		<div >
+			<p:outputPanel id="painelMarca"
+				style="font-size: 14px">
+
+				<p:dataTable var="peca" value="#{pecaMB.listaPecas}"
+					id="tabelaTipos" rowIndexVar="index" 
+					scrollable="true" scrollHeight="500" sortBy="#{peca.descricao}">
+					
+					<p:column headerText="N&ordm;" style="width:30px;">
+						<h:outputText value="#{index+1}" />
+					</p:column>
+					
+					<p:column headerText="Referencia" style="width:auto;">
+						<h:outputText value="#{peca.referencia}" />
+					</p:column>
+					
+					<p:column headerText="Descrição" style="width:auto;">
+						<h:outputText value="#{peca.descricao}" />
+					</p:column>
+					
+					<p:column headerText="Quantidade" style="width:auto;">
+						<h:outputText value="#{peca.qtd}" />
+					</p:column>
+					
+					<p:column headerText="Qtd Minima" style="width:auto;">
+						<h:outputText value="#{peca.qtdMin}" />
+					</p:column>
+					
+					<p:column headerText="Valor" style="width:auto;">
+						<h:outputText value="#{peca.valor}" />
+					</p:column>
+
+					<p:column headerText="Ações" style="width:auto;">
+						<p:commandLink update=":form:marcaDetail" process="@this"
+							oncomplete="PF('marcaDialog').show()" title="View Detail"
+							style="float:left;margin-right:10px" value="Editar">
+							<f:setPropertyActionListener target="#{pecaMB.peca}"
+								value="#{peca}" />
+						</p:commandLink>
+						<p:commandLink actionListener="#{pecaMB.deletar(peca)}"
+							process="@this" title="View Detail" update="form:painelMarca form:count"
+							style="float:left;margin-right:10px" value="Remover	">
+							<p:confirm header="Confirmation"
+								message="Deseja deletar esta Peça?" icon="ui-icon-alert" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+
+			</p:outputPanel>
+		</div>
+		<!-- fim tabela de clientes  -->
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Yes" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+
+		<p:dialog header="Alterar" widgetVar="marcaDialog" modal="true"
+			showEffect="blind" hideEffect="explode" resizable="false">
+			<p:outputPanel id="marcaDetail" style="text-align:center;">
+
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Descrição: " />
+					<p:inputText id="anome" value="#{pecaMB.peca.descricao}"  />
+					
+					<p:outputLabel value="Descrição: " />
+					<p:inputText id="aref" value="#{pecaMB.peca.referencia}"  />
+										
+					<p:outputLabel value="Qtd Estoque: " />
+					<p:inputText id="aqtd" value="#{pecaMB.peca.qtd}"  />
+					
+					<p:outputLabel value="Qtd Min em Estoque: " />
+					<p:inputText id="aqtdmin" value="#{pecaMB.peca.qtdMin}"  />
+					
+					<p:outputLabel value="Valor: " />
+					<p:inputText id="avalor" value="#{pecaMB.peca.valor}"  />
+				</h:panelGrid>
+					
+				<br></br><br></br>
+				<p:commandButton value="Salvar" actionListener="#{pecaMB.editar}" process="@this :form:anome :form:aqtd :form:aqtdmin :form:avalor :form:aref"
+					update=":form:painelMarca :form:growl :form:anome :form:aqtd :form:aqtdmin :form:avalor :form:aref" 
+					oncomplete="PF('marcaDialog').hide()" />	
+			</p:outputPanel>
+		</p:dialog>
+
+		<p:dialog header="Inserir" widgetVar="inserirDialog" modal="true"
+			showEffect="blind" hideEffect="explode" resizable="false">
+			<p:outputPanel id="inserirDetail">
+			
+			<h:panelGrid columns="2">
+					<p:outputLabel value="Descrição: " />
+					<p:inputText id="nome" value="#{pecaMB.peca.descricao}"  />
+					
+					<p:outputLabel value="Referencia " />
+					<p:inputText id="ref" value="#{pecaMB.peca.referencia}"  />
+										
+					<p:outputLabel value="Qtd Estoque: " />
+					<p:inputText id="qtd" value="#{pecaMB.peca.qtd}"  />
+					
+					<p:outputLabel value="Qtd Min em Estoque: " />
+					<p:inputText id="qtdmin" value="#{pecaMB.peca.qtdMin}"  />
+					
+					<p:outputLabel value="Valor: " />
+					<p:inputText id="valor" value="#{pecaMB.peca.valor}"  />
+				</h:panelGrid>
+					<br></br>
+					<br></br>
+					<p:commandButton value="Salvar" actionListener="#{pecaMB.salvar}" process=":form:nome :form:qtd 
+					:form:qtdmin :form:valor :form:ref @this"
+						update=":form:painelMarca :form:growl :form:nome :form:qtd :form:qtdmin :form:valor :form:ref :form:count" 
+						oncomplete="PF('inserirDialog').hide()"/>
+					
+			</p:outputPanel>
+		</p:dialog>
+	
+	</h:form>
+</ui:decorate>

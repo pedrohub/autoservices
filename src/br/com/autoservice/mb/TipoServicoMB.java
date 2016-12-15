@@ -39,9 +39,11 @@ public class TipoServicoMB implements Serializable{
 		
 			TipoServico tipoServico = new TipoServico();
 			tipoServico.setDescricao(tipo.getDescricao());
+			tipoServico.setValor(tipo.getValor());
 			
 			tipoController.salvar(tipoServico);
 			this.tipo.setDescricao(null);
+			this.tipo.setValor(null);
 			listaTipos = tipoController.getListaTipoServico();
 			
 			FacesContext context = FacesContext.getCurrentInstance();

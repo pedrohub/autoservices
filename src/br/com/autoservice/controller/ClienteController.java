@@ -25,11 +25,13 @@ public class ClienteController implements Serializable{
 	private ClienteDao clienteDao = new ClienteDao();
 	private Logger logger = Logger.getLogger("ClienteController");
 	private VeiculoController veiculoController;
+	private EnderecoController enderecoController;
 	
 	private static ClienteController uniqueInstance; 
 	
 	private ClienteController() { 
 		veiculoController = veiculoController.getInstance();
+		enderecoController = enderecoController.getInstance();
 	} 
 	
 	public static synchronized ClienteController getInstance() { 
@@ -52,16 +54,21 @@ public class ClienteController implements Serializable{
 
 	public void excluir(Cliente cliente) {
 		
-		for (Veiculo veiculo : cliente.getVeiculos()) {
+		List<Veiculo> listaVeiculos = cliente.getVeiculos();
+		
+		for (Veiculo veiculo : listaVeiculos) {
 			veiculoController.excluir(veiculo);
 		}
 		clienteDao.excluir(cliente);
+		
+		
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Cliente> listar() throws HibernateException {
 		Cliente cliente = new Cliente();
 		List<Cliente> listaCliente = clienteDao.listar(cliente);
+		
 		return listaCliente;
 	}
 
@@ -106,7 +113,7 @@ public class ClienteController implements Serializable{
 		estados.add("PR");
 		estados.add("PE");
 		estados.add("PI");
-			estados.add("RJ");
+		estados.add("RJ");
 		estados.add("RN");
 		estados.add("RS");
 		estados.add("RO");
