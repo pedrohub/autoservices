@@ -21,16 +21,17 @@
 					<p:outputPanel id="painelOs" styleClass="modal">
 				
 						<h:panelGrid columns="2" cellpadding="10">
+						
 							<h:panelGrid columns="2" cellpadding="10">
 							
-								<h:outputText value="Marca: " />
+								<h:outputText value="Adicionar Pecas: " />
 								 <p:selectOneMenu id="marca" value="#{geralMB.veiculo.marca}"
 									 disabled="#{geralMB.botaoVeiculo}">
 						            <f:selectItem itemLabel="- Selecione -" itemValue="" />
 						            <f:selectItems value="#{clienteMB.listaMarcas}" var="marca" itemValue="#{marca.marca}" itemLabel="#{marca.marca}"/>
 						        </p:selectOneMenu>
 
-								<h:outputText value="Modelo: " />
+								<h:outputText value="Quantidade: " />
 								<p:inputText value="#{geralMB.veiculo.modelo}"
 									disabled="#{geralMB.botaoVeiculo}" />
 
@@ -65,6 +66,9 @@
 								actionListener="#{geralMB.salvarVeiculo}" />
 						<p:commandButton ajax="true" update=":dialogInVeiculo" value="Fechar Janela" icon="ui-icon-check"
 						onclick="PF('documentDialogInVeiculo').hide();" immediate="true" />
+
+
+
 
 				</p:outputPanel>
 			</h:form>
