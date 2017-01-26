@@ -29,7 +29,7 @@ public class AgendamentoController implements Serializable{
 	}
 
 	public List<Agendamento> listaAgendamentos(){
-		return dao.findAll();
+		return dao.findAllStatus();
 	}
 	
 	public List<Agendamento> listarPorcliente(Cliente cliente){
