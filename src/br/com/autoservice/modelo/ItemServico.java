@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,6 +19,9 @@ public class ItemServico {
 	private String descricao;
 	private int quantidade;
 	private Double valor;
+	@ManyToOne//(cascade = CascadeType.PERSIST)
+	@JoinColumn(name="os_id")
+	private OS os;
 	
 	public Long getId() {
 		return id;
@@ -41,6 +46,12 @@ public class ItemServico {
 	}
 	public void setValor(Double valor) {
 		this.valor = valor;
+	}
+	public OS getOs() {
+		return os;
+	}
+	public void setOs(OS os) {
+		this.os = os;
 	}
 	
 }
