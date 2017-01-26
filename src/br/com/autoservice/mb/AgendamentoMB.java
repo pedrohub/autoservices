@@ -21,6 +21,7 @@ public class AgendamentoMB implements Serializable{
 	private static final long serialVersionUID = 705257259861914374L;
 	private AgendamentoController agendamentoController;
 	private List<Agendamento> agendamentos;
+	private Agendamento agendamento;
 
 	
 	@PostConstruct
@@ -44,6 +45,14 @@ public class AgendamentoMB implements Serializable{
 
 	public void setAgendamentos(List<Agendamento> agendamentos) {
 		this.agendamentos = agendamentos;
+	}
+
+	public Agendamento getAgendamento() {
+		return agendamento;
+	}
+
+	public void setAgendamento(Agendamento agendamento) {
+		this.agendamento = agendamento;
 	}
 	
 	
