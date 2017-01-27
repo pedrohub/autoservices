@@ -206,8 +206,9 @@
 				</p:column>
 			</p:dataTable>
 			
-			<h:outputText value="" />
-			<p:commandButton value="Adicionar Agendamento" />
+			<p:commandButton update=":formAgenda:painelAgenda" value="Adicionar Agendamento"
+						oncomplete="PF('documentDialogInAgendamento').show()" icon="fa fa-fw fa-edit"
+						actionListener="#{geralMB.limparModalVeiculo}"></p:commandButton>
 			
 			</p:outputPanel>
 			<!-- fim tabela de agendamentos  -->
@@ -297,5 +298,6 @@
 	
 	<ui:include src="../modais/veiculo.xhtml"></ui:include>
 	<ui:include src="../modais/os.xhtml"></ui:include>
+	<ui:include src="../modais/agendamentoModal.xhtml"></ui:include>
 	
 </ui:decorate>

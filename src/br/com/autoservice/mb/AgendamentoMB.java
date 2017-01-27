@@ -1,7 +1,9 @@
 package br.com.autoservice.mb;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -27,6 +29,24 @@ public class AgendamentoMB implements Serializable{
 	@PostConstruct
 	public void init() {
 		agendamentoController = AgendamentoController.getInstance();
+	}
+	
+	public Map<String, String> getAgendaPeriodo(){
+		Map<String, String> periodos = new LinkedHashMap<String, String>();
+		periodos.put("1 Mes", "1");
+		periodos.put("2 Meses", "2");
+		periodos.put("3 Meses", "3");
+		periodos.put("4 Meses", "4");
+		periodos.put("5 Meses", "5");
+		periodos.put("6 Meses", "6");
+		periodos.put("7 Meses", "7");
+		periodos.put("8 Meses", "8");
+		periodos.put("9 Meses", "9");
+		periodos.put("10 Meses", "10");
+		periodos.put("11 Meses", "11");
+		periodos.put("12 Meses", "12");
+		return periodos;
+		
 	}
 
 	public void findAll(){

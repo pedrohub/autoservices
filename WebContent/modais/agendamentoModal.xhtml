@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	
+	  <p:growl id="messageAgenda" showDetail="true" />
+		
+		<!-- *************** dialog inserir agendamento ************** -->
+		<p:dialog id="dialogInAgendamento" header="Cadastrar Agendamenmto" showEffect="fade"
+			widgetVar="documentDialogInAgendamento" modal="true"  resizable="false"  
+			style="max-height:700px;overflow:auto">
+			
+			 <h:form id="formAgenda">
+			 
+		 			<p:messages id="msgAgenda" showDetail="true" autoUpdate="true" closable="true" />
+		 			
+					<p:outputPanel id="painelAgenda" styleClass="modal">
+				
+						<h:panelGrid columns="2" cellpadding="10">
+							<h:panelGrid columns="2" cellpadding="10">
+							
+								<h:outputText value="Veiculo: " />
+								 <p:selectOneMenu id="marca" 
+									 disabled="#{geralMB.botaoVeiculo}">
+						            <f:selectItem itemLabel="- Selecione -" itemValue="" />
+						            <f:selectItems value="#{geralMB.veiculos}" var="vei" itemValue="#{vei.placa}" itemLabel="#{vei.placa} - #{vei.modelo}"/>
+						        </p:selectOneMenu>
+
+								<h:outputText value="Retorna em: " />
+								 <p:selectOneMenu id="periodo" value="#{geralMB.veiculo.marca}"
+									 disabled="#{geralMB.botaoVeiculo}" >
+						            <f:selectItem itemLabel="- Selecione -" itemValue="" />
+						            <f:selectItems value="#{agendamentoMB.agendaPeriodo}" var="map.entrySet()" 
+						            itemValue="#{map.value}" itemLabel="#{map.key}" />
+						        </p:selectOneMenu>
+
+
+								<h:outputText value="Vencimento: " />
+								<p:inputText value="#{geralMB.veiculo.modelo}"
+									disabled="#{geralMB.botaoVeiculo}" />
+
+								<h:outputText value="Obs: " />
+								<p:inputMask id="placa" value="#{geralMB.veiculo.placa}"  mask="aaa-9999"
+					    			disabled="#{geralMB.botaoVeiculo}">
+					    		</p:inputMask>
+
+							</h:panelGrid>
+						</h:panelGrid>
+						
+						<p:commandButton
+								update=":formAgenda:painelAgenda :form:tabView:tabelaAgenda"  
+								value="Salvar" icon="ui-icon-check"
+								disabled="#{geralMB.botaoVeiculo}"
+								actionListener="#{geralMB.salvarVeiculo}" />
+						<p:commandButton ajax="true" update=":dialogInAgendamento" value="Fechar Janela" icon="ui-icon-check"
+						onclick="PF('documentDialogInAgendamento').hide();" immediate="true" />
+
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+		<!-- **************** fim dialog inserir veiculos *************** -->
+		
+		<!-- **************** modal de confimacao *************** -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Yes" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+
+
+</ui:composition>
