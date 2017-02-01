@@ -10,7 +10,7 @@
 	  <p:growl id="messageAgenda" showDetail="true" />
 		
 		<!-- *************** dialog inserir agendamento ************** -->
-		<p:dialog id="dialogInAgendamento" header="Cadastrar Agendamenmto" showEffect="fade"
+		<p:dialog id="dialogInAgendamento" header="Cadastrar Agendamento" showEffect="fade"
 			widgetVar="documentDialogInAgendamento" modal="true"  resizable="false"  
 			style="max-height:700px;overflow:auto">
 			
@@ -24,29 +24,28 @@
 							<h:panelGrid columns="2" cellpadding="10">
 							
 								<h:outputText value="Veiculo: " />
-								 <p:selectOneMenu id="marca" 
-									 disabled="#{geralMB.botaoVeiculo}">
+								 <p:selectOneMenu id="marca" value="#{agendamentoMB.agendamento.veiculo}">
 						            <f:selectItem itemLabel="- Selecione -" itemValue="" />
-						            <f:selectItems value="#{geralMB.veiculos}" var="vei" itemValue="#{vei.placa}" itemLabel="#{vei.placa} - #{vei.modelo}"/>
+						            <f:selectItems value="#{geralMB.veiculos}" var="vei" itemValue="#{vei}" itemLabel="#{vei.placa} - #{vei.modelo}"/>
 						        </p:selectOneMenu>
 
 								<h:outputText value="Retorna em: " />
-								 <p:selectOneMenu id="periodo" value="#{geralMB.veiculo.marca}"
-									 disabled="#{geralMB.botaoVeiculo}" >
-						            <f:selectItem itemLabel="- Selecione -" itemValue="" />
+								 <p:selectOneMenu id="periodo" value="#{agendamentoMB.retorno}" >
+						            <f:selectItem itemLabel="- Selecione -" itemValue="" noSelectionOption="true"/>
 						            <f:selectItems value="#{agendamentoMB.agendaPeriodo}" var="map.entrySet()" 
 						            itemValue="#{map.value}" itemLabel="#{map.key}" />
+						            <p:ajax event="change" listener="#{agendamentoMB.calcularRetorno()}" 
+						            update="formAgenda:vencimento"></p:ajax>
 						        </p:selectOneMenu>
 
 
 								<h:outputText value="Vencimento: " />
-								<p:inputText value="#{geralMB.veiculo.modelo}"
-									disabled="#{geralMB.botaoVeiculo}" />
+      							<p:calendar id="vencimento"  showOn="button" pattern="dd/MM/yyyy"
+      							 value="#{agendamentoMB.agendamento.vencimento}"/>
 
 								<h:outputText value="Obs: " />
-								<p:inputMask id="placa" value="#{geralMB.veiculo.placa}"  mask="aaa-9999"
-					    			disabled="#{geralMB.botaoVeiculo}">
-					    		</p:inputMask>
+								<p:inputTextarea id="placa" value="#{agendamentoMB.agendamento.descricao}" >
+					    		</p:inputTextarea>
 
 							</h:panelGrid>
 						</h:panelGrid>

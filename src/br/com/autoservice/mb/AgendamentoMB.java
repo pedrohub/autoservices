@@ -1,17 +1,18 @@
 package br.com.autoservice.mb;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-
 import br.com.autoservice.controller.AgendamentoController;
 import br.com.autoservice.modelo.Agendamento;
 import br.com.autoservice.modelo.Cliente;
+import br.com.autoservice.util.Constantes;
+import br.com.autoservice.util.DateUtil;
 
 @ManagedBean
 @ViewScoped
@@ -24,11 +25,29 @@ public class AgendamentoMB implements Serializable{
 	private AgendamentoController agendamentoController;
 	private List<Agendamento> agendamentos;
 	private Agendamento agendamento;
+	private String retorno;
+	private String acaoAgenda;
 
 	
 	@PostConstruct
 	public void init() {
 		agendamentoController = AgendamentoController.getInstance();
+		agendamento = new Agendamento();
+		retorno = "";
+	}
+	
+	public void limparModal(){
+		agendamento = new Agendamento();
+		acaoAgenda = Constantes.INSERIR;
+	}
+	
+	
+	public void calcularRetorno(){
+		
+		Date dateAtual = DateUtil.getDate();
+		int mes = Integer.valueOf(retorno);
+		dateAtual.setMonth(dateAtual.getMonth()+mes);
+		agendamento.setVencimento(dateAtual);
 	}
 	
 	public Map<String, String> getAgendaPeriodo(){
@@ -73,6 +92,14 @@ public class AgendamentoMB implements Serializable{
 
 	public void setAgendamento(Agendamento agendamento) {
 		this.agendamento = agendamento;
+	}
+
+	public String getRetorno() {
+		return retorno;
+	}
+
+	public void setRetorno(String retorno) {
+		this.retorno = retorno;
 	}
 	
 	
