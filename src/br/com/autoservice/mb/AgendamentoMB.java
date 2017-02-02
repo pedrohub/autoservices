@@ -39,15 +39,21 @@ public class AgendamentoMB implements Serializable{
 	public void limparModal(){
 		agendamento = new Agendamento();
 		acaoAgenda = Constantes.INSERIR;
+		retorno = "";
 	}
 	
 	
 	public void calcularRetorno(){
+		if(!"".equals(retorno)){
+			Date dateAtual = DateUtil.getDate();
+			int mes = Integer.valueOf(retorno);
+			dateAtual.setMonth(dateAtual.getMonth()+mes);
+			agendamento.setVencimento(dateAtual);
+		}
+	}
+	
+	public void salvar(){
 		
-		Date dateAtual = DateUtil.getDate();
-		int mes = Integer.valueOf(retorno);
-		dateAtual.setMonth(dateAtual.getMonth()+mes);
-		agendamento.setVencimento(dateAtual);
 	}
 	
 	public Map<String, String> getAgendaPeriodo(){
