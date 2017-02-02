@@ -24,9 +24,9 @@
 							<h:panelGrid columns="2" cellpadding="10">
 							
 								<h:outputText value="Veiculo: " />
-								 <p:selectOneMenu id="marca" value="#{agendamentoMB.agendamento.veiculo}">
+								 <p:selectOneMenu id="marca" value="#{agendamentoMB.idVeiculo}">
 						            <f:selectItem itemLabel="- Selecione -" itemValue="" />
-						            <f:selectItems value="#{geralMB.veiculos}" var="vei" itemValue="#{vei}" itemLabel="#{vei.placa} - #{vei.modelo}"/>
+						            <f:selectItems value="#{geralMB.veiculos}" var="vei" itemValue="#{vei.codVeiculo}" itemLabel="#{vei.placa} - #{vei.modelo}" />
 						        </p:selectOneMenu>
 
 								<h:outputText value="Retorna em: " />
@@ -52,9 +52,8 @@
 						
 						<p:commandButton
 								update=":formAgenda:painelAgenda :form:tabView:tabelaAgenda"  
-								value="Salvar" icon="ui-icon-check"
-								disabled="#{geralMB.botaoVeiculo}"
-								actionListener="#{geralMB.salvarVeiculo}" />
+								value="Salvar" icon="ui-icon-check" 
+								actionListener="#{agendamentoMB.salvar}" />
 						<p:commandButton ajax="true" update=":dialogInAgendamento" value="Fechar Janela" icon="ui-icon-check"
 						onclick="PF('documentDialogInAgendamento').hide();" immediate="true" />
 

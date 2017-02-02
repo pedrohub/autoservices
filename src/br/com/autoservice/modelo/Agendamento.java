@@ -1,5 +1,6 @@
 package br.com.autoservice.modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -12,8 +13,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "agendamento")
-public class Agendamento {
+public class Agendamento implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2728183822697553562L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -23,6 +28,7 @@ public class Agendamento {
 	@JoinColumn(name="veiculo_id")
 	private Veiculo veiculo;
 	private String descricao;
+	private boolean status;
 	
 	
 	
@@ -55,6 +61,12 @@ public class Agendamento {
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 	
 	

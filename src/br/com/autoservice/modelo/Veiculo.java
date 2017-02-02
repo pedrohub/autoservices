@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name = "veiculo")
 public class Veiculo implements Serializable{
@@ -32,7 +35,8 @@ public class Veiculo implements Serializable{
 	@ManyToOne//(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
-	@OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Agendamento> agendamentos;
 
 	public Veiculo() {

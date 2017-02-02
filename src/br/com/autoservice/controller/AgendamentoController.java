@@ -32,10 +32,16 @@ public class AgendamentoController implements Serializable{
 		return dao.findAllStatus();
 	}
 	
+	public void salvar(Agendamento agendamento){
+		dao.inserir(agendamento);
+	}
+	
 	public List<Agendamento> listarPorcliente(Cliente cliente){
 		List<Agendamento> lista = new ArrayList<Agendamento>();
 		
-		for (Veiculo veiculo : cliente.getVeiculos()) {
+		List<Veiculo> veiculos = cliente.getVeiculos();
+		
+		for (Veiculo veiculo : veiculos) {
 			
 			if (dao.findByVeiculo(veiculo).size() > 0)
 				lista.addAll(veiculo.getAgendamentos());

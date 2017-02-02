@@ -164,13 +164,17 @@
 					<f:facet name="header">
 						<h:outputText value="Abertura" />
 					</f:facet>
-					<h:outputText value="#{agenda.abertura}" />
+					<h:outputText value="#{agenda.abertura}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</p:column>
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Vencimento" />
 					</f:facet>
-					<h:outputText value="#{agenda.venimento}" />
+					<h:outputText value="#{agenda.vencimento}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</p:column>
 				<p:column>
 					<f:facet name="header">
@@ -208,7 +212,7 @@
 			
 			<p:commandButton update=":formAgenda:painelAgenda" value="Adicionar Agendamento"
 						oncomplete="PF('documentDialogInAgendamento').show()" icon="fa fa-fw fa-edit"
-						actionListener="#{agendamentoMB.limparModal}"></p:commandButton>
+						actionListener="#{geralMB.redirectAgenda()}"></p:commandButton>
 			
 			</p:outputPanel>
 			<!-- fim tabela de agendamentos  -->

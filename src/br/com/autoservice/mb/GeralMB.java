@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -26,11 +27,12 @@ public class GeralMB implements Serializable{
 	private ClienteController controladorCliente;
 	private VeiculoController controladorVeiculo;
 	private List<Veiculo> veiculos;
-	private List<Agendamento> agendamentos;
 	private Veiculo veiculo;
 	private boolean botaoVeiculo;
 	private String acaoVeiculo;
 	private AgendamentoController agendamentoController;
+	@ManagedProperty(value="#{agendamentoMB}")
+	private AgendamentoMB agendamentoMB;
 	
 	
 	@PostConstruct
@@ -49,7 +51,7 @@ public class GeralMB implements Serializable{
 		if (cliente.getVeiculos() != null)
 			veiculos = controladorVeiculo.listar(cliente);
 		
-		agendamentos = agendamentoController.listarPorcliente(cliente);
+		agendamentoMB.setAgendamentos(agendamentoController.listarPorcliente(cliente));
 	}
 	
 	/**
@@ -161,7 +163,15 @@ public class GeralMB implements Serializable{
 			return false;
 		}
 	}
+	
+	public void reloadAgendamentos(){
+		agendamentoMB.setAgendamentos(agendamentoController.listarPorcliente(cliente));
+	}
 
+	public void redirectAgenda(){
+		agendamentoMB.setVeiculos(getVeiculos());
+		agendamentoMB.limparModal();
+	}
 
 	public Cliente getCliente() {
 		return cliente;
@@ -200,6 +210,14 @@ public class GeralMB implements Serializable{
 
 	public void setBotaoVeiculo(boolean botaoVeiculo) {
 		this.botaoVeiculo = botaoVeiculo;
+	}
+
+	public AgendamentoMB getAgendamentoMB() {
+		return agendamentoMB;
+	}
+
+	public void setAgendamentoMB(AgendamentoMB agendamentoMB) {
+		this.agendamentoMB = agendamentoMB;
 	}
 
 

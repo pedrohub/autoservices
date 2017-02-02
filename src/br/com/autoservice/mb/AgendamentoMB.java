@@ -6,27 +6,29 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import br.com.autoservice.controller.AgendamentoController;
 import br.com.autoservice.modelo.Agendamento;
 import br.com.autoservice.modelo.Cliente;
+import br.com.autoservice.modelo.Veiculo;
 import br.com.autoservice.util.Constantes;
 import br.com.autoservice.util.DateUtil;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class AgendamentoMB implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 705257259861914374L;
 	private AgendamentoController agendamentoController;
 	private List<Agendamento> agendamentos;
 	private Agendamento agendamento;
 	private String retorno;
 	private String acaoAgenda;
+	private Long idVeiculo;
+	private List<Veiculo> veiculos;
 
 	
 	@PostConstruct
@@ -34,6 +36,7 @@ public class AgendamentoMB implements Serializable{
 		agendamentoController = AgendamentoController.getInstance();
 		agendamento = new Agendamento();
 		retorno = "";
+		
 	}
 	
 	public void limparModal(){
@@ -54,6 +57,45 @@ public class AgendamentoMB implements Serializable{
 	
 	public void salvar(){
 		
+		agendamento.setVeiculo(getVeiculoAgenda(idVeiculo));
+		
+		if (validarCamposAgenda(agendamento)){
+			
+			if(acaoAgenda.equals(Constantes.INSERIR)){
+				agendamento.setAbertura(DateUtil.getDate());
+				agendamento.setStatus(true);
+				agendamentoController.salvar(agendamento);
+				agendamentos = agendamentoController.listarPorcliente(agendamento.getVeiculo().getCliente());
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO ,"Agendamento Salvo", ""));
+			}
+			
+		} else {
+			FacesContext.getCurrentInstance().addMessage( null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Informar Campos Obrigatorios", ""));
+		}
+		
+	}
+	
+	private boolean validarCamposAgenda(Agendamento agendamento){
+		
+		if(agendamento.getVencimento() == null)
+			return false;
+		
+		if(agendamento.getVeiculo() == null)
+			return false;
+		
+		if(agendamento.getDescricao() == null || agendamento.getDescricao().isEmpty())
+			return false;
+		
+		return true;
+	}
+	
+	private Veiculo getVeiculoAgenda(Long id){
+		
+		for (Veiculo vei : veiculos) {
+			if (vei.getCodVeiculo().longValue() == id.longValue())
+				return vei;
+		}
+		return null;
 	}
 	
 	public Map<String, String> getAgendaPeriodo(){
@@ -106,6 +148,22 @@ public class AgendamentoMB implements Serializable{
 
 	public void setRetorno(String retorno) {
 		this.retorno = retorno;
+	}
+
+	public Long getIdVeiculo() {
+		return idVeiculo;
+	}
+
+	public void setIdVeiculo(Long idVeiculo) {
+		this.idVeiculo = idVeiculo;
+	}
+
+	public List<Veiculo> getVeiculos() {
+		return veiculos;
+	}
+
+	public void setVeiculos(List<Veiculo> veiculos) {
+		this.veiculos = veiculos;
 	}
 	
 	
