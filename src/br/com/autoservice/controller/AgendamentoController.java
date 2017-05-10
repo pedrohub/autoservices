@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.autoservice.dao.AgendamentoDao;
+import br.com.autoservice.dao.VeiculoDao;
 import br.com.autoservice.modelo.Agendamento;
 import br.com.autoservice.modelo.Cliente;
 import br.com.autoservice.modelo.Veiculo;
@@ -16,6 +17,7 @@ public class AgendamentoController implements Serializable{
 	 */
 	private static final long serialVersionUID = -7167510669050634685L;
 	private AgendamentoDao dao = new AgendamentoDao();
+	private VeiculoDao daoVeiculo = new VeiculoDao();
 	private static AgendamentoController uniqueInstance;
 	
 	
@@ -39,11 +41,13 @@ public class AgendamentoController implements Serializable{
 	public List<Agendamento> listarPorcliente(Cliente cliente){
 		List<Agendamento> lista = new ArrayList<Agendamento>();
 		
-		List<Veiculo> veiculos = cliente.getVeiculos();
+		List<Veiculo> veiculos = daoVeiculo.listar(cliente);
 		
 		for (Veiculo veiculo : veiculos) {
 			
-			if (dao.findByVeiculo(veiculo).size() > 0)
+			List<Veiculo> listaVeiculo = dao.findByVeiculo(veiculo);
+			
+			if (listaVeiculo.size() > 0)
 				lista.addAll(veiculo.getAgendamentos());
 		}
 		return lista;

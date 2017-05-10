@@ -15,6 +15,8 @@ public class Peca {
 	private Long id;
 	private String descricao;
 	private Double valor;
+	private String tipo;
+	private String marca;
 	private int qtd;
 	private int qtdMin;
 	private String referencia;
@@ -54,6 +56,18 @@ public class Peca {
 	}
 	public void setReferencia(String referencia) {
 		this.referencia = referencia;
+	}
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	public String getMarca() {
+		return marca;
+	}
+	public void setMarca(String marca) {
+		this.marca = marca;
 	}
 	
 	

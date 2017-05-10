@@ -36,10 +36,43 @@
 	
 	</h:form>
 	<br></br>
+	
+	<p:outputPanel >
+			<p:commandLink value="Agendamentos Vencidos:8" 
+			action="geralCliente.xhtml?faces-redirect=true"  style="color:black"
+			actionListener="#{homeMB.redirectGeral()}"></p:commandLink>
+			
+			<p:spacer width="30px"></p:spacer>
+			<p:commandLink value="Agendamentos Abertos:21" 
+			action="geralCliente.xhtml?faces-redirect=true"  style="color:black"
+			actionListener="#{homeMB.redirectGeral()}"></p:commandLink>
+			
+			<p:spacer width="30px"></p:spacer>
+			<p:commandLink value="Orçamentos Abertos:10" 
+			action="geralCliente.xhtml?faces-redirect=true"  style="color:black"
+			actionListener="#{homeMB.redirectGeral()}"></p:commandLink>
+			
+			<p:spacer width="30px"></p:spacer>
+			<p:commandLink value="OS Pendentes:15" 
+			action="geralCliente.xhtml?faces-redirect=true"  style="color:black"
+			actionListener="#{homeMB.redirectGeral()}"></p:commandLink>
+	</p:outputPanel>
+	
+	<br></br><br></br>
+	<p:spacer height="1px"></p:spacer>
 		
 	<p:commandButton value="Gerar &lt;br/&gt;Orçamento" type="button" escape="false"></p:commandButton>
 	
 	<p:commandButton value="Gerar &lt;br/&gt;Orçamento" type="button" escape="false"></p:commandButton>
 	
-	
+	<br></br>
+	<p:spacer height="10px"></p:spacer>
+	<p:dataList value="#{homeMB.pecas}" var="peca" type="ordered" >
+		<f:facet name="header">
+            Peças com estoque baixo
+        </f:facet>
+        <p:commandLink>&nbsp;#{peca.descricao}, Quantidade:#{peca.qtd}</p:commandLink>
+        <p:spacer height="4px"></p:spacer>
+	 </p:dataList>
+	 
 </ui:decorate>

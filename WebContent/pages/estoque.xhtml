@@ -34,10 +34,17 @@
 						<h:outputText value="#{index+1}" />
 					</p:column>
 					
-					<p:column headerText="Referencia" style="width:140px;">
+					<p:column headerText="Referencia" style="width:120px;">
 						<h:outputText value="#{peca.referencia}" />
 					</p:column>
 					
+					<p:column headerText="Tipo" style="width:80px;">
+						<h:outputText value="#{peca.tipo}" />
+					</p:column>
+					
+					<p:column headerText="Marca" style="width:80px;">
+						<h:outputText value="#{peca.marca}" />
+					</p:column>
 
 					<p:column filterBy="#{peca.descricao}" headerText="Descrição:" style="width:auto;"
 						 filterMatchMode="exact">

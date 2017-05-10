@@ -14,18 +14,102 @@
 			<h1 class="texto2">Ordem de Serviço</h1>
 
 			<p:outputLabel value="ID: " />
-			<p:outputLabel id="id" value="12"  />
+			<p:outputLabel id="id" value="12"  /> 
+			<p:spacer width="40px"></p:spacer>
+			<p:commandLink style="font-weight: bold">Voltar</p:commandLink>
 			<br></br>
 			<br></br>
 
-			<p:commandButton value="Salvar" actionListener="#{marcaMB.salvar}" process=" @this"
-				   />
-			<br></br>
-			<br></br>
-			<br></br>
+			<p:outputLabel value="Pedro Edson" /><p:spacer width="20px"></p:spacer>
+			<p:outputLabel value="81 999941867" /><p:spacer width="20px"></p:spacer>
+			<p:outputLabel value="Celta" /><p:spacer width="20px"></p:spacer>
+			<p:outputLabel value="kkx-3434" /><br></br><br></br>
+			<p:outputLabel value="Data Abertura: 23/03/2017 21:21:21" /><p:spacer width="20px"></p:spacer>
+			<p:outputLabel value="Data Fechamento: 23/03/2017 21:21:21" /><p:spacer width="20px"></p:spacer>
+			<p:outputLabel value="Valor Total: 233,45" style="font-weight: bold"/>
+			<br></br><br></br>	
+			
+			<p:outputLabel value="Valor dos Itens: 233,45" /><p:spacer width="30px"></p:spacer>
+			<p:outputLabel value="Desconto em %: " />
+			<p:inputText value="#{geralMB.cliente.email}"  size="3"/> <p:spacer width="6px"></p:spacer>
+			<p:commandButton value="Aplicar Desconto" actionListener="#{marcaMB.salvar}" process=" @this" />
+			<p:spacer width="50px"></p:spacer><p:outputLabel value="Situação: Em andamento" />
 
-
+			<p:spacer width="10px"></p:spacer>
+			<h:panelGrid columns="2" cellpadding="2">
+				<p:outputLabel value="Observação: " />
+				<p:inputTextarea value="#{geralMB.cliente.obs}"
+							autoResize="false" rows="4" cols="42" />
+			</h:panelGrid>
+			
+			<br></br><br></br>
+			<p:commandButton value="Salvar" actionListener="#{marcaMB.salvar}" process=" @this" />
+				<p:commandButton value="Adicionar Peças" actionListener="#{marcaMB.salvar}" process=" @this" />
+					<p:commandButton value="Adicionar Serviço" actionListener="#{marcaMB.salvar}" process=" @this" />
+			<p:commandButton value="Cancelar Desconto" actionListener="#{marcaMB.salvar}" process=" @this" />
+			<p:commandButton value="Imprimir" actionListener="#{marcaMB.salvar}" process=" @this" />
+			<br></br>
+			<br></br>
+			
+			<p:dataTable id="tabelaordem" var="cliente" value="#{clienteMB.listaClientes}" 
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+					paginator="true" rows="6" style="margin-bottom:20px;font-size: 14px !important">
 		
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Ano" />
+						</f:facet>
+						<h:outputText value="#{cliente.nome}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Cor" />
+						</f:facet>
+						<h:outputText value="#{cliente.email}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Marca" />
+						</f:facet>
+						<h:outputText value="#{cliente.fone1}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Modelo" />
+						</f:facet>
+						<h:outputText value="#{cliente.endereco.bairro}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Placa" />
+						</f:facet>
+						<h:outputText value="#{cliente.endereco.bairro}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Ações" />
+						</f:facet>
+						<p:panelGrid columns="2">
+						<p:commandLink 
+							oncomplete="PF('documentDialog').show()" title="View Detail"
+							styleClass="ui-icon ui-icon-search">
+							<f:setPropertyActionListener value="#{cliente}"
+								target="#{clienteMB.cliente}" />
+						</p:commandLink>
+						 <p:commandLink 
+							oncomplete="PF('documentDialogDelete').show()" title="View Detail"
+							styleClass="ui-icon ui-icon-search">
+							<f:setPropertyActionListener value="#{cliente}"
+								target="#{clienteMB.cliente}" />
+						</p:commandLink> 
+						</p:panelGrid>
+						
+					</p:column>
+				</p:dataTable>
+
+
+
+
 
 	</h:form>
 </ui:decorate>

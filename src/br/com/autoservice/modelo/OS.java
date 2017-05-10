@@ -23,6 +23,7 @@ public class OS {
 	@OneToMany(mappedBy = "os", fetch = FetchType.EAGER)
 	private List<ItemServico> itens;
 	private Date abertura;
+	private Date fechamento;
 	private String obs;
 	private String nomeCliente;
 	private String telefoneCliente;
