@@ -6,9 +6,12 @@
   <property name="hibernate.connection.driver_class">org.gjt.mm.mysql.Driver</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property> 
   <property name="hibernate.enable_lazy_load_no_trans">true</property>
-   <property name="hibernate.connection.username">root</property>
+  <property name="hibernate.connection.username">root</property>
   <property name="hibernate.connection.password">sicoadmin</property>
   <property name="hibernate.connection.url">jdbc:mysql://localhost/auto_services</property>
+ <!-- <property name="hibernate.connection.username">adminddIYLMG</property>
+  <property name="hibernate.connection.password">cnHxYZExI489</property>
+  <property name="hibernate.connection.url">jdbc:mysql://127.13.157.130/ismaelpecaseservicos</property>-->
  <property name="hibernate.hbm2ddl.auto">false</property>
  <!-- Para criar as tabelas no banco de dados -->
  <!--  

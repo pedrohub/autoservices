@@ -7,6 +7,7 @@ import java.util.List;
 import br.com.autoservice.dao.OSDao;
 import br.com.autoservice.modelo.Cliente;
 import br.com.autoservice.modelo.OS;
+import br.com.autoservice.modelo.Peca;
 
 public class OSController implements Serializable{
 
@@ -32,6 +33,14 @@ public class OSController implements Serializable{
 	public List<OS> listaOS(){
 		return dao.listar(OS.class);
 	}
+	
+	public void salvar(OS os){
+		dao.inserir(os);
+	}
+	
+//	public OS find(OS tipo){
+//		return dao.find(tipo);
+//	}
 	
 	public List<OS> listarPorcliente(Cliente cliente){
 		List<OS> lista = new ArrayList<OS>();

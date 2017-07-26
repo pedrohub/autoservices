@@ -3,6 +3,7 @@ package br.com.autoservice.util;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class DateUtil {
 	
@@ -16,4 +17,8 @@ public class DateUtil {
 		return dateFormat.format(date);
 	}
 
+	public static Date pegarData(){
+		GregorianCalendar calendar = new GregorianCalendar(); 
+		return calendar.getTime();
+	}
 }

@@ -19,6 +19,7 @@ public class ItemServico {
 	private String descricao;
 	private int quantidade;
 	private Double valor;
+	private Double valorUnitario;
 	@ManyToOne//(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="os_id")
 	private OS os;
@@ -53,5 +54,12 @@ public class ItemServico {
 	public void setOs(OS os) {
 		this.os = os;
 	}
+	public Double getValorUnitario() {
+		return valorUnitario;
+	}
+	public void setValorUnitario(Double valorUnitario) {
+		this.valorUnitario = valorUnitario;
+	}
+	
 	
 }

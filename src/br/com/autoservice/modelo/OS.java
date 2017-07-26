@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import br.com.autoservice.util.DateUtil;
 import br.com.autoservice.util.StatusOS;
 
 public class OS {
@@ -31,6 +32,20 @@ public class OS {
 	private Long idVeiculo;
 	private String placa;
 	private String modelo;
+	private String km;
+	
+	public void gerarOS(Cliente cliente, Veiculo veiculo){
+		
+		abertura = DateUtil.pegarData(); 
+		fechamento = new Date();
+		idCliente = cliente.getIdCliente();
+		nomeCliente = cliente.getNome();
+		idVeiculo = veiculo.getCodVeiculo();
+		placa = veiculo.getPlaca();
+		modelo = veiculo.getModelo();
+		obs = "";
+		status = StatusOS.ABERTA;
+	}
 	
 	public Long getId() {
 		return id;
@@ -117,6 +132,24 @@ public class OS {
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
+
+	public Date getFechamento() {
+		return fechamento;
+	}
+
+	public void setFechamento(Date fechamento) {
+		this.fechamento = fechamento;
+	}
+
+	public String getKm() {
+		return km;
+	}
+
+	public void setKm(String km) {
+		this.km = km;
+	}
+	
+	
 	
 	
 }

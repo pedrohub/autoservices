@@ -45,6 +45,8 @@ public class PecaMB implements Serializable{
 			tipoServico.setQtdMin(peca.getQtdMin());
 			tipoServico.setValor(peca.getValor());
 			tipoServico.setReferencia(peca.getReferencia());
+			tipoServico.setMarca(peca.getMarca());
+			tipoServico.setTipo(peca.getTipo());
 			
 			pecaController.salvar(tipoServico);
 			this.peca.setDescricao(null);

@@ -14,76 +14,85 @@
 			<h1 class="texto2">Ordem de Serviço</h1>
 
 			<p:outputLabel value="ID: " />
-			<p:outputLabel id="id" value="12"  /> 
+			<p:outputLabel id="id" value="#{osMB.os.id}"  /> 
 			<p:spacer width="40px"></p:spacer>
-			<p:commandLink style="font-weight: bold">Voltar</p:commandLink>
+			<p:link style="font-weight: bold" href="javascript:history.back(1);">Voltar</p:link>
 			<br></br>
 			<br></br>
 
-			<p:outputLabel value="Pedro Edson" /><p:spacer width="20px"></p:spacer>
-			<p:outputLabel value="81 999941867" /><p:spacer width="20px"></p:spacer>
-			<p:outputLabel value="Celta" /><p:spacer width="20px"></p:spacer>
-			<p:outputLabel value="kkx-3434" /><br></br><br></br>
-			<p:outputLabel value="Data Abertura: 23/03/2017 21:21:21" /><p:spacer width="20px"></p:spacer>
-			<p:outputLabel value="Data Fechamento: 23/03/2017 21:21:21" /><p:spacer width="20px"></p:spacer>
-			<p:outputLabel value="Valor Total: 233,45" style="font-weight: bold"/>
+			<p:outputLabel value="#{osMB.os.nomeCliente}" /><p:spacer width="20px"></p:spacer>
+			<p:outputLabel value="#{osMB.os.telefoneCliente}" /><p:spacer width="20px"></p:spacer>
+			<p:outputLabel value="#{osMB.os.modelo}" /><p:spacer width="20px"></p:spacer>
+			<p:outputLabel value="#{osMB.os.placa}" /><p:spacer width="20px"></p:spacer>
+			<p:outputLabel value="Km: " />
+			<p:inputText value="#{osMB.os.km}" /> <p:spacer width="6px"></p:spacer>
+			<br></br><br></br>
+			<p:outputLabel value="Data Abertura: " />
+			<p:outputLabel value="#{osMB.os.abertura}" >
+				 <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Montevideo" />
+			</p:outputLabel>
+			<p:spacer width="20px"></p:spacer>
+			<p:outputLabel value="Data Fechamento: " />
+			<p:outputLabel value="#{osMB.os.fechamento}" />
+			<p:spacer width="20px"></p:spacer>
+			<p:outputLabel value="Valor Total: " style="font-weight: bold"/>
+			<p:outputLabel value="#{osMB.os.valorTotal}" style="font-weight: bold"/>
 			<br></br><br></br>	
 			
-			<p:outputLabel value="Valor dos Itens: 233,45" /><p:spacer width="30px"></p:spacer>
+			<p:outputLabel value="Valor dos Itens: " />
+			<p:outputLabel value="#{osMB.os.valor}" /><p:spacer width="30px"></p:spacer>
 			<p:outputLabel value="Desconto em %: " />
-			<p:inputText value="#{geralMB.cliente.email}"  size="3"/> <p:spacer width="6px"></p:spacer>
+			<p:inputText value="#{osMB.os.desconto}"  size="3"/> <p:spacer width="6px"></p:spacer>
 			<p:commandButton value="Aplicar Desconto" actionListener="#{marcaMB.salvar}" process=" @this" />
-			<p:spacer width="50px"></p:spacer><p:outputLabel value="Situação: Em andamento" />
+			<p:spacer width="50px"></p:spacer><p:outputLabel value="Status: #{osMB.os.status}" />
 
 			<p:spacer width="10px"></p:spacer>
 			<h:panelGrid columns="2" cellpadding="2">
 				<p:outputLabel value="Observação: " />
-				<p:inputTextarea value="#{geralMB.cliente.obs}"
+				<p:inputTextarea value="#{osMB.os.obs}"
 							autoResize="false" rows="4" cols="42" />
 			</h:panelGrid>
 			
 			<br></br><br></br>
 			<p:commandButton value="Salvar" actionListener="#{marcaMB.salvar}" process=" @this" />
-				<p:commandButton value="Adicionar Peças" actionListener="#{marcaMB.salvar}" process=" @this" />
-					<p:commandButton value="Adicionar Serviço" actionListener="#{marcaMB.salvar}" process=" @this" />
+			<p:commandButton value="Adicionar Peças" actionListener="#{marcaMB.salvar}" process=" @this"
+				 oncomplete="PF('pecaDialog').show()" update=":form:pecaDetail"/>
+				 
+			<p:commandButton value="Adicionar Serviço" actionListener="#{marcaMB.salvar}" process=" @this" 
+				oncomplete="PF('servicoDialog').show()" update=":form:servicoDetail"/>
+				
 			<p:commandButton value="Cancelar Desconto" actionListener="#{marcaMB.salvar}" process=" @this" />
 			<p:commandButton value="Imprimir" actionListener="#{marcaMB.salvar}" process=" @this" />
 			<br></br>
 			<br></br>
 			
-			<p:dataTable id="tabelaordem" var="cliente" value="#{clienteMB.listaClientes}" 
+			<p:dataTable id="tabelaordem" var="item" value="#{osMB.itens}" 
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 					paginator="true" rows="6" style="margin-bottom:20px;font-size: 14px !important">
 		
 					<p:column>
 						<f:facet name="header">
-							<h:outputText value="Ano" />
+							<h:outputText value="Descrição" />
 						</f:facet>
-						<h:outputText value="#{cliente.nome}" />
+						<h:outputText value="#{item.descricao}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">
-							<h:outputText value="Cor" />
+							<h:outputText value="Quantidade" />
 						</f:facet>
-						<h:outputText value="#{cliente.email}" />
+						<h:outputText value="#{item.quantidade}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">
-							<h:outputText value="Marca" />
+							<h:outputText value="Preço Unitario" />
 						</f:facet>
-						<h:outputText value="#{cliente.fone1}" />
+						<h:outputText value="#{item.valorUnitario}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">
-							<h:outputText value="Modelo" />
+							<h:outputText value="Preço Total" />
 						</f:facet>
-						<h:outputText value="#{cliente.endereco.bairro}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Placa" />
-						</f:facet>
-						<h:outputText value="#{cliente.endereco.bairro}" />
+						<h:outputText value="#{item.valor}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">
@@ -93,23 +102,134 @@
 						<p:commandLink 
 							oncomplete="PF('documentDialog').show()" title="View Detail"
 							styleClass="ui-icon ui-icon-search">
-							<f:setPropertyActionListener value="#{cliente}"
-								target="#{clienteMB.cliente}" />
+							
 						</p:commandLink>
+						
 						 <p:commandLink 
 							oncomplete="PF('documentDialogDelete').show()" title="View Detail"
 							styleClass="ui-icon ui-icon-search">
-							<f:setPropertyActionListener value="#{cliente}"
-								target="#{clienteMB.cliente}" />
+							
 						</p:commandLink> 
 						</p:panelGrid>
 						
 					</p:column>
 				</p:dataTable>
 
+		<p:dialog header="Adicionar Peças" widgetVar="pecaDialog" modal="true"
+			showEffect="blind" hideEffect="explode" resizable="false">
+			<p:outputPanel id="pecaDetail" style="text-align:center;">
 
+					<p:dataTable var="peca" value="#{pecaMB.listaPecas}"
+					id="tabelaPecas" rowIndexVar="index"  widgetVar="pecaTable"
+					scrollable="true" scrollHeight="400" sortBy="#{peca.descricao}">
+					
+					<p:column headerText="N&ordm;" style="width:30px;">
+						<h:outputText value="#{index+1}" />
+					</p:column>
+					
+					<p:column headerText="Referencia" style="width:120px;">
+						<h:outputText value="#{peca.referencia}" />
+					</p:column>
+					
+					<p:column headerText="Tipo" filterBy="#{peca.tipo}" filterMatchMode="exact" style="width:auto;">
+						<f:facet name="filter">
+							<p:selectOneMenu onchange="PF('pecaTable').filter()" >
+								<f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true" />
+										<f:selectItems value="#{pecaMB.listaPecas}" var="pc" itemLabel="#{pc.tipo}" itemValue="#{pc.tipo}"/>
+							</p:selectOneMenu>
+						</f:facet>
+						<h:outputText value="#{peca.tipo}" />
+					</p:column>
+					
+					<p:column headerText="Marca" filterBy="#{peca.marca}" filterMatchMode="exact" style="width:auto;">
+						<f:facet name="filter">
+							<p:selectOneMenu onchange="PF('pecaTable').filter()" >
+								<f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true" />
+										<f:selectItems value="#{pecaMB.listaPecas}" var="pc" itemLabel="#{pc.marca}" itemValue="#{pc.marca}"/>
+							</p:selectOneMenu>
+						</f:facet>
+						<h:outputText value="#{peca.marca}" />
+					</p:column>
 
+					<p:column filterBy="#{peca.descricao}" headerText="Descrição:" style="width:auto;"
+						 filterMatchMode="exact">
+						<f:facet name="filter">
+							<p:selectOneMenu onchange="PF('pecaTable').filter()" >
+								<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+									noSelectionOption="true" />
+								<f:selectItems value="#{pecaMB.listaPecas}" var="pc" itemLabel="#{pc.descricao}"
+								 itemValue="#{pc.descricao}"/>
+							</p:selectOneMenu>
+						</f:facet>
+						<h:outputText value="#{peca.descricao}" />
+					</p:column>
 
+					<p:column headerText="Quantidade em estoque" style="width:80px;">
+						<h:outputText value="#{peca.qtd}" />
+					</p:column>
+					
+					<p:column headerText="Valor" style="width:90px;">
+						<h:outputText value="#{peca.valor}" >
+							  <f:convertNumber pattern="#,###.00" locale="pt_BR"/>
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Ações" style="width:140px;">
+						<p:commandLink actionListener="#{osMB.pecaToItem(peca)}"
+							process="@this" title="View Detail" oncomplete="PF('pecasQtd').show()" update=":form:qtdPecasPainel :form:pecaDetail"
+							style="float:left;margin-right:10px" value="Adicionar">
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+		</p:dialog>
+		
+		<p:dialog header="Quantidade Pecas" widgetVar="pecasQtd" modal="true"
+			showEffect="blind" hideEffect="explode" resizable="false">
+			<p:outputPanel id="qtdPecasPainel" style="text-align:center;">
+
+					<h:outputText value="Item: " />
+					<h:outputText value="#{osMB.item.descricao}" /><br></br><br></br>
+					<h:outputText value="Quantidade: " />
+					<h:inputText value="#{osMB.item.quantidade}" size="5" id="itemQtd"></h:inputText><br></br>
+					
+					<p:commandLink actionListener="#{osMB.pecaToItem(peca)}"
+							process="@this" title="View Detail" oncomplete="PF('pecasQtd').hide()" update=":form:qtdPecasPainel form:itemQtd"
+							style="float:left;margin-right:10px" value="Adicionar">
+						</p:commandLink>
+					
+				<br></br><br></br>
+			</p:outputPanel>
+		</p:dialog>
+		
+		<p:dialog header="Adicionar Serviço" widgetVar="servicoDialog" modal="true"
+			showEffect="blind" hideEffect="explode" resizable="false">
+			<p:outputPanel id="servicoDetail" style="text-align:center;width:800px">
+
+					<p:dataTable var="tipo" value="#{tipoServicoMB.listaTipos}"
+					id="tabelaTipos" rowIndexVar="index">
+					
+					<p:column headerText="Serviço" >
+						<h:outputText value="#{tipo.descricao}" />
+					</p:column>
+					
+					<p:column headerText="Valor" >
+						<h:outputText value="#{tipo.valor}" />
+					</p:column>
+
+					<p:column headerText="Acoes" >
+						<p:commandLink  process="@this"
+							 title="View Detail"
+							style="float:left;margin-right:10px" value="Adicionar">
+							<f:setPropertyActionListener target="#{tipoServicoMB.tipo}"
+								value="#{tipo}" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+					
+				<br></br><br></br>
+			</p:outputPanel>
+		</p:dialog>
 
 	</h:form>
 </ui:decorate>

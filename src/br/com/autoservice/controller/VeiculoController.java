@@ -61,6 +61,12 @@ public class VeiculoController {
 		return listaPeca;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Veiculo> listar() throws HibernateException {
+		List<Veiculo> listaPeca = veiculoDao.listar();
+		return listaPeca;
+	}
+	
 	public Veiculo find(Veiculo veiculo) {
 		Veiculo veiculoRetorno = veiculoDao.find(veiculo); 
 		return veiculoRetorno;

@@ -1,5 +1,6 @@
 package br.com.autoservice.mb;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,8 +14,8 @@ import javax.faces.context.FacesContext;
 import br.com.autoservice.controller.AgendamentoController;
 import br.com.autoservice.controller.ClienteController;
 import br.com.autoservice.controller.VeiculoController;
-import br.com.autoservice.modelo.Agendamento;
 import br.com.autoservice.modelo.Cliente;
+import br.com.autoservice.modelo.OS;
 import br.com.autoservice.modelo.Veiculo;
 import br.com.autoservice.util.Constantes;
 
@@ -33,6 +34,8 @@ public class GeralMB implements Serializable{
 	private AgendamentoController agendamentoController;
 	@ManagedProperty(value="#{agendamentoMB}")
 	private AgendamentoMB agendamentoMB;
+	@ManagedProperty(value="#{osMB}")
+	private OsMB osMB;
 	
 	
 	@PostConstruct
@@ -172,6 +175,17 @@ public class GeralMB implements Serializable{
 		agendamentoMB.setVeiculos(getVeiculos());
 		agendamentoMB.limparModal();
 	}
+	
+	public void redirectOs(){
+		try {
+			OS os = new OS();
+			os.gerarOS(cliente, veiculo);
+			osMB.setOs(os);
+			FacesContext.getCurrentInstance().getExternalContext().redirect("pageOS.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public Cliente getCliente() {
 		return cliente;
@@ -219,6 +233,16 @@ public class GeralMB implements Serializable{
 	public void setAgendamentoMB(AgendamentoMB agendamentoMB) {
 		this.agendamentoMB = agendamentoMB;
 	}
+
+	public OsMB getOsMB() {
+		return osMB;
+	}
+
+	public void setOsMB(OsMB osMB) {
+		this.osMB = osMB;
+	}
+	
+	
 
 
 }

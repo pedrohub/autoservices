@@ -5,7 +5,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml" 
+	xmlns:pe="http://primefaces.org/ui/extensions">
 
 	<h:form id="form">
 
@@ -38,11 +39,23 @@
 						<h:outputText value="#{peca.referencia}" />
 					</p:column>
 					
-					<p:column headerText="Tipo" style="width:80px;">
+					<p:column headerText="Tipo" filterBy="#{peca.tipo}" filterMatchMode="exact" style="width:auto;">
+						<f:facet name="filter">
+							<p:selectOneMenu onchange="PF('pecaTable').filter()" >
+								<f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true" />
+										<f:selectItems value="#{pecaMB.listaPecas}" var="pc" itemLabel="#{pc.tipo}" itemValue="#{pc.tipo}"/>
+							</p:selectOneMenu>
+						</f:facet>
 						<h:outputText value="#{peca.tipo}" />
 					</p:column>
 					
-					<p:column headerText="Marca" style="width:80px;">
+					<p:column headerText="Marca" filterBy="#{peca.marca}" filterMatchMode="exact" style="width:auto;">
+						<f:facet name="filter">
+							<p:selectOneMenu onchange="PF('pecaTable').filter()" >
+								<f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true" />
+										<f:selectItems value="#{pecaMB.listaPecas}" var="pc" itemLabel="#{pc.marca}" itemValue="#{pc.marca}"/>
+							</p:selectOneMenu>
+						</f:facet>
 						<h:outputText value="#{peca.marca}" />
 					</p:column>
 
@@ -50,7 +63,7 @@
 						 filterMatchMode="exact">
 						<f:facet name="filter">
 							<p:selectOneMenu onchange="PF('pecaTable').filter()" >
-								<f:selectItem itemLabel="Select One" itemValue="#{null}"
+								<f:selectItem itemLabel="Selecione" itemValue="#{null}"
 									noSelectionOption="true" />
 								<f:selectItems value="#{pecaMB.listaPecas}" var="pc" itemLabel="#{pc.descricao}"
 								 itemValue="#{pc.descricao}"/>
@@ -68,7 +81,9 @@
 					</p:column>
 					
 					<p:column headerText="Valor" style="width:90px;">
-						<h:outputText value="#{peca.valor}" />
+						<h:outputText value="#{peca.valor}" >
+							  <f:convertNumber pattern="#,###.00" locale="pt_BR"/>
+						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Ações" style="width:140px;">
@@ -89,7 +104,7 @@
 
 			</p:outputPanel>
 		</div>
-		<!-- fim tabela de clientes  -->
+		<!-- fim tabela de estoque  -->
 
 		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
 			<p:commandButton value="Yes" type="button"
@@ -108,6 +123,12 @@
 					
 					<p:outputLabel value="Descrição: " />
 					<p:inputText id="aref" value="#{pecaMB.peca.referencia}"  />
+					
+					<p:outputLabel value="tipo " />
+					<p:inputText id="atipo" value="#{pecaMB.peca.tipo}"  />
+					
+					<p:outputLabel value="marca " />
+					<p:inputText id="amarca" value="#{pecaMB.peca.marca}"  />
 										
 					<p:outputLabel value="Qtd Estoque: " />
 					<p:inputText id="aqtd" value="#{pecaMB.peca.qtd}"  />
@@ -116,12 +137,15 @@
 					<p:inputText id="aqtdmin" value="#{pecaMB.peca.qtdMin}"  />
 					
 					<p:outputLabel value="Valor: " />
-					<p:inputText id="avalor" value="#{pecaMB.peca.valor}"  />
+					
+					<pe:inputNumber id="avalor" symbol="R$ " decimalSeparator="," thousandSeparator="."
+ 						 value="#{pecaMB.peca.valor}" decimalPlaces="2" emptyValue="0"/>
+						
 				</h:panelGrid>
 					
 				<br></br><br></br>
-				<p:commandButton value="Salvar" actionListener="#{pecaMB.editar}" process="@this :form:anome :form:aqtd :form:aqtdmin :form:avalor :form:aref"
-					update=":form:painelMarca :form:growl :form:anome :form:aqtd :form:aqtdmin :form:avalor :form:aref" 
+				<p:commandButton value="Salvar" actionListener="#{pecaMB.editar}" process="@this :form:anome :form:aqtd :form:aqtdmin :form:avalor :form:aref :form:atipo :form:amarca"
+					update=":form:painelMarca :form:growl :form:anome :form:aqtd :form:aqtdmin :form:avalor :form:aref :form:atipo :form:amarca" 
 					oncomplete="PF('marcaDialog').hide()" />	
 			</p:outputPanel>
 		</p:dialog>
@@ -136,6 +160,12 @@
 					
 					<p:outputLabel value="Referencia " />
 					<p:inputText id="ref" value="#{pecaMB.peca.referencia}"  />
+					
+					<p:outputLabel value="tipo " />
+					<p:inputText id="tipo" value="#{pecaMB.peca.tipo}"  />
+					
+					<p:outputLabel value="marca " />
+					<p:inputText id="marca" value="#{pecaMB.peca.marca}"  />
 										
 					<p:outputLabel value="Qtd Estoque: " />
 					<p:inputText id="qtd" value="#{pecaMB.peca.qtd}"  />
@@ -144,13 +174,14 @@
 					<p:inputText id="qtdmin" value="#{pecaMB.peca.qtdMin}"  />
 					
 					<p:outputLabel value="Valor: " />
-					<p:inputText id="valor" value="#{pecaMB.peca.valor}"  />
+						<pe:inputNumber id="valor" symbol="R$ " decimalSeparator="," thousandSeparator="."
+ 						 value="#{pecaMB.peca.valor}" decimalPlaces="2" emptyValue="0"/>
 				</h:panelGrid>
 					<br></br>
 					<br></br>
-					<p:commandButton value="Salvar" actionListener="#{pecaMB.salvar}" process=":form:nome :form:qtd 
+					<p:commandButton value="Salvar" actionListener="#{pecaMB.salvar}" process=":form:nome :form:qtd :form:tipo :form:marca 
 					:form:qtdmin :form:valor :form:ref @this"
-						update=":form:painelMarca :form:growl :form:nome :form:qtd :form:qtdmin :form:valor :form:ref :form:count" 
+						update=":form:painelMarca :form:growl :form:nome :form:qtd :form:qtdmin :form:valor :form:ref :form:count :form:tipo :form:marca" 
 						oncomplete="PF('inserirDialog').hide()"/>
 					
 			</p:outputPanel>

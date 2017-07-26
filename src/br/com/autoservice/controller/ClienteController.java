@@ -49,6 +49,13 @@ public class ClienteController implements Serializable{
 	}
 
 	public void alterar(Cliente cliente) {
+		
+		List<Veiculo> listaVeiculos = cliente.getVeiculos();
+		
+		for (Veiculo veiculo : listaVeiculos) {
+			veiculoController.alterar(veiculo);
+		}
+		
 		clienteDao.alterar(cliente);
 	}
 

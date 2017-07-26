@@ -38,5 +38,17 @@ public class VeiculoDao extends GenericDao {
 
 		}
 	}
+	
+	public List listar() throws HibernateException{
+		session = HibernateUtil.getSessionFactory().openSession();
+
+		try{
+			Criteria cri = session.createCriteria(Veiculo.class).add(Restrictions.eq("status", true));
+			return cri.list();
+		}finally{
+			session.close();
+
+		}
+	}
 
 }

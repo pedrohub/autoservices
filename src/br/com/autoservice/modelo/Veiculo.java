@@ -134,7 +134,85 @@ public class Veiculo implements Serializable{
 	public void setAgendamentos(List<Agendamento> agendamentos) {
 		this.agendamentos = agendamentos;
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((agendamentos == null) ? 0 : agendamentos.hashCode());
+		result = prime * result + ((ano == null) ? 0 : ano.hashCode());
+		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
+		result = prime * result
+				+ ((codVeiculo == null) ? 0 : codVeiculo.hashCode());
+		result = prime * result + ((cor == null) ? 0 : cor.hashCode());
+		result = prime * result + ((marca == null) ? 0 : marca.hashCode());
+		result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
+		result = prime * result + ((obs == null) ? 0 : obs.hashCode());
+		result = prime * result + ((placa == null) ? 0 : placa.hashCode());
+		result = prime * result + (status ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Veiculo other = (Veiculo) obj;
+		if (agendamentos == null) {
+			if (other.agendamentos != null)
+				return false;
+		} else if (!agendamentos.equals(other.agendamentos))
+			return false;
+		if (ano == null) {
+			if (other.ano != null)
+				return false;
+		} else if (!ano.equals(other.ano))
+			return false;
+		if (cliente == null) {
+			if (other.cliente != null)
+				return false;
+		} else if (!cliente.equals(other.cliente))
+			return false;
+		if (codVeiculo == null) {
+			if (other.codVeiculo != null)
+				return false;
+		} else if (!codVeiculo.equals(other.codVeiculo))
+			return false;
+		if (cor == null) {
+			if (other.cor != null)
+				return false;
+		} else if (!cor.equals(other.cor))
+			return false;
+		if (marca == null) {
+			if (other.marca != null)
+				return false;
+		} else if (!marca.equals(other.marca))
+			return false;
+		if (modelo == null) {
+			if (other.modelo != null)
+				return false;
+		} else if (!modelo.equals(other.modelo))
+			return false;
+		if (obs == null) {
+			if (other.obs != null)
+				return false;
+		} else if (!obs.equals(other.obs))
+			return false;
+		if (placa == null) {
+			if (other.placa != null)
+				return false;
+		} else if (!placa.equals(other.placa))
+			return false;
+		if (status != other.status)
+			return false;
+		return true;
+	}
+
 	
 
 }

@@ -1,7 +1,6 @@
 package br.com.autoservice.modelo;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -119,5 +118,7 @@ public class Cliente implements Serializable{
 	public void setIdCliente(Long idCliente) {
 		this.idCliente = idCliente;
 	}
+
+	
 	
 }
