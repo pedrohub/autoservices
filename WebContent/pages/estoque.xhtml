@@ -27,7 +27,7 @@
 			<p:outputPanel id="painelMarca"
 				style="font-size: 14px">
 
-				<p:dataTable var="peca" value="#{pecaMB.listaPecas}"
+				<p:dataTable var="peca" value="#{pecaMB.listaPecas}" filteredValue="#{pecaMB.listaPecasFilters}"
 					id="tabelaTipos" rowIndexVar="index"  widgetVar="pecaTable"
 					scrollable="true" scrollHeight="500" sortBy="#{peca.descricao}">
 					
@@ -41,9 +41,11 @@
 					
 					<p:column headerText="Tipo" filterBy="#{peca.tipo}" filterMatchMode="exact" style="width:auto;">
 						<f:facet name="filter">
-							<p:selectOneMenu onchange="PF('pecaTable').filter()" >
+							<p:selectOneMenu value="#{pecaMB.tipo}">
 								<f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true" />
 										<f:selectItems value="#{pecaMB.listaPecas}" var="pc" itemLabel="#{pc.tipo}" itemValue="#{pc.tipo}"/>
+										<p:ajax event="change" oncomplete="PF('pecaTable').filter()" update="@form"
+								listener="#{pecaMB.filterlistTipo}"/>
 							</p:selectOneMenu>
 						</f:facet>
 						<h:outputText value="#{peca.tipo}" />
@@ -51,27 +53,31 @@
 					
 					<p:column headerText="Marca" filterBy="#{peca.marca}" filterMatchMode="exact" style="width:auto;">
 						<f:facet name="filter">
-							<p:selectOneMenu onchange="PF('pecaTable').filter()" >
+							<p:selectOneMenu value="#{pecaMB.marca}">
 								<f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true" />
 										<f:selectItems value="#{pecaMB.listaPecas}" var="pc" itemLabel="#{pc.marca}" itemValue="#{pc.marca}"/>
+										<p:ajax event="change" oncomplete="PF('pecaTable').filter()" update="@form"
+								listener="#{pecaMB.filterlistMarca}"/>
 							</p:selectOneMenu>
 						</f:facet>
 						<h:outputText value="#{peca.marca}" />
 					</p:column>
 
-					<p:column filterBy="#{peca.descricao}" headerText="Descrição:" style="width:auto;"
+					 <p:column filterBy="#{peca.descricao}" headerText="Descrição:" style="width:auto;"
 						 filterMatchMode="exact">
 						<f:facet name="filter">
-							<p:selectOneMenu onchange="PF('pecaTable').filter()" >
+							<p:selectOneMenu value="#{pecaMB.descricao}">
 								<f:selectItem itemLabel="Selecione" itemValue="#{null}"
 									noSelectionOption="true" />
 								<f:selectItems value="#{pecaMB.listaPecas}" var="pc" itemLabel="#{pc.descricao}"
-								 itemValue="#{pc.descricao}"/>
+								 itemValue="#{pc.descricao}" forceSelection="true" />
+								 <p:ajax event="change" oncomplete="PF('pecaTable').filter()" update="@form"
+								listener="#{pecaMB.filterlistDesc}"/>
 							</p:selectOneMenu>
 						</f:facet>
 						<h:outputText value="#{peca.descricao}" />
-					</p:column>
-
+					</p:column> 
+					
 					<p:column headerText="Quantidade" style="width:80px;">
 						<h:outputText value="#{peca.qtd}" />
 					</p:column>
@@ -94,7 +100,7 @@
 								value="#{peca}" />
 						</p:commandLink>
 						<p:commandLink actionListener="#{pecaMB.deletar(peca)}"
-							process="@this" title="View Detail" update="form:painelMarca form:count"
+							process="@this" title="View Detail" update="form:painelMarca form:count form:tabelaTipos"
 							style="float:left;margin-right:10px" value="Remover	">
 							<p:confirm header="Confirmation"
 								message="Deseja deletar esta Peça?" icon="ui-icon-alert" />

@@ -1,70 +1,37 @@
 package br.com.autoservice.util;
 
-import java.awt.Color;
+import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.OutputStream;
+import java.io.StringReader;
 
-import com.itextpdf.text.Anchor;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.ColumnText;
-import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.pdf.PdfWriter;
+
+
 
 public class GeneratorPDF {
 
 	
 	public static void main(String[] args) {
-        // criação do documento
-       Document document = new Document();
-       try {
-          
-    	   PdfWriter writer= PdfWriter.getInstance(document, new FileOutputStream("C:\\log\\PDF_DevMedia.pdf"));
-           document.open();
-          
-           // adicionando um parágrafo no documento
-           document.add(new Paragraph("Gerando PDF - Java 2"));	
-           
-           PdfContentByte cb = writer.getDirectContent();
-           cb.beginText();
-        // write text centered at 155 mm from left side and 270 mm from bottom
-       // cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "Our headline", 439, 765, 0);
-        // leave text mode
-        cb.endText();
-         
-        // now draw a line below the headline
-        cb.setLineWidth(1f); 
-        cb.moveTo(0, 755);
-        cb.lineTo(595, 755);
-        cb.stroke();
         
-        Anchor google = new Anchor("Link para o Google");
-        google.setReference("http://www.google.com");
-
-        
-        Font helvetica8BoldBlue = FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD);
-        
-     // create a column object
-     ColumnText ct = new ColumnText(cb);
-      
-     // define the text to print in the column
-     Phrase myText = new Phrase("Lorem ipsum dolor sit amet, ...", helvetica8BoldBlue);
-     ct.setSimpleColumn(myText, 72, 600, 355, 317, 10, Element.ALIGN_LEFT);
-     ct.go();
-           
-}
-       catch(DocumentException de) {
-           System.err.println(de.getMessage());
-       }
-       catch(IOException ioe) {
-           System.err.println(ioe.getMessage());
-       }
-       document.close();
-   }   
+		try {
+		    String k = "<html><body> This is my Project <hr>teste <b>teste de teste</b><div>teste falante</div><br></br>testes"
+		    		+ "<table > <tr><th>Firstname</th><th>Lastname</th><th>Age</th></tr><tr><td>Jill</td>"+
+   "<td>Smith</td><td>50</td></tr><tr><td>Eve</td><td>Jackson</td><td>94</td></tr></table><br>teste"
+		    		+ "</body></html>";
+		    OutputStream file = new FileOutputStream(new File("C:\\logs\\Test.pdf"));
+		    Document document = new Document();
+		    PdfWriter.getInstance(document, file);
+		    document.open();
+		    HTMLWorker htmlWorker = new HTMLWorker(document);
+		    htmlWorker.parse(new StringReader(k));
+		    document.close();
+		    file.close();
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+	}
 	
 }

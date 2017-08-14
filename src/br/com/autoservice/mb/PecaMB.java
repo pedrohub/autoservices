@@ -1,12 +1,13 @@
 package br.com.autoservice.mb;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import br.com.autoservice.controller.PecaController;
@@ -14,7 +15,7 @@ import br.com.autoservice.modelo.Peca;
 import br.com.autoservice.util.Constantes;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class PecaMB implements Serializable{
 
 	/**
@@ -22,9 +23,13 @@ public class PecaMB implements Serializable{
 	 */
 	private static final long serialVersionUID = 7763748530287660122L;
 	private List<Peca> listaPecas;
+	private List<Peca> listaPecasFilters;
 	private PecaController pecaController;
 	private Peca peca;
 	private int listSize;
+	private String descricao;
+	private String tipo;
+	private String marca;
 	
 	@PostConstruct
 	public void init (){
@@ -52,6 +57,7 @@ public class PecaMB implements Serializable{
 			this.peca.setDescricao(null);
 			listaPecas = pecaController.getLista();
 			listSize = listaPecas.size();
+			limparFiltros();
 			
 			FacesContext context = FacesContext.getCurrentInstance();
 	        context.addMessage(null, new FacesMessage("Success",  "Registro Salvo" ) );
@@ -71,6 +77,7 @@ public class PecaMB implements Serializable{
 					new FacesMessage("Sucess", "Registro Alterado"));
 			listaPecas = pecaController.getLista();
 			listSize = listaPecas.size();
+			limparFiltros();
 		}
 	}
 
@@ -78,6 +85,58 @@ public class PecaMB implements Serializable{
 		pecaController.deletar(tipo);
 		listaPecas = pecaController.getLista();
 		listSize = listaPecas.size();
+		limparFiltros();
+		
+	}
+	
+	public void filterlistDesc(){
+		
+		List<Peca> listaRetorno = new ArrayList<Peca>();
+		for (Peca item : listaPecas) {
+			if(descricao.equals(item.getDescricao())){
+				listaRetorno.add(item);
+			}
+		}
+		
+		if(!listaRetorno.isEmpty()){
+			listaPecasFilters = listaRetorno;
+		}
+	}
+	
+	public void filterlistMarca(){
+		
+		List<Peca> listaRetorno = new ArrayList<Peca>();
+		for (Peca item : listaPecas) {
+			if(marca.equals(item.getDescricao())){
+				listaRetorno.add(item);
+			}
+		}
+		
+		if(!listaRetorno.isEmpty()){
+			listaPecasFilters = listaRetorno;
+		}
+	}
+	
+	public void filterlistTipo(){
+		
+		List<Peca> listaRetorno = new ArrayList<Peca>();
+		for (Peca item : listaPecas) {
+			if(tipo.equals(item.getDescricao())){
+				listaRetorno.add(item);
+			}
+		}
+		
+		if(!listaRetorno.isEmpty()){
+			listaPecasFilters = listaRetorno;
+		}
+	}
+	
+	public void limparFiltros(){
+		marca = "";
+		tipo = "";
+		descricao = "";
+		listaPecasFilters.clear();
+		listaPecasFilters.addAll(pecaController.getLista()) ;
 	}
 	
 	public void limparModal(){
@@ -112,6 +171,46 @@ public class PecaMB implements Serializable{
 
 	public void setListSize(int listSize) {
 		this.listSize = listSize;
+	}
+
+
+	public List<Peca> getListaPecasFilters() {
+		return listaPecasFilters;
+	}
+
+
+	public void setListaPecasFilters(List<Peca> listaPecasFilters) {
+		this.listaPecasFilters = listaPecasFilters;
+	}
+
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+
+	public String getTipo() {
+		return tipo;
+	}
+
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+
+	public String getMarca() {
+		return marca;
+	}
+
+
+	public void setMarca(String marca) {
+		this.marca = marca;
 	}
 	
 	

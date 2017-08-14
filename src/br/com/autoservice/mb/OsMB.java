@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -28,6 +29,10 @@ public class OsMB implements Serializable{
 	private static OSController oSController;
 	private ItemServico item;
 	private List<ItemServico> itens;
+	private Integer quantidade;
+	@ManagedProperty(value="#{pecaMB}")
+	private PecaMB pecaMB;
+	private int quantidadeEstoque;
 	
 	
 	
@@ -53,13 +58,31 @@ public class OsMB implements Serializable{
 	}
 	
 	public void pecaToItem(Peca peca){
+		quantidade = 1;
+		quantidadeEstoque = peca.getQtd();
+		item = new ItemServico();
 		item.setDescricao(peca.getDescricao());
-		item.setValor(peca.getValor());
+		item.setValorUnitario(peca.getValor());
+		
 	}
 	
 	public void addItemPeca(){
 		
-		itens.add(item);
+		if((quantidadeEstoque > 0) && (quantidadeEstoque - quantidade >= 0)){
+			item.setValor(item.getValorUnitario()* quantidade);
+			item.setQuantidade(quantidade);
+			itens.add(item);
+			pecaMB.limparFiltros();
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Inserido", ""));
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Verifique o estoque do item", ""));
+		}
+	}
+	
+	public void removeItem(int indice){
+		itens.remove(indice);
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null,new FacesMessage("Sucess", "Registro Removido"));
 	}
 	
 	private boolean validateOs(OS os){
@@ -89,6 +112,32 @@ public class OsMB implements Serializable{
 	public void setItens(List<ItemServico> itens) {
 		this.itens = itens;
 	}
+
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public PecaMB getPecaMB() {
+		return pecaMB;
+	}
+
+	public void setPecaMB(PecaMB pecaMB) {
+		this.pecaMB = pecaMB;
+	}
+
+	public int getQuantidadeEstoque() {
+		return quantidadeEstoque;
+	}
+
+	public void setQuantidadeEstoque(int quantidadeEstoque) {
+		this.quantidadeEstoque = quantidadeEstoque;
+	}
+
+	
 	
 	
 

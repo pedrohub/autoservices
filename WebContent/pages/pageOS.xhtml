@@ -54,8 +54,8 @@
 			</h:panelGrid>
 			
 			<br></br><br></br>
-			<p:commandButton value="Salvar" actionListener="#{marcaMB.salvar}" process=" @this" />
-			<p:commandButton value="Adicionar Peças" actionListener="#{marcaMB.salvar}" process=" @this"
+			<p:commandButton value="Salvar"  process=" @this" />
+			<p:commandButton value="Adicionar Peças" process=" @this"
 				 oncomplete="PF('pecaDialog').show()" update=":form:pecaDetail"/>
 				 
 			<p:commandButton value="Adicionar Serviço" actionListener="#{marcaMB.salvar}" process=" @this" 
@@ -66,7 +66,7 @@
 			<br></br>
 			<br></br>
 			
-			<p:dataTable id="tabelaordem" var="item" value="#{osMB.itens}" 
+			<p:dataTable id="tabelaordem" var="item" value="#{osMB.itens}" rowIndexVar="index"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 					paginator="true" rows="6" style="margin-bottom:20px;font-size: 14px !important">
 		
@@ -98,19 +98,9 @@
 						<f:facet name="header">
 							<h:outputText value="Ações" />
 						</f:facet>
-						<p:panelGrid columns="2">
-						<p:commandLink 
-							oncomplete="PF('documentDialog').show()" title="View Detail"
-							styleClass="ui-icon ui-icon-search">
-							
-						</p:commandLink>
-						
-						 <p:commandLink 
-							oncomplete="PF('documentDialogDelete').show()" title="View Detail"
-							styleClass="ui-icon ui-icon-search">
-							
-						</p:commandLink> 
-						</p:panelGrid>
+						<p:commandButton actionListener="#{osMB.removeItem(index)}" update=":form:itemQtd :form:qtdPecasPainel :form:tabelaordem :form:tabelaPecas :form:growl"
+							process="@this :form:itemQtd" oncomplete="PF('pecasQtd').hide()"  value="Remover">
+						</p:commandButton>
 						
 					</p:column>
 				</p:dataTable>
@@ -118,8 +108,10 @@
 		<p:dialog header="Adicionar Peças" widgetVar="pecaDialog" modal="true"
 			showEffect="blind" hideEffect="explode" resizable="false">
 			<p:outputPanel id="pecaDetail" style="text-align:center;">
+			
+			<p:messages id="messagesPecas" showDetail="true" autoUpdate="true" closable="true" />
 
-					<p:dataTable var="peca" value="#{pecaMB.listaPecas}"
+					<p:dataTable var="peca" value="#{pecaMB.listaPecas}" filteredValue="#{pecaMB.listaPecasFilters}"
 					id="tabelaPecas" rowIndexVar="index"  widgetVar="pecaTable"
 					scrollable="true" scrollHeight="400" sortBy="#{peca.descricao}">
 					
@@ -133,9 +125,11 @@
 					
 					<p:column headerText="Tipo" filterBy="#{peca.tipo}" filterMatchMode="exact" style="width:auto;">
 						<f:facet name="filter">
-							<p:selectOneMenu onchange="PF('pecaTable').filter()" >
+							<p:selectOneMenu value="#{pecaMB.tipo}">
 								<f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true" />
 										<f:selectItems value="#{pecaMB.listaPecas}" var="pc" itemLabel="#{pc.tipo}" itemValue="#{pc.tipo}"/>
+										<p:ajax event="change" oncomplete="PF('pecaTable').filter()" 
+								listener="#{pecaMB.filterlistTipo}"/>
 							</p:selectOneMenu>
 						</f:facet>
 						<h:outputText value="#{peca.tipo}" />
@@ -143,26 +137,30 @@
 					
 					<p:column headerText="Marca" filterBy="#{peca.marca}" filterMatchMode="exact" style="width:auto;">
 						<f:facet name="filter">
-							<p:selectOneMenu onchange="PF('pecaTable').filter()" >
+							<p:selectOneMenu value="#{pecaMB.marca}">
 								<f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true" />
 										<f:selectItems value="#{pecaMB.listaPecas}" var="pc" itemLabel="#{pc.marca}" itemValue="#{pc.marca}"/>
+										<p:ajax event="change" oncomplete="PF('pecaTable').filter()" 
+								listener="#{pecaMB.filterlistMarca}"/>
 							</p:selectOneMenu>
 						</f:facet>
 						<h:outputText value="#{peca.marca}" />
 					</p:column>
 
-					<p:column filterBy="#{peca.descricao}" headerText="Descrição:" style="width:auto;"
+					 <p:column filterBy="#{peca.descricao}" headerText="Descrição:" style="width:auto;"
 						 filterMatchMode="exact">
 						<f:facet name="filter">
-							<p:selectOneMenu onchange="PF('pecaTable').filter()" >
+							<p:selectOneMenu value="#{pecaMB.descricao}">
 								<f:selectItem itemLabel="Selecione" itemValue="#{null}"
 									noSelectionOption="true" />
 								<f:selectItems value="#{pecaMB.listaPecas}" var="pc" itemLabel="#{pc.descricao}"
-								 itemValue="#{pc.descricao}"/>
+								 itemValue="#{pc.descricao}" forceSelection="true" />
+								 <p:ajax event="change" oncomplete="PF('pecaTable').filter()" 
+								listener="#{pecaMB.filterlistDesc}"/>
 							</p:selectOneMenu>
 						</f:facet>
 						<h:outputText value="#{peca.descricao}" />
-					</p:column>
+					</p:column> 
 
 					<p:column headerText="Quantidade em estoque" style="width:80px;">
 						<h:outputText value="#{peca.qtd}" />
@@ -176,7 +174,7 @@
 
 					<p:column headerText="Ações" style="width:140px;">
 						<p:commandLink actionListener="#{osMB.pecaToItem(peca)}"
-							process="@this" title="View Detail" oncomplete="PF('pecasQtd').show()" update=":form:qtdPecasPainel :form:pecaDetail"
+							process="@this" title="View Detail" oncomplete="PF('pecasQtd').show()" update=":form:qtdPecasPainel :form:tabelaPecas :form:messagesPecas"
 							style="float:left;margin-right:10px" value="Adicionar">
 						</p:commandLink>
 					</p:column>
@@ -191,12 +189,11 @@
 					<h:outputText value="Item: " />
 					<h:outputText value="#{osMB.item.descricao}" /><br></br><br></br>
 					<h:outputText value="Quantidade: " />
-					<h:inputText value="#{osMB.item.quantidade}" size="5" id="itemQtd"></h:inputText><br></br>
+					<h:inputText value="#{osMB.quantidade}" size="5" id="itemQtd"></h:inputText><br></br><br></br>
 					
-					<p:commandLink actionListener="#{osMB.pecaToItem(peca)}"
-							process="@this" title="View Detail" oncomplete="PF('pecasQtd').hide()" update=":form:qtdPecasPainel form:itemQtd"
-							style="float:left;margin-right:10px" value="Adicionar">
-						</p:commandLink>
+					<p:commandButton actionListener="#{osMB.addItemPeca}" update=":form:itemQtd :form:qtdPecasPainel :form:tabelaordem :form:tabelaPecas"
+							process="@this :form:itemQtd" oncomplete="PF('pecasQtd').hide()"  value="Adicionar">
+					</p:commandButton>
 					
 				<br></br><br></br>
 			</p:outputPanel>
@@ -214,7 +211,7 @@
 					</p:column>
 					
 					<p:column headerText="Valor" >
-						<h:outputText value="#{tipo.valor}" />
+						<h:inputText value="#{tipo.valor}" />
 					</p:column>
 
 					<p:column headerText="Acoes" >
