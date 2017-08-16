@@ -5,7 +5,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml" 
+	xmlns:pe="http://primefaces.org/ui/extensions">
 
 	<h:form id="form">
 
@@ -233,7 +234,9 @@
 					<h:outputText value="Item: " />
 					<h:outputText value="#{osMB.item.descricao}" /><br></br><br></br>
 					<h:outputText value="Quantidade: " />
-					<h:inputText value="#{osMB.item.valor}" size="5" id="valorItemServico"></h:inputText><br></br><br></br>
+					<pe:inputNumber id="valorItemServico" symbol="R$ " decimalSeparator="," thousandSeparator="."
+ 						 value="#{osMB.item.valor}" decimalPlaces="2" emptyValue="0"/>
+					<br></br><br></br>
 					
 					<p:commandButton actionListener="#{osMB.addItemServico}" update=":form:tabelaordem :form:tabelaTipos :form:valorItemServico"
 							process="@this :form:valorItemServico" oncomplete="PF('confService').hide()"  value="Adicionar">
