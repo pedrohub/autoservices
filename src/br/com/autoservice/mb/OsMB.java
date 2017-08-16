@@ -15,6 +15,7 @@ import br.com.autoservice.controller.OSController;
 import br.com.autoservice.modelo.ItemServico;
 import br.com.autoservice.modelo.OS;
 import br.com.autoservice.modelo.Peca;
+import br.com.autoservice.modelo.TipoServico;
 
 @ManagedBean
 @SessionScoped
@@ -66,6 +67,16 @@ public class OsMB implements Serializable{
 		
 	}
 	
+	public void pecaToService(TipoServico tipo){
+		
+		item = new ItemServico();
+		item.setDescricao(tipo.getDescricao());
+		item.setValor(tipo.getValor());
+		item.setQuantidade(1);
+		item.setValorUnitario(tipo.getValor());
+		
+	}
+	
 	public void addItemPeca(){
 		
 		if((quantidadeEstoque > 0) && (quantidadeEstoque - quantidade >= 0)){
@@ -76,6 +87,16 @@ public class OsMB implements Serializable{
 			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Inserido", ""));
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Verifique o estoque do item", ""));
+		}
+	}
+	
+	public void addItemServico(){
+		if(item.getValor() > 0){
+			item.setValorUnitario(item.getValor());
+			itens.add(item);
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Inserido", ""));
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Verifique o valor do item", ""));
 		}
 	}
 	

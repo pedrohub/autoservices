@@ -211,18 +211,33 @@
 					</p:column>
 					
 					<p:column headerText="Valor" >
-						<h:inputText value="#{tipo.valor}" />
+						<h:outputText	 value="#{tipo.valor}" />
 					</p:column>
 
 					<p:column headerText="Acoes" >
-						<p:commandLink  process="@this"
-							 title="View Detail"
+						<p:commandLink  process="@this" actionListener="#{osMB.pecaToService(tipo)}" 
+							 title="View Detail" oncomplete="PF('confService').show()" update=":form:confServPainel"
 							style="float:left;margin-right:10px" value="Adicionar">
-							<f:setPropertyActionListener target="#{tipoServicoMB.tipo}"
-								value="#{tipo}" />
 						</p:commandLink>
 					</p:column>
 				</p:dataTable>
+					
+				<br></br><br></br>
+			</p:outputPanel>
+		</p:dialog>
+		
+		<p:dialog header="Confirmar Serviço" widgetVar="confService" modal="true"
+			showEffect="blind" hideEffect="explode" resizable="false">
+			<p:outputPanel id="confServPainel" style="text-align:center;">
+
+					<h:outputText value="Item: " />
+					<h:outputText value="#{osMB.item.descricao}" /><br></br><br></br>
+					<h:outputText value="Quantidade: " />
+					<h:inputText value="#{osMB.item.valor}" size="5" id="valorItemServico"></h:inputText><br></br><br></br>
+					
+					<p:commandButton actionListener="#{osMB.addItemServico}" update=":form:tabelaordem :form:tabelaTipos :form:valorItemServico"
+							process="@this :form:valorItemServico" oncomplete="PF('confService').hide()"  value="Adicionar">
+					</p:commandButton>
 					
 				<br></br><br></br>
 			</p:outputPanel>
