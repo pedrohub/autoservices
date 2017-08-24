@@ -25,6 +25,8 @@
   <mapping class="br.com.autoservice.modelo.TipoServico"/>
   <mapping class="br.com.autoservice.modelo.Peca"/>
   <mapping class="br.com.autoservice.modelo.Agendamento"/>
+  <mapping class="br.com.autoservice.modelo.OS"/>
+  <mapping class="br.com.autoservice.modelo.ItemServico"/>
   
  </session-factory>
 </hibernate-configuration>

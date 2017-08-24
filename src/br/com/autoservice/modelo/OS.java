@@ -3,23 +3,25 @@ package br.com.autoservice.modelo;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import br.com.autoservice.util.DateUtil;
 import br.com.autoservice.util.StatusOS;
 
+@Entity
+@Table(name = "os")
 public class OS {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Double valor;
-	private Double desconto;
-	private Double valorTotal;
 	private StatusOS status;
 	@OneToMany(mappedBy = "os", fetch = FetchType.EAGER)
 	private List<ItemServico> itens;
@@ -37,7 +39,7 @@ public class OS {
 	public void gerarOS(Cliente cliente, Veiculo veiculo){
 		
 		abertura = DateUtil.pegarData(); 
-		fechamento = new Date();
+		fechamento = null;
 		idCliente = cliente.getIdCliente();
 		nomeCliente = cliente.getNome();
 		idVeiculo = veiculo.getCodVeiculo();
@@ -45,6 +47,8 @@ public class OS {
 		modelo = veiculo.getModelo();
 		obs = "";
 		status = StatusOS.ABERTA;
+		valor = 0d;
+		km = "";
 	}
 	
 	public Long getId() {
@@ -83,18 +87,6 @@ public class OS {
 	}
 	public void setObs(String obs) {
 		this.obs = obs;
-	}
-	public Double getDesconto() {
-		return desconto;
-	}
-	public void setDesconto(Double desconto) {
-		this.desconto = desconto;
-	}
-	public Double getValorTotal() {
-		return valorTotal;
-	}
-	public void setValorTotal(Double valorTotal) {
-		this.valorTotal = valorTotal;
 	}
 	public String getNomeCliente() {
 		return nomeCliente;

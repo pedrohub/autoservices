@@ -135,8 +135,10 @@ public class PecaMB implements Serializable{
 		marca = "";
 		tipo = "";
 		descricao = "";
-		listaPecasFilters.clear();
-		listaPecasFilters.addAll(pecaController.getLista()) ;
+		if ((listaPecasFilters != null) && (!listaPecasFilters.isEmpty())){
+			listaPecasFilters.clear();
+			listaPecasFilters.addAll(pecaController.getLista()) ;
+		}
 	}
 	
 	public void limparModal(){

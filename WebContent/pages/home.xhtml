@@ -34,6 +34,10 @@
 		</p:outputPanel>
 	</p:outputPanel>	
 	
+	<p:commandButton value="print" icon="fa fa-print" actionListener="#{printMB.createPdf}" 
+	 ajax="false" onclick="this.form.target='_blank'"></p:commandButton>
+	
+	
 	</h:form>
 	<br></br>
 	
@@ -63,7 +67,6 @@
 		
 	<p:commandButton value="Gerar &lt;br/&gt;Orçamento" type="button" escape="false"></p:commandButton>
 	
-	<p:commandButton value="Gerar &lt;br/&gt;Orçamento" type="button" escape="false"></p:commandButton>
 	
 	<br></br>
 	<p:spacer height="10px"></p:spacer>

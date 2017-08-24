@@ -26,7 +26,7 @@
 			<p:outputLabel value="#{osMB.os.modelo}" /><p:spacer width="20px"></p:spacer>
 			<p:outputLabel value="#{osMB.os.placa}" /><p:spacer width="20px"></p:spacer>
 			<p:outputLabel value="Km: " />
-			<p:inputText value="#{osMB.os.km}" /> <p:spacer width="6px"></p:spacer>
+			<p:inputText value="#{osMB.os.km}" id="km"/> <p:spacer width="6px"></p:spacer>
 			<br></br><br></br>
 			<p:outputLabel value="Data Abertura: " />
 			<p:outputLabel value="#{osMB.os.abertura}" >
@@ -36,34 +36,28 @@
 			<p:outputLabel value="Data Fechamento: " />
 			<p:outputLabel value="#{osMB.os.fechamento}" />
 			<p:spacer width="20px"></p:spacer>
-			<p:outputLabel value="Valor Total: " style="font-weight: bold"/>
-			<p:outputLabel value="#{osMB.os.valorTotal}" style="font-weight: bold"/>
+			<p:outputLabel value="Status: #{osMB.os.status}" />
+			<p:spacer width="20px"></p:spacer>
+			<p:outputLabel value="Valor: " style="font-weight: bold"/>
+			<p:outputLabel value="#{osMB.os.valor}" style="font-weight: bold" id="valorOS"/>
 			<br></br><br></br>	
-			
-			<p:outputLabel value="Valor dos Itens: " />
-			<p:outputLabel value="#{osMB.os.valor}" /><p:spacer width="30px"></p:spacer>
-			<p:outputLabel value="Desconto em %: " />
-			<p:inputText value="#{osMB.os.desconto}"  size="3"/> <p:spacer width="6px"></p:spacer>
-			<p:commandButton value="Aplicar Desconto" actionListener="#{marcaMB.salvar}" process=" @this" />
-			<p:spacer width="50px"></p:spacer><p:outputLabel value="Status: #{osMB.os.status}" />
 
 			<p:spacer width="10px"></p:spacer>
 			<h:panelGrid columns="2" cellpadding="2">
 				<p:outputLabel value="Observação: " />
-				<p:inputTextarea value="#{osMB.os.obs}"
-							autoResize="false" rows="4" cols="42" />
+				<p:inputTextarea value="#{osMB.os.obs}" 
+							autoResize="false" rows="4" cols="42" id="obs"/>
 			</h:panelGrid>
 			
 			<br></br><br></br>
-			<p:commandButton value="Salvar"  process=" @this" />
+			<p:commandButton value="Salvar"  process="@this :form:km :form:obs" actionListener="#{osMB.salvar}" update=":form:km :form:obs"/>
 			<p:commandButton value="Adicionar Peças" process=" @this"
 				 oncomplete="PF('pecaDialog').show()" update=":form:pecaDetail"/>
 				 
 			<p:commandButton value="Adicionar Serviço" actionListener="#{marcaMB.salvar}" process=" @this" 
 				oncomplete="PF('servicoDialog').show()" update=":form:servicoDetail"/>
 				
-			<p:commandButton value="Cancelar Desconto" actionListener="#{marcaMB.salvar}" process=" @this" />
-			<p:commandButton value="Imprimir" actionListener="#{marcaMB.salvar}" process=" @this" />
+			<p:commandButton value="Imprimir"  process=" @this" />
 			<br></br>
 			<br></br>
 			
@@ -99,8 +93,10 @@
 						<f:facet name="header">
 							<h:outputText value="Ações" />
 						</f:facet>
-						<p:commandButton actionListener="#{osMB.removeItem(index)}" update=":form:itemQtd :form:qtdPecasPainel :form:tabelaordem :form:tabelaPecas :form:growl"
+						<p:commandButton actionListener="#{osMB.removeItem(index)}" update=":form:itemQtd :form:qtdPecasPainel :form:tabelaordem :form:tabelaPecas :form:growl :form:valorOS"
 							process="@this :form:itemQtd" oncomplete="PF('pecasQtd').hide()"  value="Remover">
+							<p:confirm header="Confirmation"
+								message="Deseja remover o Item?" icon="ui-icon-alert" />
 						</p:commandButton>
 						
 					</p:column>
@@ -192,7 +188,7 @@
 					<h:outputText value="Quantidade: " />
 					<h:inputText value="#{osMB.quantidade}" size="5" id="itemQtd"></h:inputText><br></br><br></br>
 					
-					<p:commandButton actionListener="#{osMB.addItemPeca}" update=":form:itemQtd :form:qtdPecasPainel :form:tabelaordem :form:tabelaPecas"
+					<p:commandButton actionListener="#{osMB.addItemPeca}" update=":form:itemQtd :form:qtdPecasPainel :form:tabelaordem :form:tabelaPecas :form:valorOS"
 							process="@this :form:itemQtd" oncomplete="PF('pecasQtd').hide()"  value="Adicionar">
 					</p:commandButton>
 					
@@ -204,15 +200,25 @@
 			showEffect="blind" hideEffect="explode" resizable="false">
 			<p:outputPanel id="servicoDetail" style="text-align:center;width:800px">
 
-					<p:dataTable var="tipo" value="#{tipoServicoMB.listaTipos}"
-					id="tabelaTipos" rowIndexVar="index">
+					<p:dataTable var="tipo" value="#{tipoServicoMB.listaTipos}" filteredValue="#{tipoServicoMB.listaServFilters}"
+					id="tabelaTipos" rowIndexVar="index" widgetVar="servTable">
 					
-					<p:column headerText="Serviço" >
-						<h:outputText value="#{tipo.descricao}" />
+					<p:column headerText="Serviço" filterMatchMode="exact" filterBy="#{tipo.descricao}">
+					<f:facet name="filter" >
+						<p:selectOneMenu value="#{tipoServicoMB.descricao}">
+							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+									noSelectionOption="true" />
+							<f:selectItems value="#{tipoServicoMB.listaTipos}" var="tp" itemLabel="#{tp.descricao}"
+								 itemValue="#{tp.descricao}" forceSelection="true" />
+							 <p:ajax event="change" oncomplete="PF('servTable').filter()" 
+								listener="#{tipoServicoMB.filterlistDesc}"/>
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{tipo.descricao}" />
 					</p:column>
 					
 					<p:column headerText="Valor" >
-						<h:outputText	 value="#{tipo.valor}" />
+						<h:outputText value="#{tipo.valor}" />
 					</p:column>
 
 					<p:column headerText="Acoes" >
@@ -238,13 +244,21 @@
  						 value="#{osMB.item.valor}" decimalPlaces="2" emptyValue="0"/>
 					<br></br><br></br>
 					
-					<p:commandButton actionListener="#{osMB.addItemServico}" update=":form:tabelaordem :form:tabelaTipos :form:valorItemServico"
+					<p:commandButton actionListener="#{osMB.addItemServico}" update=":form:tabelaordem :form:tabelaTipos :form:valorItemServico :form:servicoDetail :form:valorOS"
 							process="@this :form:valorItemServico" oncomplete="PF('confService').hide()"  value="Adicionar">
 					</p:commandButton>
 					
 				<br></br><br></br>
 			</p:outputPanel>
 		</p:dialog>
+		
+		<!-- **************** modal de confimacao *************** -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Yes" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
 
 	</h:form>
 </ui:decorate>

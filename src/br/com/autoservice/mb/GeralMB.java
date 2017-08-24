@@ -2,6 +2,7 @@ package br.com.autoservice.mb;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -181,6 +182,7 @@ public class GeralMB implements Serializable{
 			OS os = new OS();
 			os.gerarOS(cliente, veiculo);
 			osMB.setOs(os);
+			osMB.getItens().clear();
 			FacesContext.getCurrentInstance().getExternalContext().redirect("pageOS.xhtml");
 		} catch (IOException e) {
 			e.printStackTrace();

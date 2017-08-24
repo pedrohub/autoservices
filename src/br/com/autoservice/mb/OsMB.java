@@ -21,9 +21,6 @@ import br.com.autoservice.modelo.TipoServico;
 @SessionScoped
 public class OsMB implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2573197656673380989L;
 	
 	private OS os;
@@ -33,6 +30,8 @@ public class OsMB implements Serializable{
 	private Integer quantidade;
 	@ManagedProperty(value="#{pecaMB}")
 	private PecaMB pecaMB;
+	@ManagedProperty(value="#{tipoServicoMB}")
+	private TipoServicoMB tipoMB;
 	private int quantidadeEstoque;
 	
 	
@@ -48,6 +47,7 @@ public class OsMB implements Serializable{
 		
 		if (validateOs(os)) {
 			try{
+				os.setItens(itens);
 				oSController.salvar(os);
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Os Salva"));
 			} catch(Exception e){
@@ -83,6 +83,7 @@ public class OsMB implements Serializable{
 			item.setValor(item.getValorUnitario()* quantidade);
 			item.setQuantidade(quantidade);
 			itens.add(item);
+			countValor();
 			pecaMB.limparFiltros();
 			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Inserido", ""));
 		} else {
@@ -94,6 +95,8 @@ public class OsMB implements Serializable{
 		if(item.getValor() > 0){
 			item.setValorUnitario(item.getValor());
 			itens.add(item);
+			countValor();
+			tipoMB.limparFiltros();
 			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Inserido", ""));
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Verifique o valor do item", ""));
@@ -102,11 +105,27 @@ public class OsMB implements Serializable{
 	
 	public void removeItem(int indice){
 		itens.remove(indice);
+		countValor();
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null,new FacesMessage("Sucess", "Registro Removido"));
 	}
 	
+	private void countValor(){
+		double valor = 0;
+		for (ItemServico itemServico : itens) {
+			valor += itemServico.getValor();
+		}
+		os.setValor(valor);
+	}
+	
 	private boolean validateOs(OS os){
+		
+		if (itens == null || itens.isEmpty())
+			return false;
+		
+		if (os.getKm() == null || os.getKm().length() < 1)
+			return false;
+		
 		return true;
 	}
 	
@@ -156,6 +175,14 @@ public class OsMB implements Serializable{
 
 	public void setQuantidadeEstoque(int quantidadeEstoque) {
 		this.quantidadeEstoque = quantidadeEstoque;
+	}
+
+	public TipoServicoMB getTipoMB() {
+		return tipoMB;
+	}
+
+	public void setTipoMB(TipoServicoMB tipoMB) {
+		this.tipoMB = tipoMB;
 	}
 
 	

@@ -36,6 +36,7 @@ public class OSController implements Serializable{
 	
 	public void salvar(OS os){
 		dao.inserir(os);
+		
 	}
 	
 //	public OS find(OS tipo){

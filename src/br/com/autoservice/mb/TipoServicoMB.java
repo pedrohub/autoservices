@@ -1,12 +1,13 @@
 package br.com.autoservice.mb;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import br.com.autoservice.controller.TipoServicoController;
@@ -14,7 +15,7 @@ import br.com.autoservice.modelo.TipoServico;
 import br.com.autoservice.util.Constantes;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class TipoServicoMB implements Serializable{
 
 	/**
@@ -22,8 +23,10 @@ public class TipoServicoMB implements Serializable{
 	 */
 	private static final long serialVersionUID = -448273945145471935L;
 	private List<TipoServico> listaTipos;
+	List<TipoServico> listaServFilters;
 	private TipoServicoController tipoController;
 	private TipoServico tipo;
+	private String descricao;
 	
 	@PostConstruct
 	public void init (){
@@ -69,6 +72,27 @@ public class TipoServicoMB implements Serializable{
 		listaTipos = tipoController.getListaTipoServico();
 	}
 
+	public void filterlistDesc(){
+		
+		List<TipoServico> listaRetorno = new ArrayList<TipoServico>();
+		for (TipoServico item : listaTipos) {
+			if(descricao.equals(item.getDescricao())){
+				listaRetorno.add(item);
+			}
+		}
+		
+		if(!listaRetorno.isEmpty()){
+			listaServFilters = listaRetorno;
+		}
+	}
+	
+	public void limparFiltros(){
+		descricao = "";
+		if ((listaServFilters != null) && (!listaServFilters.isEmpty())){
+			listaServFilters.clear();
+			listaServFilters.addAll(tipoController.getListaTipoServico()) ;
+		}
+	}
 
 	public List<TipoServico> getListaTipos() {
 		return listaTipos;
@@ -87,6 +111,26 @@ public class TipoServicoMB implements Serializable{
 
 	public void setTipo(TipoServico tipo) {
 		this.tipo = tipo;
+	}
+
+
+	public List<TipoServico> getListaServFilters() {
+		return listaServFilters;
+	}
+
+
+	public void setListaServFilters(List<TipoServico> listaServFilters) {
+		this.listaServFilters = listaServFilters;
+	}
+
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 	
 	

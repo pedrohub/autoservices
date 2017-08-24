@@ -2,6 +2,7 @@ package br.com.autoservice.rs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.GET;
@@ -15,6 +16,7 @@ import br.com.autoservice.modelo.Cliente;
 import br.com.autoservice.modelo.ItemServico;
 import br.com.autoservice.modelo.OS;
 import br.com.autoservice.modelo.Veiculo;
+import br.com.robson.rest.Noticia;
 
 import com.google.gson.Gson;
 
@@ -29,7 +31,6 @@ public class RestController {
 		
 		OS os = new OS();
 		os.setId(1l);
-		os.setDesconto(2.2);
 		os.setModelo("fiat");
 		os.setNomeCliente("nomeOba da name");
 		os.setPlaca("KTM-0393");
@@ -86,5 +87,33 @@ public class RestController {
 		return "nao encontrado clientes para essa placa";
 	}
 
+
+	/**
+	 * Esse método lista todas noticias cadastradas na base
+	 * */
+	@GET
+	@Produces("application/json")
+	@Path("/todasNoticias")
+	public List<Noticia> TodasNoticias(){
+		
+		List<Noticia> noticias =  new ArrayList<Noticia>();
+		Noticia no = new Noticia();
+		no.setAutor("binha");
+		no.setDecricao("frango");
+		no.setTitulo("kkkkkkk");
+		
+//		List<NoticiaEntity> listaEntityNoticias = repository.TodasNoticias();
+//		
+//		for (NoticiaEntity entity : listaEntityNoticias) {
+//			noticias.add(new Noticia(entity.getCodigo(), 
+//									 entity.getAutor(),
+//									 entity.getTitulo(), 
+//									 entity.getDecricao(),
+//									 entity.getUrl() //,entity.getFoto()
+//									 ));
+//		}
+		
+		return noticias;
+	}
 
 }
