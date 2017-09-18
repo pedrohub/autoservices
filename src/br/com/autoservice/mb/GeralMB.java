@@ -37,6 +37,7 @@ public class GeralMB implements Serializable{
 	private AgendamentoMB agendamentoMB;
 	@ManagedProperty(value="#{osMB}")
 	private OsMB osMB;
+	private List<OS> listaOS;
 	
 	
 	@PostConstruct
@@ -45,7 +46,7 @@ public class GeralMB implements Serializable{
 		controladorVeiculo = VeiculoController.getInstance();
 		agendamentoController = AgendamentoController.getInstance();
 		veiculo = new Veiculo();
-		
+		listaOS = new ArrayList<OS>();
 	}
 	
 	public void carregarInformacoes(Cliente cliente){
@@ -56,6 +57,7 @@ public class GeralMB implements Serializable{
 			veiculos = controladorVeiculo.listar(cliente);
 		
 		agendamentoMB.setAgendamentos(agendamentoController.listarPorcliente(cliente));
+		carregarOS();
 	}
 	
 	/**
@@ -188,6 +190,19 @@ public class GeralMB implements Serializable{
 			e.printStackTrace();
 		}
 	}
+	
+	public void redirectOsAlter(OS os){
+		try {
+			osMB.setOs(os);
+			FacesContext.getCurrentInstance().getExternalContext().redirect("pageOS.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void carregarOS(){
+		listaOS = osMB.listbyClient(cliente.getIdCliente());
+	}
 
 	public Cliente getCliente() {
 		return cliente;
@@ -243,6 +258,15 @@ public class GeralMB implements Serializable{
 	public void setOsMB(OsMB osMB) {
 		this.osMB = osMB;
 	}
+
+	public List<OS> getListaOS() {
+		return listaOS;
+	}
+
+	public void setListaOS(List<OS> listaOS) {
+		this.listaOS = listaOS;
+	}
+	
 	
 	
 

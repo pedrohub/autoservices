@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.autoservice.dao.ItemServicoDao;
 import br.com.autoservice.dao.OSDao;
-import br.com.autoservice.modelo.Cliente;
+import br.com.autoservice.modelo.ItemServico;
 import br.com.autoservice.modelo.OS;
-import br.com.autoservice.modelo.Peca;
 
 public class OSController implements Serializable{
 
@@ -18,6 +18,7 @@ public class OSController implements Serializable{
 	
 	private static OSController instance;
 	private OSDao dao = new OSDao();
+	private ItemServicoDao itemDao = new ItemServicoDao();
 	
 	private OSController(){
 		
@@ -30,6 +31,7 @@ public class OSController implements Serializable{
 		return instance;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<OS> listaOS(){
 		return dao.listar(OS.class);
 	}
@@ -37,21 +39,20 @@ public class OSController implements Serializable{
 	public void salvar(OS os){
 		dao.inserir(os);
 		
+		List<ItemServico> itens = new ArrayList<ItemServico>();
+		
+		if (os.getItens() != null && !os.getItens().isEmpty())
+			itens = os.getItens();
+		
+		for (ItemServico itemServico : itens) {
+			itemServico.setOs(os);
+			itemDao.inserir(itemServico);
+		}
 	}
 	
-//	public OS find(OS tipo){
-//		return dao.find(tipo);
-//	}
 	
-	public List<OS> listarPorcliente(Cliente cliente){
-		List<OS> lista = new ArrayList<OS>();
-		
-//		for (Veiculo veiculo : cliente.getVeiculos()) {
-//			
-//			if (dao.findByVeiculo(veiculo).size() > 0)
-//				lista.addAll(veiculo.getAgendamentos());
-//		}
-		return lista;
+	public List<OS> listarPorcliente(Long idCliente){
+		return dao.listarByCliente(idCliente);
 	}
 
 }

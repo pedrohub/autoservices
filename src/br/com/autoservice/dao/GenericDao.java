@@ -55,7 +55,7 @@ public class GenericDao {
 	 */
 	public void excluir(Object o) throws HibernateException{
 		session = HibernateUtil.getSessionFactory().openSession();
-
+		System.out.println(o.toString());
 		try{
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();

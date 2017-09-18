@@ -7,7 +7,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.criterion.Restrictions;
 
 import br.com.autoservice.modelo.Marca;
-import br.com.autoservice.modelo.Usuario;
 import br.com.autoservice.util.HibernateUtil;
 
 

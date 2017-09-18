@@ -5,37 +5,37 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
+import br.com.autoservice.modelo.ItemServico;
 import br.com.autoservice.modelo.OS;
 import br.com.autoservice.util.HibernateUtil;
 
-public class OSDao extends GenericDao {
-
+public class ItemServicoDao extends GenericDao{
+	
 	@SuppressWarnings("unchecked")
-	public List<OS> listar() {
+	public List<ItemServico> listar() {
 
 		session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			Criteria cri = session.createCriteria(OS.class);
+			Criteria cri = session.createCriteria(ItemServico.class);
 
-			return (List<OS>) cri.list();
+			return (List<ItemServico>) cri.list();
 		} finally {
 			session.close();
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<OS> listarByCliente(Long valor) {
+	public List<ItemServico> listarByOS(OS os) {
 
 		session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			Criteria cri = session.createCriteria(OS.class).add(Restrictions.eq("idCliente", valor));
-			cri.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-			return (List<OS>) cri.list();
+			Criteria cri = session.createCriteria(ItemServico.class)
+					.add(Restrictions.eq("os_id", os.getId()));
+
+			return (List<ItemServico>) cri.list();
 		} finally {
 			session.close();
 		}
 	}
-	
-	
-	
+
 }

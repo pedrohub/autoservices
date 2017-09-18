@@ -129,6 +129,12 @@ public class OsMB implements Serializable{
 		return true;
 	}
 	
+	public List<OS> listbyClient(Long idCliente){
+		
+		return oSController.listarPorcliente(idCliente);
+	}
+	
+	// get e set **************************************************
 	public OS getOs() {
 		return os;
 	}

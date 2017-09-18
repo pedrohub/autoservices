@@ -1,37 +1,30 @@
 package br.com.robson.rest;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
-public class Noticia {
-
-	private int codigo;	
+@Entity
+@Table(name = "noticia")
+public class NoticiaBase {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codigo;	
 	private String autor;
 	private String titulo;
 	private String decricao;
 	private String url;
 	private byte[] foto;
 	
-	public Noticia(){
-		
-	}
 	
-	public Noticia(int codigo, String autor, String titulo, String decricao, String url) {
-		super();
-		this.codigo = codigo;
-		this.autor = autor;
-		this.titulo = titulo;
-		this.decricao = decricao;
-		this.url = url;
-		this.foto = foto; //, byte[] foto
-	}
-
-	public int getCodigo() {
+	public Long getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(int codigo) {
+	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
 	}
 

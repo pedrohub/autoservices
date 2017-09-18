@@ -222,52 +222,63 @@
 		        <!-- tabela de ordens  -->
 
 				<p:outputPanel id="painelOrdem">
-				<p:dataTable id="tabelaordem" var="cliente" value="#{clienteMB.listaClientes}" 
+				<p:dataTable id="tabelaordem" var="os" value="#{geralMB.listaOS}" 
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 					paginator="true" rows="6" style="margin-bottom:20px;font-size: 14px !important">
 		
 					<p:column>
 						<f:facet name="header">
-							<h:outputText value="Ano" />
+							<h:outputText value="Abertura" />
 						</f:facet>
-						<h:outputText value="#{cliente.nome}" />
+						<h:outputText value="#{os.abertura}" >
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
 					</p:column>
 					<p:column>
 						<f:facet name="header">
-							<h:outputText value="Cor" />
+							<h:outputText value="Fechamento" />
 						</f:facet>
-						<h:outputText value="#{cliente.email}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="Marca" />
-						</f:facet>
-						<h:outputText value="#{cliente.fone1}" />
+						<h:outputText value="#{os.fechamento}" >
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
 					</p:column>
 					<p:column>
 						<f:facet name="header">
 							<h:outputText value="Modelo" />
 						</f:facet>
-						<h:outputText value="#{cliente.endereco.bairro}" />
+						<h:outputText value="#{os.modelo}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">
 							<h:outputText value="Placa" />
 						</f:facet>
-						<h:outputText value="#{cliente.endereco.bairro}" />
+						<h:outputText value="#{os.placa}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Valor" />
+						</f:facet>
+						<h:outputText value="#{os.valor}" >
+							<f:convertNumber pattern="#,###.00" locale="pt_BR"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Status" />
+						</f:facet>
+						<h:outputText value="#{os.status}" />
 					</p:column>
 					<p:column>
 						<f:facet name="header">
 							<h:outputText value="Ações" />
 						</f:facet>
 								<p:commandLink action="geralCliente.xhtml?faces-redirect=true" 
-									 title="View Detail" actionListener="#{clienteMB.redirectGeral(cliente)}"
+									 title="View Detail" 
 										value="Visualizar" >
-									<f:setPropertyActionListener value="#{cliente}"
-										target="#{clienteMB.cliente}" />
+									
 								</p:commandLink>
 								<p:spacer width="4px"></p:spacer>
-								<p:commandLink actionListener="#{clienteMB.removeCliente(cliente)}"
+								<p:commandLink 
 										process="@this" 
 											value="Deletar">
 											<p:confirm header="Confirmation"
@@ -280,10 +291,10 @@
 				<h:outputText value="" />
 			<p:commandButton update=":formOs:painelOs" value="Adicionar Ordem de Serviço"
 						oncomplete="PF('documentDialogInOS').show()" icon="fa fa-fw fa-edit"
-						actionListener="#{geralMB.limparModalVeiculo}"></p:commandButton>
+						></p:commandButton>
 				
 				</p:outputPanel>
-				<!-- fim tabela de veiculos  -->
+				<!-- fim tabela de OS  -->
         </p:tab>
         
     </p:tabView>
