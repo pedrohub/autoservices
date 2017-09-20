@@ -236,6 +236,10 @@ public class ClienteMB implements Serializable{
 		}
 	}
 	
+	public void redirectGeral(){
+		geralMB.carregarInformacoes(null);
+	}
+	
 	public void redirectGeral(Cliente cliente){
 		geralMB.carregarInformacoes(cliente);
 	}

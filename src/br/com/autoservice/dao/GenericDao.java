@@ -32,6 +32,24 @@ public class GenericDao {
 	}
 	
 	/**
+	 * salvar objeto
+	 * @param o
+	 */
+	public void saveOrUpdate(Object o) throws HibernateException {
+		session = HibernateUtil.getSessionFactory().openSession();
+
+		try{
+			session.beginTransaction();
+			session.saveOrUpdate(o);
+			session.getTransaction().commit();
+
+		} finally {
+			session.close();
+
+		}
+	}
+	
+	/**
 	 * alterar objeto
 	 * @param pessoa
 	 */

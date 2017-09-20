@@ -19,6 +19,7 @@ import br.com.autoservice.modelo.Cliente;
 import br.com.autoservice.modelo.OS;
 import br.com.autoservice.modelo.Veiculo;
 import br.com.autoservice.util.Constantes;
+import br.com.autoservice.util.StatusOS;
 
 @ManagedBean
 @SessionScoped
@@ -51,7 +52,11 @@ public class GeralMB implements Serializable{
 	
 	public void carregarInformacoes(Cliente cliente){
 		
-		this.cliente = cliente;
+		if(cliente == null) {
+			cliente = this.cliente;
+		} else {
+			this.cliente = cliente;
+		}
 		
 		if (cliente.getVeiculos() != null)
 			veiculos = controladorVeiculo.listar(cliente);
@@ -185,6 +190,7 @@ public class GeralMB implements Serializable{
 			os.gerarOS(cliente, veiculo);
 			osMB.setOs(os);
 			osMB.getItens().clear();
+			osMB.setDisableButons(false);
 			FacesContext.getCurrentInstance().getExternalContext().redirect("pageOS.xhtml");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -194,6 +200,12 @@ public class GeralMB implements Serializable{
 	public void redirectOsAlter(OS os){
 		try {
 			osMB.setOs(os);
+			osMB.setItens(osMB.getItensOs(os));
+			if (os.getStatus().equals(StatusOS.FINALIZADA)){
+				osMB.setDisableButons(true);
+			}else{
+				osMB.setDisableButons(false);
+			}
 			FacesContext.getCurrentInstance().getExternalContext().redirect("pageOS.xhtml");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -203,7 +215,25 @@ public class GeralMB implements Serializable{
 	public void carregarOS(){
 		listaOS = osMB.listbyClient(cliente.getIdCliente());
 	}
+	
+	public void deletarOS(OS os){
+		if (!StatusOS.FINALIZADA.equals(os.getStatus())) {
+			try{
+				osMB.deletar(os);
+				listaOS = osMB.listbyClient(cliente.getIdCliente());
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Os Removida"));
+			} catch(Exception e){
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));
+			}
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Verifique o status da ordem", ""));
+		}
+	}
 
+	/**
+	 * get e setters
+	 * @return
+	 */
 	public Cliente getCliente() {
 		return cliente;
 	}

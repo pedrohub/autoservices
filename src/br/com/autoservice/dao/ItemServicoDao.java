@@ -1,5 +1,6 @@
 package br.com.autoservice.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -30,12 +31,34 @@ public class ItemServicoDao extends GenericDao{
 		session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			Criteria cri = session.createCriteria(ItemServico.class)
-					.add(Restrictions.eq("os_id", os.getId()));
+					.add(Restrictions.eq("os", os));
 
 			return (List<ItemServico>) cri.list();
 		} finally {
 			session.close();
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	public void removeByOS(OS os) {
+
+		session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			Criteria cri = session.createCriteria(ItemServico.class)
+					.add(Restrictions.eq("os", os));
+
+			List<ItemServico> lista = cri.list();
+			
+			for (ItemServico itemServico : lista) {
+				session.beginTransaction();
+				session.delete(itemServico);
+				session.getTransaction().commit();
+			}
+			
+		} finally {
+			//session.close();
+		}
+	}
+	
 
 }

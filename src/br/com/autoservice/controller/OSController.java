@@ -37,12 +37,14 @@ public class OSController implements Serializable{
 	}
 	
 	public void salvar(OS os){
-		dao.inserir(os);
+		dao.saveOrUpdate(os);
 		
 		List<ItemServico> itens = new ArrayList<ItemServico>();
 		
-		if (os.getItens() != null && !os.getItens().isEmpty())
-			itens = os.getItens();
+		itemDao.removeByOS(os);
+		if (os.getItens() != null && !os.getItens().isEmpty()){
+			itens = toNewItens(os.getItens());
+		}
 		
 		for (ItemServico itemServico : itens) {
 			itemServico.setOs(os);
@@ -50,9 +52,32 @@ public class OSController implements Serializable{
 		}
 	}
 	
+	public void deletar(OS os){
+		itemDao.removeByOS(os);
+		dao.excluir(os);
+	}
+	
+	private List<ItemServico> toNewItens(List<ItemServico> itens){
+		
+		List<ItemServico> listaNew = new ArrayList<ItemServico>();
+		for (ItemServico itemServico : itens) {
+			ItemServico item = new ItemServico();
+			item.setDescricao(itemServico.getDescricao());
+			item.setQuantidade(itemServico.getQuantidade());
+			item.setValor(itemServico.getValor());
+			item.setValorUnitario(itemServico.getValorUnitario());
+			item.setOs(itemServico.getOs());
+			listaNew.add(item);
+		}
+		return listaNew;
+	}
 	
 	public List<OS> listarPorcliente(Long idCliente){
 		return dao.listarByCliente(idCliente);
+	}
+	
+	public List<ItemServico> getItens(OS os){
+		return itemDao.listarByOS(os);
 	}
 
 }

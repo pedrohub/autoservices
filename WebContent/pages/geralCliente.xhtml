@@ -216,11 +216,8 @@
 			<!-- fim tabela de agendamentos  -->
         </p:tab>
         
-        
+         <!-- tabela de ordens  -->
         <p:tab title="Ordens de Servicos">
-           
-		        <!-- tabela de ordens  -->
-
 				<p:outputPanel id="painelOrdem">
 				<p:dataTable id="tabelaordem" var="os" value="#{geralMB.listaOS}" 
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
@@ -272,17 +269,17 @@
 						<f:facet name="header">
 							<h:outputText value="Ações" />
 						</f:facet>
-								<p:commandLink action="geralCliente.xhtml?faces-redirect=true" 
-									 title="View Detail" 
+								<p:commandLink action="pageOS.xhmtl?faces-redirect=true" 
+									 title="View Detail" actionListener="#{geralMB.redirectOsAlter(os)}"
 										value="Visualizar" >
 									
 								</p:commandLink>
 								<p:spacer width="4px"></p:spacer>
-								<p:commandLink 
-										process="@this" 
+								<p:commandLink actionListener="#{geralMB.deletarOS(os)}"
+										process="@this" update=":form:tabView:tabelaordem :form:growl"
 											value="Deletar">
 											<p:confirm header="Confirmation"
-												message="Deseja deletar o Cliente?" icon="ui-icon-alert" />
+												message="Deseja deletar a OS?" icon="ui-icon-alert" />
 								</p:commandLink>
 						
 					</p:column>
@@ -295,6 +292,7 @@
 				
 				</p:outputPanel>
 				<!-- fim tabela de OS  -->
+				
         </p:tab>
         
     </p:tabView>

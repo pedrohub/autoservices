@@ -2,6 +2,7 @@ package br.com.autoservice.mb;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -16,6 +17,7 @@ import br.com.autoservice.modelo.ItemServico;
 import br.com.autoservice.modelo.OS;
 import br.com.autoservice.modelo.Peca;
 import br.com.autoservice.modelo.TipoServico;
+import br.com.autoservice.util.StatusOS;
 
 @ManagedBean
 @SessionScoped
@@ -33,7 +35,7 @@ public class OsMB implements Serializable{
 	@ManagedProperty(value="#{tipoServicoMB}")
 	private TipoServicoMB tipoMB;
 	private int quantidadeEstoque;
-	
+	private boolean disableButons;
 	
 	
 	@PostConstruct
@@ -56,6 +58,10 @@ public class OsMB implements Serializable{
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Verifique o preenchimento da ordem", ""));
 		}
+	}
+	
+	public void deletar(OS os){
+		oSController.deletar(os);
 	}
 	
 	public void pecaToItem(Peca peca){
@@ -120,8 +126,8 @@ public class OsMB implements Serializable{
 	
 	private boolean validateOs(OS os){
 		
-		if (itens == null || itens.isEmpty())
-			return false;
+//		if (itens == null || itens.isEmpty())
+//			return false;
 		
 		if (os.getKm() == null || os.getKm().length() < 1)
 			return false;
@@ -132,6 +138,28 @@ public class OsMB implements Serializable{
 	public List<OS> listbyClient(Long idCliente){
 		
 		return oSController.listarPorcliente(idCliente);
+	}
+	
+	public List<ItemServico> getItensOs(OS os){
+		
+		 List<ItemServico> lista = oSController.getItens(os);
+		 
+		 return lista != null ? lista : new ArrayList<ItemServico>();
+	}
+	
+	/**
+	 * Fechar a OS
+	 */
+	public void fecharOS(){
+		
+		if(validateOs(os) && !os.getItens().isEmpty()){
+			os.setFechamento(new Date());
+			os.setStatus(StatusOS.FINALIZADA);
+			oSController.salvar(os);
+			disableButons = true;
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "OS nao pode ser fechada", ""));
+		}
 	}
 	
 	// get e set **************************************************
@@ -189,6 +217,14 @@ public class OsMB implements Serializable{
 
 	public void setTipoMB(TipoServicoMB tipoMB) {
 		this.tipoMB = tipoMB;
+	}
+
+	public boolean isDisableButons() {
+		return disableButons;
+	}
+
+	public void setDisableButons(boolean disableButons) {
+		this.disableButons = disableButons;
 	}
 
 	

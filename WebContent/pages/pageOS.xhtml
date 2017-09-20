@@ -17,7 +17,10 @@
 			<p:outputLabel value="ID: " />
 			<p:outputLabel id="id" value="#{osMB.os.id}"  /> 
 			<p:spacer width="40px"></p:spacer>
-			<p:link style="font-weight: bold" href="javascript:history.back(1);">Voltar</p:link>
+			<p:commandLink action="geralCliente.xhtml?faces-redirect=true" 
+					 title="View Detail" actionListener="#{clienteMB.redirectGeral()}"
+					value="Voltar" >
+				</p:commandLink>
 			<br></br>
 			<br></br>
 
@@ -26,7 +29,7 @@
 			<p:outputLabel value="#{osMB.os.modelo}" /><p:spacer width="20px"></p:spacer>
 			<p:outputLabel value="#{osMB.os.placa}" /><p:spacer width="20px"></p:spacer>
 			<p:outputLabel value="Km: " />
-			<p:inputText value="#{osMB.os.km}" id="km"/> <p:spacer width="6px"></p:spacer>
+			<p:inputText value="#{osMB.os.km}" id="km" disabled="#{osMB.disableButons}"/> <p:spacer width="6px"></p:spacer>
 			<br></br><br></br>
 			<p:outputLabel value="Data Abertura: " />
 			<p:outputLabel value="#{osMB.os.abertura}" >
@@ -34,7 +37,9 @@
 			</p:outputLabel>
 			<p:spacer width="20px"></p:spacer>
 			<p:outputLabel value="Data Fechamento: " />
-			<p:outputLabel value="#{osMB.os.fechamento}" />
+			<p:outputLabel value="#{osMB.os.fechamento}" >
+				 <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Montevideo" />
+			</p:outputLabel>
 			<p:spacer width="20px"></p:spacer>
 			<p:outputLabel value="Status: #{osMB.os.status}" />
 			<p:spacer width="20px"></p:spacer>
@@ -45,18 +50,22 @@
 			<p:spacer width="10px"></p:spacer>
 			<h:panelGrid columns="2" cellpadding="2">
 				<p:outputLabel value="Observação: " />
-				<p:inputTextarea value="#{osMB.os.obs}" 
+				<p:inputTextarea value="#{osMB.os.obs}" disabled="#{osMB.disableButons}" 
 							autoResize="false" rows="4" cols="42" id="obs"/>
 			</h:panelGrid>
 			
 			<br></br><br></br>
-			<p:commandButton value="Salvar"  process="@this :form:km :form:obs" actionListener="#{osMB.salvar}" update=":form:km :form:obs"/>
+			<p:commandButton value="Salvar"  process="@this :form:km :form:obs" actionListener="#{osMB.salvar}" update=":form:km :form:obs :form:growl" disabled="#{osMB.disableButons}"/>
 			<p:commandButton value="Adicionar Peças" process=" @this"
-				 oncomplete="PF('pecaDialog').show()" update=":form:pecaDetail"/>
+				 oncomplete="PF('pecaDialog').show()" update=":form:pecaDetail" disabled="#{osMB.disableButons}"/>
 				 
-			<p:commandButton value="Adicionar Serviço" actionListener="#{marcaMB.salvar}" process=" @this" 
-				oncomplete="PF('servicoDialog').show()" update=":form:servicoDetail"/>
-				
+			<p:commandButton value="Adicionar Serviço" process=" @this" 
+				oncomplete="PF('servicoDialog').show()" update=":form:servicoDetail" disabled="#{osMB.disableButons}"/>
+			<p:commandButton value="Fechar OS"  process=" @this" actionListener="#{osMB.fecharOS}" update="@form" disabled="#{osMB.disableButons}">
+				<p:confirm header="Confirmation"
+								message="Deseja fechar a OS?" icon="ui-icon-alert" />
+			</p:commandButton>	
+
 			<p:commandButton value="Imprimir"  process=" @this" />
 			<br></br>
 			<br></br>
@@ -94,7 +103,7 @@
 							<h:outputText value="Ações" />
 						</f:facet>
 						<p:commandButton actionListener="#{osMB.removeItem(index)}" update=":form:itemQtd :form:qtdPecasPainel :form:tabelaordem :form:tabelaPecas :form:growl :form:valorOS"
-							process="@this :form:itemQtd" oncomplete="PF('pecasQtd').hide()"  value="Remover">
+							process="@this :form:itemQtd" oncomplete="PF('pecasQtd').hide()"  value="Remover" disabled="#{osMB.disableButons}">
 							<p:confirm header="Confirmation"
 								message="Deseja remover o Item?" icon="ui-icon-alert" />
 						</p:commandButton>
