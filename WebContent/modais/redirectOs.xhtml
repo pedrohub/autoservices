@@ -23,13 +23,14 @@
 					<h:panelGrid columns="3" cellpadding="5">
 					
 						<p:outputLabel value="Escolha o Veiculo: " />
-						<p:selectOneMenu value="#{geralMB.veiculo}" >
-						<f:selectItems value="#{geralMB.veiculos}" var="veiculo" 
-							itemLabel="#{veiculo.modelo} #{veiculo.placa}" itemValue="#{veiculo}"/>
+						
+						<p:selectOneMenu value="#{geralMB.veiculo}" id="menuVeiculos" >
+							<f:selectItems value="#{geralMB.veiculos}" var="veiculo" 
+								itemLabel="#{veiculo.modelo} #{veiculo.placa}" itemValue="#{veiculo}"/>
 						</p:selectOneMenu>	
 						
 						<p:commandButton  value="Enviar" 
-							action="pageOS.xhmtl?faces-redirect=true"
+							action="pageOS.xhmtl?faces-redirect=true" 
 							 icon="fa fa-fw fa-edit" actionListener="#{geralMB.redirectOs()}"/>
 
 					</h:panelGrid>

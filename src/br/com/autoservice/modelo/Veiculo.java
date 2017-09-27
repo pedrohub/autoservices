@@ -156,62 +156,20 @@ public class Veiculo implements Serializable{
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		
 		Veiculo other = (Veiculo) obj;
-		if (agendamentos == null) {
-			if (other.agendamentos != null)
-				return false;
-		} else if (!agendamentos.equals(other.agendamentos))
-			return false;
-		if (ano == null) {
-			if (other.ano != null)
-				return false;
-		} else if (!ano.equals(other.ano))
-			return false;
-		if (cliente == null) {
-			if (other.cliente != null)
-				return false;
-		} else if (!cliente.equals(other.cliente))
-			return false;
+		
+		
 		if (codVeiculo == null) {
 			if (other.codVeiculo != null)
 				return false;
 		} else if (!codVeiculo.equals(other.codVeiculo))
 			return false;
-		if (cor == null) {
-			if (other.cor != null)
-				return false;
-		} else if (!cor.equals(other.cor))
-			return false;
-		if (marca == null) {
-			if (other.marca != null)
-				return false;
-		} else if (!marca.equals(other.marca))
-			return false;
-		if (modelo == null) {
-			if (other.modelo != null)
-				return false;
-		} else if (!modelo.equals(other.modelo))
-			return false;
-		if (obs == null) {
-			if (other.obs != null)
-				return false;
-		} else if (!obs.equals(other.obs))
-			return false;
-		if (placa == null) {
-			if (other.placa != null)
-				return false;
-		} else if (!placa.equals(other.placa))
-			return false;
-		if (status != other.status)
-			return false;
+		
+	
 		return true;
 	}
+
 
 	
 

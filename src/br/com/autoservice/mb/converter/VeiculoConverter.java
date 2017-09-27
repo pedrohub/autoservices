@@ -22,12 +22,10 @@ public class VeiculoConverter implements Converter {
 	@Override
 	public String getAsString(FacesContext facesContext,
 			UIComponent uiComponent, Object value) {
-		if (value instanceof Veiculo) {
+ 		if (value instanceof Veiculo) {
 			Veiculo entity = (Veiculo) value;
-			if (entity != null && entity instanceof Veiculo
-					&& entity.getCodVeiculo() != null) {
-				uiComponent.getAttributes().put(
-						entity.getCodVeiculo().toString(), entity);
+			if (entity != null && entity instanceof Veiculo && entity.getCodVeiculo() != null) {
+				uiComponent.getAttributes().put(entity.getCodVeiculo().toString(), entity);
 				return entity.getCodVeiculo().toString();
 			}
 		}

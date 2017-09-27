@@ -52,11 +52,7 @@ public class GeralMB implements Serializable{
 	
 	public void carregarInformacoes(Cliente cliente){
 		
-		if(cliente == null) {
-			cliente = this.cliente;
-		} else {
-			this.cliente = cliente;
-		}
+		this.cliente = cliente;
 		
 		if (cliente.getVeiculos() != null)
 			veiculos = controladorVeiculo.listar(cliente);
@@ -64,6 +60,16 @@ public class GeralMB implements Serializable{
 		agendamentoMB.setAgendamentos(agendamentoController.listarPorcliente(cliente));
 		carregarOS();
 	}
+	
+	public void carregarInformacoes(){
+		
+		if (cliente.getVeiculos() != null)
+			veiculos = controladorVeiculo.listar(cliente);
+		
+		agendamentoMB.setAgendamentos(agendamentoController.listarPorcliente(cliente));
+		carregarOS();
+	}
+	
 	
 	/**
 	 * Salvar Veiculos

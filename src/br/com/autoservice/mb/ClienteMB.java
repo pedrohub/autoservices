@@ -237,7 +237,7 @@ public class ClienteMB implements Serializable{
 	}
 	
 	public void redirectGeral(){
-		geralMB.carregarInformacoes(null);
+		geralMB.carregarInformacoes();
 	}
 	
 	public void redirectGeral(Cliente cliente){
