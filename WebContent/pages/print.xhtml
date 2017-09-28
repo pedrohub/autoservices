@@ -13,13 +13,31 @@
 		
 		.bordas{
 		border-style: solid;
-    	border-width: 2px;
+    	border-width: 1px;
 		}
 		
 		.bordasCorpo{
 		border-style: solid;
-    	border-width: 2px;
+    	border-width: 1px;
     	font-size: 14px;
+    	padding: 1px;
+		}
+		
+		.semBorda tr, .semBorda td {
+			border: none !important;
+		}
+		
+		table {
+		    width: 100%;
+		     border: 1px solid black;
+		}
+		
+		th {
+		    height: 50px;
+		}
+		
+		th, td {
+		    border-bottom: 1px solid #ddd;
 		}
 		
 	</style>
@@ -35,13 +53,79 @@
 	<br></br>
 	<div class="bordasCorpo">
 		
-		<p:outputLabel>Ordem de Serviço N°:232</p:outputLabel>  
-		<p:outputLabel>Cliente: Pedro Edson Oliveira Telefone: 81 999941867</p:outputLabel>
 		
+		<p:panelGrid columns="2" style="width:100%" styleClass="semBorda">
+			<p:outputPanel>
+				<p:outputLabel>Ordem de Serviço N°:232</p:outputLabel> 
+			</p:outputPanel>
+			<p:outputPanel style="text-align: right;" >
+				<p:outputLabel>Data de Impressão: 29/06/2017</p:outputLabel> 
+			</p:outputPanel>
+		</p:panelGrid>
+		
+		<p:panelGrid columns="3" style="width:100%" styleClass="semBorda">
+			<p:outputLabel>Nome Cliente: Pedro Edson Oliveira</p:outputLabel> 
+			<p:outputLabel>Telefone: 81 999941867</p:outputLabel>
+			<p:outputLabel>Status OS: FECHADA</p:outputLabel>
+		</p:panelGrid>
+		
+		<hr/>	 
+		
+		<p:panelGrid columns="3" style="width:100%" styleClass="semBorda">
+			<p:outputLabel>Modelo: Ford Ka</p:outputLabel> 
+			<p:outputLabel>Placa: PDX-4442</p:outputLabel>
+			<p:outputLabel>Km: 20.000,00</p:outputLabel>
+		</p:panelGrid>
+		
+		<hr/>	
+		
+		<p:panelGrid columns="3" style="width:100%" styleClass="semBorda">
+			<p:outputLabel>Data Abertura: 29/06/2017</p:outputLabel> 
+			<p:outputLabel>Data Fechamento: 29/06/2017</p:outputLabel>
+			<p:outputLabel style="font-weight: bold;">Valor Total: 240,21</p:outputLabel>
+		</p:panelGrid>
+		
+		
+		<p:panelGrid columns="1" style="width:100%" styleClass="semBorda">
+			<p:outputLabel>Observação: OS feita para retirada do motor, e trocar suspeção, 
+			cliente gostou e quer marcar a volta</p:outputLabel> 
+		</p:panelGrid>
 		
 	</div>
-    
-    
+	
+	<br></br>
+	
+	<p:panelGrid columns="1" style="width:100%;text-align:center;" styleClass="semBorda">
+		<p:outputLabel style="font-weight: bold;">Itens</p:outputLabel>
+	</p:panelGrid>
+	
+	<h:dataTable id="items" value="#{clienteMB.listaClientes}" var="cliente" 
+	      styleClass="tabela"> 
+			<h:column > 
+			      <f:facet name="header"> 
+				<h:outputText value="Descrição" /> 
+			      </f:facet> 
+				  <h:outputText value="#{cliente.nome}" />
+			</h:column> 
+			<h:column> 
+			      <f:facet name="header"> 
+				<h:outputText value="Quantidade"/> 
+			      </f:facet> 
+				  <h:outputText value="#{cliente.nome}" />
+			</h:column> 
+			<h:column> 
+			      <f:facet name="header"> 
+				<h:outputText value="Preço Unitario"/> 
+			      </f:facet> 
+				  <h:outputText value="#{cliente.nome}" />
+			</h:column> 
+			<h:column> 
+			      <f:facet name="header"> 
+				<h:outputText value="Preço Total"/> 
+			      </f:facet> 
+				  <h:outputText value="#{cliente.nome}" />
+			</h:column> 
+		</h:dataTable>
     
   </h:body>
 </html>
