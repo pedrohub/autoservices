@@ -59,7 +59,7 @@
 				<p:outputLabel>Ordem de Serviço N°:232</p:outputLabel> 
 			</p:outputPanel>
 			<p:outputPanel style="text-align: right;" >
-				<p:outputLabel>Data de Impressão: 29/06/2017</p:outputLabel> 
+				<p:outputLabel>Data de Impressão: 30/06/2017</p:outputLabel> 
 			</p:outputPanel>
 		</p:panelGrid>
 		
@@ -82,7 +82,7 @@
 		<p:panelGrid columns="3" style="width:100%" styleClass="semBorda">
 			<p:outputLabel>Data Abertura: 29/06/2017</p:outputLabel> 
 			<p:outputLabel>Data Fechamento: 29/06/2017</p:outputLabel>
-			<p:outputLabel style="font-weight: bold;">Valor Total: 240,21</p:outputLabel>
+			<p:outputLabel style="font-weight: bold;">Valor Total: 130,00</p:outputLabel>
 		</p:panelGrid>
 		
 		
@@ -99,33 +99,35 @@
 		<p:outputLabel style="font-weight: bold;">Itens</p:outputLabel>
 	</p:panelGrid>
 	
-	<h:dataTable id="items" value="#{clienteMB.listaClientes}" var="cliente" 
+	<h:dataTable id="items" value="#{osMB.listaFake}" var="cliente" 
 	      styleClass="tabela"> 
 			<h:column > 
 			      <f:facet name="header"> 
 				<h:outputText value="Descrição" /> 
 			      </f:facet> 
-				  <h:outputText value="#{cliente.nome}" />
+				  <h:outputText value="#{cliente.descricao}" />
 			</h:column> 
 			<h:column> 
 			      <f:facet name="header"> 
 				<h:outputText value="Quantidade"/> 
 			      </f:facet> 
-				  <h:outputText value="#{cliente.nome}" />
+				  <h:outputText value="#{cliente.quantidade}" />
 			</h:column> 
 			<h:column> 
 			      <f:facet name="header"> 
 				<h:outputText value="Preço Unitario"/> 
 			      </f:facet> 
-				  <h:outputText value="#{cliente.nome}" />
+				  <h:outputText value="#{cliente.valorUnitario}" />
 			</h:column> 
 			<h:column> 
 			      <f:facet name="header"> 
 				<h:outputText value="Preço Total"/> 
 			      </f:facet> 
-				  <h:outputText value="#{cliente.nome}" />
-			</h:column> 
+				  <h:outputText value="#{cliente.valor}" />
+			</h:column>
 		</h:dataTable>
+    <br></br>
+    <div style="font-weight: bold;text-align: right;">Total dos Itens: R$ 130,00</div>
     
   </h:body>
 </html>

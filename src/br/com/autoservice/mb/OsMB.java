@@ -162,6 +162,44 @@ public class OsMB implements Serializable{
 		}
 	}
 	
+	public List<ItemServico> getListaFake(){
+		
+		ItemServico o= new ItemServico();
+		o.setDescricao("Corrente de Comanda");
+		o.setQuantidade(2);
+		o.setValor(10d);
+		o.setValorUnitario(5d);
+		
+		ItemServico o2= new ItemServico();
+		o2.setDescricao("Oleo do motor");
+		o2.setQuantidade(2);
+		o2.setValor(10d);
+		o2.setValorUnitario(5d);
+		
+		ItemServico o3= new ItemServico();
+		o3.setDescricao("Junta cabeçote");
+		o3.setQuantidade(2);
+		o3.setValor(10d);
+		o3.setValorUnitario(5d);
+		
+		ItemServico o4= new ItemServico();
+		o4.setDescricao("Serviço");
+		o4.setQuantidade(1);
+		o4.setValor(100d);
+		o4.setValorUnitario(100d);
+		
+		List<ItemServico> itens = new ArrayList<ItemServico>();
+		itens.add(o);
+		itens.add(o2);
+		itens.add(o3);
+		itens.add(o4);
+		
+		
+		
+		return itens;
+		
+	}
+	
 	// get e set **************************************************
 	public OS getOs() {
 		return os;
