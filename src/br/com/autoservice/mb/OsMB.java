@@ -85,16 +85,16 @@ public class OsMB implements Serializable{
 	
 	public void addItemPeca(){
 		
-		if((quantidadeEstoque > 0) && (quantidadeEstoque - quantidade >= 0)){
+		//if((quantidadeEstoque > 0) && (quantidadeEstoque - quantidade >= 0)){
 			item.setValor(item.getValorUnitario()* quantidade);
 			item.setQuantidade(quantidade);
 			itens.add(item);
 			countValor();
 			pecaMB.limparFiltros();
 			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Inserido", ""));
-		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Verifique o estoque do item", ""));
-		}
+		//} else {
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Verifique o estoque do item", ""));
+		//}
 	}
 	
 	public void addItemServico(){
@@ -177,13 +177,13 @@ public class OsMB implements Serializable{
 		o2.setValorUnitario(5d);
 		
 		ItemServico o3= new ItemServico();
-		o3.setDescricao("Junta cabeçote");
+		o3.setDescricao("Junta cabeï¿½ote");
 		o3.setQuantidade(2);
 		o3.setValor(10d);
 		o3.setValorUnitario(5d);
 		
 		ItemServico o4= new ItemServico();
-		o4.setDescricao("Serviço");
+		o4.setDescricao("Serviï¿½o");
 		o4.setQuantidade(1);
 		o4.setValor(100d);
 		o4.setValorUnitario(100d);
