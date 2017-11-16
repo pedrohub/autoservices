@@ -55,13 +55,30 @@ public class AgendamentoMB implements Serializable{
 		}
 	}
 	
+	public void editAgenda(Agendamento agenda){
+		agendamento = agenda;
+		idVeiculo = agendamento.getVeiculo().getCodVeiculo();
+		acaoAgenda= Constantes.ALTERAR;
+	}
+	
+	public void deletar(Agendamento agenda){
+		Cliente cliente = agenda.getVeiculo().getCliente();
+		agendamentoController.deletar(agenda);
+		agendamentos = agendamentoController.listarPorcliente(cliente);
+	}
+	
 	public void salvar(){
 		
-		agendamento.setVeiculo(getVeiculoAgenda(idVeiculo));
+		if(acaoAgenda.equals(Constantes.ALTERAR) && validarCamposAgenda(agendamento)){
+			agendamento.setStatus(true);
+			agendamentoController.edit(agendamento);
+			agendamentos = agendamentoController.listarPorcliente(agendamento.getVeiculo().getCliente());
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO ,"Agendamento Salvo", ""));
 		
-		if (validarCamposAgenda(agendamento)){
+		} else if(acaoAgenda.equals(Constantes.INSERIR)){
 			
-			if(acaoAgenda.equals(Constantes.INSERIR)){
+			agendamento.setVeiculo(getVeiculoAgenda(idVeiculo));
+			if (validarCamposAgenda(agendamento)){
 				agendamento.setAbertura(DateUtil.getDate());
 				agendamento.setStatus(true);
 				agendamentoController.salvar(agendamento);

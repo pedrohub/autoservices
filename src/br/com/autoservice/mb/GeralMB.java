@@ -15,6 +15,7 @@ import javax.faces.context.FacesContext;
 import br.com.autoservice.controller.AgendamentoController;
 import br.com.autoservice.controller.ClienteController;
 import br.com.autoservice.controller.VeiculoController;
+import br.com.autoservice.modelo.Agendamento;
 import br.com.autoservice.modelo.Cliente;
 import br.com.autoservice.modelo.OS;
 import br.com.autoservice.modelo.Veiculo;
@@ -31,6 +32,7 @@ public class GeralMB implements Serializable{
 	private VeiculoController controladorVeiculo;
 	private List<Veiculo> veiculos;
 	private Veiculo veiculo;
+	private Agendamento agenda;
 	private boolean botaoVeiculo;
 	private String acaoVeiculo;
 	private AgendamentoController agendamentoController;
@@ -301,6 +303,14 @@ public class GeralMB implements Serializable{
 
 	public void setListaOS(List<OS> listaOS) {
 		this.listaOS = listaOS;
+	}
+
+	public Agendamento getAgenda() {
+		return agenda;
+	}
+
+	public void setAgenda(Agendamento agenda) {
+		this.agenda = agenda;
 	}
 	
 	

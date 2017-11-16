@@ -34,6 +34,8 @@ public class OsMB implements Serializable{
 	private PecaMB pecaMB;
 	@ManagedProperty(value="#{tipoServicoMB}")
 	private TipoServicoMB tipoMB;
+	@ManagedProperty(value="#{printMB}")
+	private PrintMB printMB;
 	private int quantidadeEstoque;
 	private boolean disableButons;
 	
@@ -162,6 +164,14 @@ public class OsMB implements Serializable{
 		}
 	}
 	
+	/**
+	 * imprimir OS
+	 */
+	public void createPdfOS(){
+		printMB.setOs(os);
+		printMB.createPdfOS();
+	}
+	
 	public List<ItemServico> getListaFake(){
 		
 		ItemServico o= new ItemServico();
@@ -177,13 +187,13 @@ public class OsMB implements Serializable{
 		o2.setValorUnitario(5d);
 		
 		ItemServico o3= new ItemServico();
-		o3.setDescricao("Junta cabe�ote");
+		o3.setDescricao("Junta cabeçote");
 		o3.setQuantidade(2);
 		o3.setValor(10d);
 		o3.setValorUnitario(5d);
 		
 		ItemServico o4= new ItemServico();
-		o4.setDescricao("Servi�o");
+		o4.setDescricao("Serviço");
 		o4.setQuantidade(1);
 		o4.setValor(100d);
 		o4.setValorUnitario(100d);
@@ -263,6 +273,14 @@ public class OsMB implements Serializable{
 
 	public void setDisableButons(boolean disableButons) {
 		this.disableButons = disableButons;
+	}
+
+	public PrintMB getPrintMB() {
+		return printMB;
+	}
+
+	public void setPrintMB(PrintMB printMB) {
+		this.printMB = printMB;
 	}
 
 	

@@ -27,7 +27,6 @@
   <mapping class="br.com.autoservice.modelo.Agendamento"/>
   <mapping class="br.com.autoservice.modelo.OS"/>
   <mapping class="br.com.autoservice.modelo.ItemServico"/>
-   <mapping class="br.com.robson.rest.NoticiaBase"/>
   
  </session-factory>
 </hibernate-configuration>

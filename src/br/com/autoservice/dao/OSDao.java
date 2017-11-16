@@ -28,7 +28,9 @@ public class OSDao extends GenericDao {
 
 		session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			Criteria cri = session.createCriteria(OS.class).add(Restrictions.eq("idCliente", valor));
+			Criteria cri = session.createCriteria(OS.class)
+					.add(Restrictions.eq("idCliente", valor))
+					.add(Restrictions.eq("tipo", "os"));
 			cri.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			return (List<OS>) cri.list();
 		} finally {

@@ -38,6 +38,14 @@ public class AgendamentoController implements Serializable{
 		dao.inserir(agendamento);
 	}
 	
+	public void edit(Agendamento agendamento){
+		dao.alterar(agendamento);
+	}
+	
+	public void deletar(Agendamento agendamento){
+		dao.excluir(agendamento);
+	}
+	
 	public List<Agendamento> listarPorcliente(Cliente cliente){
 		List<Agendamento> lista = new ArrayList<Agendamento>();
 		

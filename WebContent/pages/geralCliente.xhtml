@@ -28,11 +28,11 @@
 
 					<p:outputLabel for="fone1" value="Fone 1: " />
 					<p:inputMask id="fone1" value="#{geralMB.cliente.fone1}"
-						mask="(999) 99999-9999"  />
+						mask="(99) 99999-9999"  />
 
 					<p:outputLabel for="fone2" value="Fone 2: " />
 					<p:inputMask id="fone2" value="#{geralMB.cliente.fone2}"
-						mask="(999) 99999-9999"  />
+						mask="(99) 99999-9999"  />
 
 					<p:outputLabel value="Observação: " />
 					<p:inputTextarea value="#{geralMB.cliente.obs}"
@@ -190,21 +190,16 @@
 					<f:facet name="header">
 						<h:outputText value="Ações" />
 					</f:facet>
-					<p:panelGrid columns="2">
-					<p:commandLink 
-						 title="View Detail"
-						styleClass="ui-icon ui-icon-search">
-						<f:setPropertyActionListener value="#{agenda}"
-							target="#{agendamentoMB.agendamento}" />
+					<p:commandLink update=":formAgenda:painelAgenda" process="@this"
+							oncomplete="PF('documentDialogInAgendamento').show()" title="Editar " styleClass="ui-icon ui-icon-pencil"
+							style="float:left;margin-right:1px" actionListener="#{agendamentoMB.editAgenda(agenda)}">
 					</p:commandLink>
-					 <p:commandLink 
-						 title="View Detail"
-						styleClass="ui-icon ui-icon-search">
-						<f:setPropertyActionListener value="#{agenda}"
-							target="#{agendamentoMB.agendamento}" />
-					</p:commandLink> 
-					</p:panelGrid>
-					
+						<p:commandLink actionListener="#{agendamentoMB.deletar(agenda)}" styleClass="ui-icon ui-icon-close"
+							process="@this" title="Deletar" update=":formAgenda:painelAgenda :form:tabView:tabelaAgenda"
+							style="float:left;margin-right:1px" >
+							<p:confirm header="Confirmation"
+								message="Deseja deletar o Agendamento" icon="ui-icon-alert" />
+						</p:commandLink>
 				</p:column>
 			</p:dataTable>
 			

@@ -5,7 +5,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml" 
+	xmlns:pe="http://primefaces.org/ui/extensions">
 
 	<h:form id="form">
 
@@ -18,8 +19,10 @@
 			<p:inputText id="nome" value="#{tipoServicoMB.tipo.descricao}" required="true" />
 			<br></br>
 			<br></br>
-			<p:outputLabel value="Valor: " /> 
-			<p:inputText id="valor" value="#{tipoServicoMB.tipo.valor}" required="true" />
+			
+			<p:outputLabel value="Valor: " />
+			<pe:inputNumber id="valor" symbol="R$ " decimalSeparator="," thousandSeparator="."
+ 				 value="#{tipoServicoMB.tipo.valor}" decimalPlaces="2" emptyValue="0"/>
 			<br></br>
 			<br></br>
 
@@ -81,7 +84,8 @@
 					<br></br>
 					<br></br>
 					<h:outputText value="Valor: " />
-					<p:inputText id="alterValor" value="#{tipoServicoMB.tipo.valor}" required="true"/>
+					<pe:inputNumber id="alterValor" symbol="R$ " decimalSeparator="," thousandSeparator="."
+ 						 value="#{tipoServicoMB.tipo.valor}" decimalPlaces="2" emptyValue="0" required="true"/>
 					
 				<br></br><br></br>
 				<p:commandButton value="Salvar" actionListener="#{tipoServicoMB.editar}" process="@this :form:alterMarca :form:alterValor"

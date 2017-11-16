@@ -1,6 +1,5 @@
 package br.com.autoservice.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;

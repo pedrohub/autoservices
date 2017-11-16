@@ -35,6 +35,7 @@ public class OS {
 	private String placa;
 	private String modelo;
 	private String km;
+	private String tipo;
 	
 	public void gerarOS(Cliente cliente, Veiculo veiculo){
 		
@@ -42,6 +43,7 @@ public class OS {
 		fechamento = null;
 		idCliente = cliente.getIdCliente();
 		nomeCliente = cliente.getNome();
+		telefoneCliente = cliente.getFone1();
 		idVeiculo = veiculo.getCodVeiculo();
 		placa = veiculo.getPlaca();
 		modelo = veiculo.getModelo();
@@ -49,6 +51,7 @@ public class OS {
 		status = StatusOS.ABERTA;
 		valor = 0d;
 		km = "";
+		tipo = "os";
 	}
 	
 	public Long getId() {
@@ -139,6 +142,14 @@ public class OS {
 
 	public void setKm(String km) {
 		this.km = km;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 	
 	
