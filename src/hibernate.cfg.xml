@@ -9,9 +9,6 @@
    <property name="hibernate.connection.username">root</property>
   <property name="hibernate.connection.password">sicoadmin</property>
   <property name="hibernate.connection.url">jdbc:mysql://localhost/auto_services</property>
-<!-- <property name="hibernate.connection.username">adminddIYLMG</property>
-  <property name="hibernate.connection.password">cnHxYZExI489</property>
-  <property name="hibernate.connection.url">jdbc:mysql://127.13.157.130/ismaelpecaseservicos</property>-->
  <property name="hibernate.hbm2ddl.auto">false</property>
  <!-- Para criar as tabelas no banco de dados -->
  <!--  
@@ -27,6 +24,8 @@
   <mapping class="br.com.autoservice.modelo.Agendamento"/>
   <mapping class="br.com.autoservice.modelo.OS"/>
   <mapping class="br.com.autoservice.modelo.ItemServico"/>
+    <mapping class="br.com.autoservice.modelo.Orcamento"/>
+   <mapping class="br.com.autoservice.modelo.ItemOrcamento"/>
   
  </session-factory>
 </hibernate-configuration>

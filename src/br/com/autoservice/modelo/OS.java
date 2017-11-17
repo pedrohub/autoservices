@@ -35,7 +35,6 @@ public class OS {
 	private String placa;
 	private String modelo;
 	private String km;
-	private String tipo;
 	
 	public void gerarOS(Cliente cliente, Veiculo veiculo){
 		
@@ -51,7 +50,6 @@ public class OS {
 		status = StatusOS.ABERTA;
 		valor = 0d;
 		km = "";
-		tipo = "os";
 	}
 	
 	public Long getId() {
@@ -116,7 +114,7 @@ public class OS {
 		this.idVeiculo = idVeiculo;
 	}
 	public String getPlaca() {
-		return placa;
+		return placa != null ? placa.toUpperCase() : placa;
 	}
 	public void setPlaca(String placa) {
 		this.placa = placa;
@@ -144,13 +142,6 @@ public class OS {
 		this.km = km;
 	}
 
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
 	
 	
 	

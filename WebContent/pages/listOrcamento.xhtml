@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<h:form id="form">
+	
+	  <p:growl id="message" showDetail="true" />
+
+			<h:panelGrid columns="1" cellpadding="5">
+				<h1 class="texto2">Orçamentos</h1>
+			</h:panelGrid>
+			<p:outputLabel value="Registros: #{orcamentoMB.listaSize}" id="count"/>
+			<p:spacer width="10px"></p:spacer>
+			<p:commandLink onclick="history.go(-1)" value="Voltar" >
+				</p:commandLink>
+		
+
+	 <!-- tabela de ordens  -->
+	<p:outputPanel id="painelOrdem">
+		<p:dataTable id="tabelaordem" var="os" value="#{orcamentoMB.orcamentos}" 
+			scrollable="true" scrollHeight="600" sortBy="#{os.abertura}" sortOrder="descending">
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Abertura" />
+				</f:facet>
+				<h:outputText value="#{os.abertura}" >
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Montevideo"/>
+				</h:outputText>
+			</p:column>
+		
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Modelo" />
+				</f:facet>
+				<h:outputText value="#{os.modelo}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Placa" />
+				</f:facet>
+				<h:outputText value="#{os.placa}" />
+			</p:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Valor" />
+				</f:facet>
+				<h:outputText value="#{os.valor}" >
+					<f:convertNumber pattern="#,###.00" locale="pt_BR"/>
+				</h:outputText>
+			</p:column>
+			
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Ações" />
+				</f:facet>
+						<p:commandLink action="pageOrcamento.xhtml?faces-redirect=true" 
+							 title="View Detail" actionListener="#{orcamentoMB.redirectAlter(os)}"
+								value="Visualizar" >
+							
+						</p:commandLink>
+						<p:spacer width="4px"></p:spacer>
+						<p:commandLink actionListener="#{orcamentoMB.deletar(os)}"
+								process="@this" update=":form:tabelaordem :form:message :form:count"
+									value="Deletar">
+									<p:confirm header="Confirmation"
+										message="Deseja deletar o Orçamento?" icon="ui-icon-alert" />
+						</p:commandLink>
+				
+			</p:column>
+		</p:dataTable>
+		
+		</p:outputPanel>
+		<!-- fim tabela de OS  -->
+				
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Yes" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+				
+	</h:form>
+
+</ui:decorate>

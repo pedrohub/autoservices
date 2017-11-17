@@ -3,39 +3,41 @@ package br.com.autoservice.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.criterion.Restrictions;
 
-import br.com.autoservice.modelo.OS;
+import br.com.autoservice.modelo.Orcamento;
 import br.com.autoservice.util.HibernateUtil;
 
-public class OSDao extends GenericDao {
+public class OrcamentoDao extends GenericDao {
 
 	@SuppressWarnings("unchecked")
-	public List<OS> listar() {
+	public List<Orcamento> listar() {
 
 		session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			Criteria cri = session.createCriteria(OS.class);
+			Criteria cri = session.createCriteria(Orcamento.class);
 
-			return (List<OS>) cri.list();
+			return (List<Orcamento>) cri.list();
 		} finally {
 			session.close();
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<OS> listarByCliente(Long valor) {
-
+	public List listarOrcamentos() throws HibernateException{
 		session = HibernateUtil.getSessionFactory().openSession();
-		try {
-			Criteria cri = session.createCriteria(OS.class)
-					.add(Restrictions.eq("idCliente", valor));
+
+		try{
+			Criteria cri = session.createCriteria(Orcamento.class);
 			cri.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-			return (List<OS>) cri.list();
-		} finally {
+			return cri.list();
+		}finally{
 			session.close();
+
 		}
 	}
+	
 	
 	
 	

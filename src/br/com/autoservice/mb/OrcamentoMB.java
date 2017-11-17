@@ -12,23 +12,22 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import br.com.autoservice.controller.OSController;
-import br.com.autoservice.modelo.ItemServico;
-import br.com.autoservice.modelo.OS;
+import br.com.autoservice.controller.OrcamentoController;
+import br.com.autoservice.modelo.ItemOrcamento;
+import br.com.autoservice.modelo.Orcamento;
 import br.com.autoservice.modelo.Peca;
 import br.com.autoservice.modelo.TipoServico;
-import br.com.autoservice.util.StatusOS;
 
 @ManagedBean
 @SessionScoped
-public class OsMB implements Serializable{
+public class OrcamentoMB implements Serializable{
 
 	private static final long serialVersionUID = -2573197656673380989L;
 	
-	private OS os;
-	private static OSController oSController;
-	private ItemServico item;
-	private List<ItemServico> itens;
+	private Orcamento os;
+	private static OrcamentoController oSController;
+	private ItemOrcamento item;
+	private List<ItemOrcamento> itens;
 	private Integer quantidade;
 	@ManagedProperty(value="#{pecaMB}")
 	private PecaMB pecaMB;
@@ -37,14 +36,17 @@ public class OsMB implements Serializable{
 	@ManagedProperty(value="#{printMB}")
 	private PrintMB printMB;
 	private int quantidadeEstoque;
-	private boolean disableButons;
+	private List<Orcamento> orcamentos;
+	private boolean desabilitarBotao;
+	private int listaSize;
 	
 	
 	@PostConstruct
 	public void init() {
-		oSController = OSController.getInstance();
-		itens = new ArrayList<ItemServico>();
-		item = new ItemServico();
+		oSController = OrcamentoController.getInstance();
+		itens = new ArrayList<ItemOrcamento>();
+		item = new ItemOrcamento();
+		orcamentos = new ArrayList<Orcamento>();
 	}
 
 	public void salvar(){
@@ -62,14 +64,15 @@ public class OsMB implements Serializable{
 		}
 	}
 	
-	public void deletar(OS os){
+	public void deletar(Orcamento os){
 		oSController.deletar(os);
+		carregarListaOrcamentos();
 	}
 	
 	public void pecaToItem(Peca peca){
 		quantidade = 1;
 		quantidadeEstoque = peca.getQtd();
-		item = new ItemServico();
+		item = new ItemOrcamento();
 		item.setDescricao(peca.getDescricao());
 		item.setValorUnitario(peca.getValor());
 		
@@ -77,7 +80,7 @@ public class OsMB implements Serializable{
 	
 	public void pecaToService(TipoServico tipo){
 		
-		item = new ItemServico();
+		item = new ItemOrcamento();
 		item.setDescricao(tipo.getDescricao());
 		item.setValor(tipo.getValor());
 		item.setQuantidade(1);
@@ -120,118 +123,80 @@ public class OsMB implements Serializable{
 	
 	private void countValor(){
 		double valor = 0;
-		for (ItemServico itemServico : itens) {
+		for (ItemOrcamento itemServico : itens) {
 			valor += itemServico.getValor();
 		}
 		os.setValor(valor);
 	}
 	
-	private boolean validateOs(OS os){
+	private boolean validateOs(Orcamento os){
 		
 //		if (itens == null || itens.isEmpty())
 //			return false;
 		
-		if (os.getKm() == null || os.getKm().length() < 1)
+		if (os.getModelo() == null || os.getModelo().length() < 1)
 			return false;
 		
 		return true;
 	}
 	
-	public List<OS> listbyClient(Long idCliente){
-		
-		return oSController.listarPorcliente(idCliente);
-	}
 	
-	public List<ItemServico> getItensOs(OS os){
+	public List<ItemOrcamento> getItensOs(Orcamento os){
 		
-		 List<ItemServico> lista = oSController.getItens(os);
+		 List<ItemOrcamento> lista = oSController.getItens(os);
 		 
-		 return lista != null ? lista : new ArrayList<ItemServico>();
+		 return lista != null ? lista : new ArrayList<ItemOrcamento>();
 	}
 	
-	/**
-	 * Fechar a OS
-	 */
-	public void fecharOS(){
-		
-		if(validateOs(os) && !os.getItens().isEmpty()){
-			os.setFechamento(new Date());
-			os.setStatus(StatusOS.FINALIZADA);
-			oSController.salvar(os);
-			disableButons = true;
-		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "OS nao pode ser fechada", ""));
-		}
+	public void redirectOrcamento(){
+		os = new Orcamento();
+		os.setAbertura(new Date());
+		itens.clear();
+		desabilitarBotao = false;
+	}
+	
+	public void redirectAlter(Orcamento os){
+		this.os = os;
+		if(!os.getItens().isEmpty())
+			itens = os.getItens();
+		desabilitarBotao = true;
+	}
+	
+	public void carregarListaOrcamentos(){
+		orcamentos = oSController.listaOS();
+		listaSize = orcamentos.size();
 	}
 	
 	/**
 	 * imprimir OS
 	 */
 	public void createPdfOS(){
-		printMB.setOs(os);
-		printMB.createPdfOS();
+		printMB.setOrcamento(os);
+		printMB.createPdfOrcamento();
 	}
-	
-	public List<ItemServico> getListaFake(){
-		
-		ItemServico o= new ItemServico();
-		o.setDescricao("Corrente de Comanda");
-		o.setQuantidade(2);
-		o.setValor(10d);
-		o.setValorUnitario(5d);
-		
-		ItemServico o2= new ItemServico();
-		o2.setDescricao("Oleo do motor");
-		o2.setQuantidade(2);
-		o2.setValor(10d);
-		o2.setValorUnitario(5d);
-		
-		ItemServico o3= new ItemServico();
-		o3.setDescricao("Junta cabeçote");
-		o3.setQuantidade(2);
-		o3.setValor(10d);
-		o3.setValorUnitario(5d);
-		
-		ItemServico o4= new ItemServico();
-		o4.setDescricao("Serviço");
-		o4.setQuantidade(1);
-		o4.setValor(100d);
-		o4.setValorUnitario(100d);
-		
-		List<ItemServico> itens = new ArrayList<ItemServico>();
-		itens.add(o);
-		itens.add(o2);
-		itens.add(o3);
-		itens.add(o4);
-		
-		
-		
-		return itens;
-		
-	}
-	
+
 	// get e set **************************************************
-	public OS getOs() {
+	public Orcamento getOs() {
 		return os;
 	}
 
-	public void setOs(OS os) {
+	public void setOs(Orcamento os) {
 		this.os = os;
 	}
 
-	public ItemServico getItem() {
+	public ItemOrcamento getItem() {
 		return item;
 	}
 
-	public void setItem(ItemServico item) {
+	public void setItem(ItemOrcamento item) {
 		this.item = item;
 	}
 
-	public List<ItemServico> getItens() {
+	public List<ItemOrcamento> getItens() {
 		return itens;
 	}
 
-	public void setItens(List<ItemServico> itens) {
+	public void setItens(List<ItemOrcamento> itens) {
 		this.itens = itens;
 	}
 
@@ -251,28 +216,12 @@ public class OsMB implements Serializable{
 		this.pecaMB = pecaMB;
 	}
 
-	public int getQuantidadeEstoque() {
-		return quantidadeEstoque;
-	}
-
-	public void setQuantidadeEstoque(int quantidadeEstoque) {
-		this.quantidadeEstoque = quantidadeEstoque;
-	}
-
 	public TipoServicoMB getTipoMB() {
 		return tipoMB;
 	}
 
 	public void setTipoMB(TipoServicoMB tipoMB) {
 		this.tipoMB = tipoMB;
-	}
-
-	public boolean isDisableButons() {
-		return disableButons;
-	}
-
-	public void setDisableButons(boolean disableButons) {
-		this.disableButons = disableButons;
 	}
 
 	public PrintMB getPrintMB() {
@@ -283,4 +232,38 @@ public class OsMB implements Serializable{
 		this.printMB = printMB;
 	}
 
+	public int getQuantidadeEstoque() {
+		return quantidadeEstoque;
+	}
+
+	public void setQuantidadeEstoque(int quantidadeEstoque) {
+		this.quantidadeEstoque = quantidadeEstoque;
+	}
+
+	public List<Orcamento> getOrcamentos() {
+		return orcamentos;
+	}
+
+	public void setOrcamentos(List<Orcamento> orcamentos) {
+		this.orcamentos = orcamentos;
+	}
+
+	public boolean isDesabilitarBotao() {
+		return desabilitarBotao;
+	}
+
+	public void setDesabilitarBotao(boolean desabilitarBotao) {
+		this.desabilitarBotao = desabilitarBotao;
+	}
+
+	public int getListaSize() {
+		return listaSize;
+	}
+
+	public void setListaSize(int listaSize) {
+		this.listaSize = listaSize;
+	}
+
+	
+	
 }

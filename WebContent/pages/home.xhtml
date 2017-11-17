@@ -34,14 +34,17 @@
 		</p:outputPanel>
 	</p:outputPanel>	
 	
-	</h:form>
+	
 	<br></br>
 	
 	<p:spacer height="1px"></p:spacer>
 		
-	<p:commandButton value="Gerar &lt;br/&gt;Orçamento" type="button" escape="false"></p:commandButton>
-	
-	
+	<p:commandButton value="Gerar &lt;br/&gt;Orçamento" escape="false" 
+		action="pageOrcamento.xhtml?faces-redirect=true" actionListener="#{orcamentoMB.redirectOrcamento()}"/>
+		
+	<p:commandButton value="Visualizar&lt;br/&gt;Orçamentos" escape="false" 
+		action="listOrcamento.xhtml?faces-redirect=true" actionListener="#{orcamentoMB.carregarListaOrcamentos()}"/>	
+		
 	<br></br>
 	<p:spacer height="10px"></p:spacer>
 	 <p:accordionPanel>
@@ -64,12 +67,8 @@
                 <h:outputText value="After a break of more than 15 years..." />
             </h:panelGrid>
         </p:tab>
-        <p:tab title="Orçamentos Abertos:10">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                <h:outputText value="After a break of more than 15 years..." />
-            </h:panelGrid>
-        </p:tab>
     </p:accordionPanel>
+    
+    </h:form>
     
 </ui:decorate>

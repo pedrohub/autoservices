@@ -12,7 +12,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import br.com.autoservice.util.DateUtil;
-import br.com.autoservice.util.StatusOS;
 
 @Entity
 @Table(name = "orcamento")
@@ -22,14 +21,12 @@ public class Orcamento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Double valor;
-	private StatusOS status;
 	@OneToMany(mappedBy = "os", fetch = FetchType.EAGER)
-	private List<ItemServico> itens;
+	private List<ItemOrcamento> itens;
 	private Date abertura;
 	private String obs;
 	private String placa;
 	private String modelo;
-	private String km;
 	
 	public void gerarOS(Cliente cliente, Veiculo veiculo){
 		
@@ -37,71 +34,64 @@ public class Orcamento {
 		placa = veiculo.getPlaca();
 		modelo = veiculo.getModelo();
 		obs = "";
-		status = StatusOS.ABERTA;
 		valor = 0d;
-		km = "";
 	}
-	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+
 	public Double getValor() {
 		return valor;
 	}
+
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
-	
-	public StatusOS getStatus() {
-		return status;
-	}
-	public void setStatus(StatusOS status) {
-		this.status = status;
-	}
-	public List<ItemServico> getItens() {
+
+	public List<ItemOrcamento> getItens() {
 		return itens;
 	}
-	public void setItens(List<ItemServico> itens) {
+
+	public void setItens(List<ItemOrcamento> itens) {
 		this.itens = itens;
 	}
+
 	public Date getAbertura() {
 		return abertura;
 	}
+
 	public void setAbertura(Date abertura) {
 		this.abertura = abertura;
 	}
+
 	public String getObs() {
 		return obs;
 	}
+
 	public void setObs(String obs) {
 		this.obs = obs;
 	}
-	
+
 	public String getPlaca() {
-		return placa;
+		return placa != null ? placa.toUpperCase() : placa;
 	}
+
 	public void setPlaca(String placa) {
 		this.placa = placa;
 	}
+
 	public String getModelo() {
 		return modelo;
 	}
+
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
 
-	public String getKm() {
-		return km;
+	public Long getId() {
+		return id;
 	}
 
-	public void setKm(String km) {
-		this.km = km;
+	public void setId(Long id) {
+		this.id = id;
 	}
-	
-	
 	
 	
 }
