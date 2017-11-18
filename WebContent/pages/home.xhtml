@@ -48,24 +48,132 @@
 	<br></br>
 	<p:spacer height="10px"></p:spacer>
 	 <p:accordionPanel>
-        <p:tab title="Agendamentos Vencidos:10">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
-                <h:outputText
-                    value="The story begins as Don Vito Corleone..." />
-            </h:panelGrid>
+        <p:tab title="Agendamentos Vencidos:#{homeMB.contAgendaVencidos}">
+           
+           <p:dataTable var="agenda" value="#{homeMB.agendamentosVencidos}" 
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				paginator="true" rows="15" style="margin-bottom:20px;font-size: 14px !important">
+	
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Abertura" />
+					</f:facet>
+					<h:outputText value="#{agenda.abertura}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Vencimento" />
+					</f:facet>
+					<h:outputText value="#{agenda.vencimento}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Veiculo" />
+					</f:facet>
+					<h:outputText value="#{agenda.veiculo.placa}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Obs" />
+					</f:facet>
+					<h:outputText value="#{agenda.descricao}" />
+				</p:column>
+			</p:dataTable>
+           
         </p:tab>
-        <p:tab title="Agendamentos Abertos">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-                <h:outputText value="Francis Ford Coppola's legendary..." />
-            </h:panelGrid>
+        <p:tab title="Agendamentos Abertos:#{homeMB.contAgendaAbertos}">
+            
+             <p:dataTable var="agenda" value="#{homeMB.agendamentosAbertos}" 
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				paginator="true" rows="15" style="margin-bottom:20px;font-size: 14px !important">
+	
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Abertura" />
+					</f:facet>
+					<h:outputText value="#{agenda.abertura}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Vencimento" />
+					</f:facet>
+					<h:outputText value="#{agenda.vencimento}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Veiculo" />
+					</f:facet>
+					<h:outputText value="#{agenda.veiculo.placa}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Obs" />
+					</f:facet>
+					<h:outputText value="#{agenda.descricao}" />
+				</p:column>
+			</p:dataTable>
+            
         </p:tab>
-        <p:tab title="OS Pendentes:15">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                <h:outputText value="After a break of more than 15 years..." />
-            </h:panelGrid>
+        <p:tab title="OS Pendentes:#{homeMB.contOs}">
+           
+           <p:dataTable id="tabelaordem" var="os" value="#{homeMB.osAbertas}" 
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+					paginator="true" rows="20" style="margin-bottom:20px;font-size: 14px !important">
+		
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Abertura" />
+						</f:facet>
+						<h:outputText value="#{os.abertura}" >
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Fechamento" />
+						</f:facet>
+						<h:outputText value="#{os.fechamento}" >
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Modelo" />
+						</f:facet>
+						<h:outputText value="#{os.modelo}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Placa" />
+						</f:facet>
+						<h:outputText value="#{os.placa}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Valor" />
+						</f:facet>
+						<h:outputText value="#{os.valor}" >
+							<f:convertNumber pattern="#,###.00" locale="pt_BR"/>
+						</h:outputText>
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Status" />
+						</f:facet>
+						<h:outputText value="#{os.status}" />
+					</p:column>
+					
+				</p:dataTable>
+           
+           
         </p:tab>
     </p:accordionPanel>
     

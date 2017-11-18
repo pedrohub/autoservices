@@ -21,7 +21,7 @@ import br.com.autoservice.util.DateUtil;
 @SessionScoped
 public class AgendamentoMB implements Serializable{
 
-	private static final long serialVersionUID = 705257259861914374L;
+	private static final long serialVersionUID = -7694855924298528666L;
 	private AgendamentoController agendamentoController;
 	private List<Agendamento> agendamentos;
 	private Agendamento agendamento;

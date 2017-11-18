@@ -23,8 +23,7 @@ import br.com.autoservice.util.StatusOS;
 @SessionScoped
 public class OsMB implements Serializable{
 
-	private static final long serialVersionUID = -2573197656673380989L;
-	
+	private static final long serialVersionUID = -7697103019906115702L;
 	private OS os;
 	private static OSController oSController;
 	private ItemServico item;
@@ -38,7 +37,6 @@ public class OsMB implements Serializable{
 	private PrintMB printMB;
 	private int quantidadeEstoque;
 	private boolean disableButons;
-	
 	
 	@PostConstruct
 	public void init() {

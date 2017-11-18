@@ -22,8 +22,8 @@ import br.com.autoservice.modelo.TipoServico;
 @SessionScoped
 public class OrcamentoMB implements Serializable{
 
-	private static final long serialVersionUID = -2573197656673380989L;
 	
+	private static final long serialVersionUID = 717323576392619722L;
 	private Orcamento os;
 	private static OrcamentoController oSController;
 	private ItemOrcamento item;

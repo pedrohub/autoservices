@@ -9,38 +9,49 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import br.com.autoservice.controller.AgendamentoController;
 import br.com.autoservice.controller.ClienteController;
-import br.com.autoservice.controller.PecaController;
+import br.com.autoservice.controller.OSController;
+import br.com.autoservice.modelo.Agendamento;
 import br.com.autoservice.modelo.Cliente;
-import br.com.autoservice.modelo.Peca;
+import br.com.autoservice.modelo.OS;
 
 @ManagedBean
 @ViewScoped
 public class HomeMB implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5831543201389925568L;
 	private Cliente cliente;
 	private ClienteController controladorCliente;
-	private PecaController pecaController;
+	private AgendamentoController agendamentoController;
+	private OSController osController;
 	private String placa;
 	private boolean painelCliente;
 	private boolean painelMensagem;
 	private String mensagemConsulta = "Nao existe cliente com esta placa";
 	@ManagedProperty(value="#{geralMB}")
 	private GeralMB geralMB;
-	private List<Peca> pecas = new ArrayList<Peca>();
+	private List<Agendamento> agendamentosVencidos = new ArrayList<Agendamento>();
+	private List<Agendamento> agendamentosAbertos = new ArrayList<Agendamento>();
+	private List<OS> osAbertas = new ArrayList<OS>();
+	private int contAgendaVencidos = 0;
+	private int contAgendaAbertos = 0;
+	private int contOs = 0;
+	
 	
 	@PostConstruct
 	public void init() {
 		controladorCliente = ClienteController.getInstance();
-		pecaController = PecaController.getInstance();
+		agendamentoController = AgendamentoController.getInstance();
+		osController = OSController.getInstance();
 		painelCliente = false;
 		painelMensagem = false;
-		pecas=pecaController.getLista();
-		
+		agendamentosVencidos = agendamentoController.listarVencidos();
+		contAgendaVencidos = agendamentosVencidos.size();
+		agendamentosAbertos = agendamentoController.listaAgendamentos();
+		contAgendaAbertos = agendamentosAbertos.size();
+		osAbertas = osController.listaOSAbertas();
+		contOs = osAbertas.size();
 	}
 	
 	public void findCliente(){
@@ -54,7 +65,7 @@ public class HomeMB implements Serializable{
 			painelMensagem = false;
 		}
 	}
-
+	
 	public void redirectGeral(){
 		geralMB.carregarInformacoes(cliente);
 	}
@@ -107,14 +118,52 @@ public class HomeMB implements Serializable{
 		this.geralMB = geralMB;
 	}
 
-	public List<Peca> getPecas() {
-		return pecas;
+	public List<Agendamento> getAgendamentosVencidos() {
+		return agendamentosVencidos;
 	}
 
-	public void setPecas(List<Peca> pecas) {
-		this.pecas = pecas;
+	public void setAgendamentosVencidos(List<Agendamento> agendamentosVencidos) {
+		this.agendamentosVencidos = agendamentosVencidos;
 	}
-	
-	
-	
+
+	public List<Agendamento> getAgendamentosAbertos() {
+		return agendamentosAbertos;
+	}
+
+	public void setAgendamentosAbertos(List<Agendamento> agendamentosAbertos) {
+		this.agendamentosAbertos = agendamentosAbertos;
+	}
+
+	public List<OS> getOsAbertas() {
+		return osAbertas;
+	}
+
+	public void setOsAbertas(List<OS> osAbertas) {
+		this.osAbertas = osAbertas;
+	}
+
+	public int getContAgendaVencidos() {
+		return contAgendaVencidos;
+	}
+
+	public void setContAgendaVencidos(int contAgendaVencidos) {
+		this.contAgendaVencidos = contAgendaVencidos;
+	}
+
+	public int getContAgendaAbertos() {
+		return contAgendaAbertos;
+	}
+
+	public void setContAgendaAbertos(int contAgendaAbertos) {
+		this.contAgendaAbertos = contAgendaAbertos;
+	}
+
+	public int getContOs() {
+		return contOs;
+	}
+
+	public void setContOs(int contOs) {
+		this.contOs = contOs;
+	}
+
 }

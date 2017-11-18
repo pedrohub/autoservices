@@ -2,6 +2,7 @@ package br.com.autoservice.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.autoservice.dao.ItemServicoDao;
@@ -34,6 +35,14 @@ public class OSController implements Serializable{
 	@SuppressWarnings("unchecked")
 	public List<OS> listaOS(){
 		return dao.listar(OS.class);
+	}
+	
+	public List<OS> listaOSAbertas(){
+		return dao.listarAbertas();
+	}
+	
+	public List<OS> listaOS(Date ini, Date fim){
+		return dao.listarPorData(ini, fim);
 	}
 	
 	public void salvar(OS os){

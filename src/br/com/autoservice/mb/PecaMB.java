@@ -18,10 +18,7 @@ import br.com.autoservice.util.Constantes;
 @SessionScoped
 public class PecaMB implements Serializable{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7763748530287660122L;
+	private static final long serialVersionUID = 1003479977504410154L;
 	private List<Peca> listaPecas;
 	private List<Peca> listaPecasFilters;
 	private PecaController pecaController;

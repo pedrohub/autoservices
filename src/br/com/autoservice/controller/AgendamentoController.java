@@ -61,6 +61,10 @@ public class AgendamentoController implements Serializable{
 		return lista;
 	}
 	
+	public List<Agendamento> listarVencidos(){
+		return dao.getAgendamentosVencidos();
+	}
+	
 	
 
 }

@@ -26,7 +26,7 @@ import br.com.autoservice.util.StatusOS;
 @SessionScoped
 public class GeralMB implements Serializable{
 	
-	private static final long serialVersionUID = 689572449911905267L;
+	private static final long serialVersionUID = -78169601485043235L;
 	private Cliente cliente;
 	private ClienteController controladorCliente;
 	private VeiculoController controladorVeiculo;

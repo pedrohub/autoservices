@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<h:form id="form">
+	
+	  <p:growl id="message" showDetail="true" />
+
+			<h:panelGrid columns="5" cellpadding="5">
+				<p:outputLabel for="maskIni" value="Inicial: " />
+        		<p:calendar id="maskIni" value="#{financeiroMB.ini}" pattern="dd-MM-yyyy" mask="true" />
+        
+         		<p:outputLabel for="maskFim" value="Final: " />
+        		<p:calendar id="maskFim" value="#{financeiroMB.fim}" pattern="dd-MM-yyyy" mask="true" />
+        		
+        		<p:commandButton value="Buscar" actionListener="#{financeiroMB.consultarPorPeriodo()}"
+        		update=":form:maskIni :form:maskFim :form:tabelaordem :form:total" ></p:commandButton>
+			</h:panelGrid>
+	
+	<p:outputLabel  value="Total: "></p:outputLabel>
+	<p:outputLabel id="total" value="#{financeiroMB.total}">
+		<f:convertNumber pattern="#,###.00" locale="pt_BR"/>
+	</p:outputLabel>
+	
+	 <!-- tabela de ordens  -->
+	<p:outputPanel id="painelOrdem">
+	<p:dataTable id="tabelaordem" var="os" value="#{financeiroMB.lista}" sortBy="#{os.abertura}" 
+		rowIndexVar="index">
+	
+				<p:column style="width:40px;">
+					<f:facet name="header">
+						<h:outputText value=" " />
+					</f:facet>
+					<h:outputText value="#{index + 1}" >
+					</h:outputText>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Abertura" />
+					</f:facet>
+					<h:outputText value="#{os.abertura}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Fechamento" />
+					</f:facet>
+					<h:outputText value="#{os.fechamento}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Modelo" />
+					</f:facet>
+					<h:outputText value="#{os.modelo}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Placa" />
+					</f:facet>
+					<h:outputText value="#{os.placa}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Valor" />
+					</f:facet>
+					<h:outputText value="#{os.valor}" >
+						<f:convertNumber pattern="#,###.00" locale="pt_BR"/>
+					</h:outputText>
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Status" />
+					</f:facet>
+					<h:outputText value="#{os.status}" />
+				</p:column>
+			</p:dataTable>
+		
+		</p:outputPanel>
+		<!-- fim tabela de OS  -->
+				
+	</h:form>
+
+</ui:decorate>

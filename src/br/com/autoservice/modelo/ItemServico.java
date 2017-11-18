@@ -1,5 +1,7 @@
 package br.com.autoservice.modelo;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,9 +12,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "item_servico")
-public class ItemServico {
+public class ItemServico implements Serializable{
 
 	
+	private static final long serialVersionUID = 677011536156704988L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

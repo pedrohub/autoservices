@@ -98,13 +98,6 @@
 					<f:setPropertyActionListener value="#{cliente}"
 						target="#{clienteMB.cliente}" />
 				</p:commandLink>
-				<p:spacer width="4px"></p:spacer>
-				<p:commandLink actionListener="#{clienteMB.removeCliente(cliente)}"
-							process="@this" update=":form:painelTabela :form:count"
-							value="Deletar">
-							<p:confirm header="Confirmation"
-								message="Deseja deletar o Cliente?" icon="ui-icon-alert" />
-				</p:commandLink>
 			</p:column>
 		</p:dataTable>
 		</p:outputPanel>
