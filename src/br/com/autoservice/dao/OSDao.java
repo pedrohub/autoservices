@@ -32,6 +32,7 @@ public class OSDao extends GenericDao {
 		try {
 			Criteria cri = session.createCriteria(OS.class)
 					.add(Restrictions.between("fechamento", dtInicial, dtFinal));
+			cri.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
 			return (List<OS>) cri.list();
 		} finally {
@@ -46,6 +47,7 @@ public class OSDao extends GenericDao {
 		try {
 			Criteria cri = session.createCriteria(OS.class)
 					.add(Restrictions.eq("status", StatusOS.ABERTA));
+			cri.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
 			return (List<OS>) cri.list();
 		} finally {
