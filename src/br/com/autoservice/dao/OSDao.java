@@ -69,6 +69,17 @@ public class OSDao extends GenericDao {
 		}
 	}
 	
-	
+	public OS getById(Long valor) {
+
+		session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			Criteria cri = session.createCriteria(OS.class)
+					.add(Restrictions.eq("id", valor));
+			cri.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			return (OS)cri.uniqueResult();
+		} finally {
+			session.close();
+		}
+	}
 	
 }

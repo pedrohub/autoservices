@@ -12,11 +12,7 @@ import br.com.autoservice.modelo.OS;
 
 public class OSController implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 325180659114136882L;
-	
 	private static OSController instance;
 	private OSDao dao = new OSDao();
 	private ItemServicoDao itemDao = new ItemServicoDao();
@@ -50,9 +46,9 @@ public class OSController implements Serializable{
 		
 		List<ItemServico> itens = new ArrayList<ItemServico>();
 		
-		itemDao.removeByOS(os);
 		if (os.getItens() != null && !os.getItens().isEmpty()){
 			itens = toNewItens(os.getItens());
+			itemDao.removeByOS(os);
 		}
 		
 		for (ItemServico itemServico : itens) {
@@ -73,7 +69,7 @@ public class OSController implements Serializable{
 			ItemServico item = new ItemServico();
 			item.setDescricao(itemServico.getDescricao());
 			item.setQuantidade(itemServico.getQuantidade());
-			item.setValor(itemServico.getValor());
+			item.setValor(itemServico.getQuantidade()*itemServico.getValorUnitario());
 			item.setValorUnitario(itemServico.getValorUnitario());
 			item.setOs(itemServico.getOs());
 			listaNew.add(item);
@@ -87,6 +83,10 @@ public class OSController implements Serializable{
 	
 	public List<ItemServico> getItens(OS os){
 		return itemDao.listarByOS(os);
+	}
+	
+	public OS getOSById(OS os){
+		return dao.getById(os.getId());
 	}
 
 }

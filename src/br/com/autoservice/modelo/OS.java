@@ -35,6 +35,8 @@ public class OS {
 	private String placa;
 	private String modelo;
 	private String km;
+	private Double desconto;
+	private Double total;
 	
 	public void gerarOS(Cliente cliente, Veiculo veiculo){
 		
@@ -50,6 +52,8 @@ public class OS {
 		status = StatusOS.ABERTA;
 		valor = 0d;
 		km = "";
+		desconto = 0d;
+		total = 0d;
 	}
 	
 	public Long getId() {
@@ -140,6 +144,22 @@ public class OS {
 
 	public void setKm(String km) {
 		this.km = km;
+	}
+
+	public Double getDesconto() {
+		return desconto;
+	}
+
+	public void setDesconto(Double desconto) {
+		this.desconto = desconto;
+	}
+
+	public Double getTotal() {
+		return total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
 	}
 
 	

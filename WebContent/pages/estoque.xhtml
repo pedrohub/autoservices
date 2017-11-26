@@ -39,7 +39,7 @@
 						<h:outputText value="#{peca.referencia}" />
 					</p:column>
 					
-					<p:column headerText="Tipo" filterBy="#{peca.tipo}" filterMatchMode="exact" style="width:auto;">
+					<p:column headerText="Tipo" filterBy="#{peca.tipo}" filterMatchMode="exact" style="width:auto;" sortBy="#{peca.tipo}">
 						<f:facet name="filter">
 							<p:selectOneMenu value="#{pecaMB.tipo}">
 								<f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true" />
@@ -51,7 +51,7 @@
 						<h:outputText value="#{peca.tipo}" />
 					</p:column>
 					
-					<p:column headerText="Marca" filterBy="#{peca.marca}" filterMatchMode="exact" style="width:auto;">
+					<p:column headerText="Marca" filterBy="#{peca.marca}" filterMatchMode="exact" style="width:auto;" sortBy="#{peca.marca}">
 						<f:facet name="filter">
 							<p:selectOneMenu value="#{pecaMB.marca}">
 								<f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true" />

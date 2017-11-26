@@ -59,5 +59,4 @@ public class ItemServicoDao extends GenericDao{
 		}
 	}
 	
-
 }
