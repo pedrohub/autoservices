@@ -185,6 +185,17 @@ public class ClienteMB implements Serializable{
 		listSize = listaClientes.size();
 	}
 	
+	public void removeCliente(){
+		controladorCliente.excluir(this.cliente);
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Cliente Deletado"));
+		listaClientes = controladorCliente.listar();
+		listSize = listaClientes.size();
+	}
+	
+	public void selecionarClienteDelete(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	
 	public List<Cliente> completeCliente(String query) {
         List<Cliente> allClientes = controladorCliente.listar();
         List<Cliente> filteredClientes = new ArrayList<Cliente>();

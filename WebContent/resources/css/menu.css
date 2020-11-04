@@ -2,7 +2,7 @@
 
 body {
 	background-color: #eee;
-	background-image: url(../imagens/patterns/light_toast.png);
+	/**background-image: url(../imagens/patterns/light_toast.png);**/
 	color: #666;
 	font-family: 'Open Sans', sans-serif;
 	font-size: 14px;

@@ -11,7 +11,7 @@
 	<h:form id="form">	
 
 	<p:outputLabel for="nome" value="Pesquisar Cliente por Placa: " />
-						<p:inputMask id="nome"  alt="Exemplo: pdx5554" value="#{homeMB.placa}"  mask="aaa-9999"
+						<p:inputMask id="nome"  alt="Exemplo: pdx5554" value="#{homeMB.placa}"  mask="aaa-9*99"
 							 style="text-transform:uppercase" /> 
 							 <p:spacer width="4px"></p:spacer>
 							 <p:commandButton value="Buscar" actionListener="#{homeMB.findCliente}" 

@@ -32,6 +32,7 @@ public class FinanceiroMB implements Serializable{
 	
 	public void consultarPorPeriodo(){
 		lista = oSController.listaOS(ini, fim);
+		total = 0;
 		if(!lista.isEmpty()){
 			for (OS os : lista) {
 				total += os.getValor();
